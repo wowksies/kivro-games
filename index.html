@@ -1813,7 +1813,7 @@ function showAdThenPlay(gameUrl) {
 }
 </script>
 
-<!-- KIVRO Total Visits Overlay (Real-Time) -->
+<!-- KIVRO Total Visits Overlay (Firebase v9 Modular SDK) -->
 <style>
   #kivro-widget {
     position: fixed;
@@ -1844,35 +1844,57 @@ function showAdThenPlay(gameUrl) {
   <div>Total Visits Today: <span id="totalVisits">Loading…</span></div>
 </div>
 
-<script>
-  const VISITORS_API = "https://kivro-counter.vercel.app/api/visitors";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, onSnapshot } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-  // --- Count unique visitor once per day in this browser ---
-  const lastVisitKey = "kivro-last-visit";
-  const now = Date.now();
-  const lastVisit = localStorage.getItem(lastVisitKey);
+  // --- Firebase config ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsZADq5g-Pi8W4cVaGIY32PYTNODSl_CY",
+    authDomain: "kivro-counter.firebaseapp.com",
+    projectId: "kivro-counter",
+    storageBucket: "kivro-counter.firebasestorage.app",
+    messagingSenderId: "1013388311382",
+    appId: "1:1013388311382:web:37e78bbd5a4279e20f74f7",
+    measurementId: "G-HJRJ0CH6ZT"
+  };
 
-  if (!lastVisit || now - parseInt(lastVisit) > 24*60*60*1000) {
-    fetch(VISITORS_API, { method: "POST" }).catch(err => console.error(err));
-    localStorage.setItem(lastVisitKey, now.toString());
+  // --- Initialize Firebase ---
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const todayId = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  const visitsRef = doc(db, "dailyVisits", todayId);
+
+  const visitorKey = "kivro-visitor-id";
+  let visitorId = localStorage.getItem(visitorKey);
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem(visitorKey, visitorId);
   }
 
-  // --- Function to update total visits ---
-  function updateTotalVisits() {
-    fetch(VISITORS_API)
-      .then(res => res.json())
-      .then(data => {
-        const totalElem = document.getElementById("totalVisits");
-        if (totalElem) totalElem.innerText = data.totalVisitors;
-      })
-      .catch(err => console.error("Failed to fetch total visits:", err));
-  }
+  // --- Add visitor if not already counted today ---
+  const addVisitor = async () => {
+    const docSnap = await getDoc(visitsRef);
+    if (!docSnap.exists()) {
+      await setDoc(visitsRef, { visitors: [visitorId] });
+    } else {
+      const data = docSnap.data();
+      if (!data.visitors.includes(visitorId)) {
+        await updateDoc(visitsRef, { visitors: arrayUnion(visitorId) });
+      }
+    }
+  };
 
-  // --- Initial load ---
-  updateTotalVisits();
+  addVisitor();
 
-  // --- Real-time refresh every 5 seconds ---
-  setInterval(updateTotalVisits, 5000);
+  // --- Real-time listener ---
+  onSnapshot(visitsRef, (docSnap) => {
+    const data = docSnap.data();
+    const total = data?.visitors?.length || 0;
+    const totalElem = document.getElementById("totalVisits");
+    if (totalElem) totalElem.innerText = total;
+  });
 </script>
 
 	
