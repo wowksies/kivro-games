@@ -1813,75 +1813,74 @@ function showAdThenPlay(gameUrl) {
 }
 </script>
 
-	<script>
-fetch("https://kivro-counter.vercel.app/api/visitors")
-    .then(r => r.json())
-    .then(d => {
-        document.getElementById("totalVisitors").innerText = d.totalUniqueVisitors;
-    });
+<!-- KIVRO Counter Overlay -->
+<style>
+  #kivro-widget {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #9e3bff, #6a00ff);
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    border-radius: 12px;
+    z-index: 999999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  #kivro-widget .kivro-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+</style>
 
-
-// LIVE ONLINE USERS
-fetch("https://kivro-counter.vercel.app/api/online", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ action: "join" })
-});
-
-window.addEventListener("beforeunload", () => {
-  navigator.sendBeacon(
-    "https://kivro-counter.vercel.app/api/online",
-    JSON.stringify({ action: "leave" })
-  );
-});
-</script>
-
-<div>Total Visitors: <span id="totalVisits">Loading…</span></div>
-
-	<div id="kivro-widget">
+<div id="kivro-widget">
   <div class="kivro-title">KIVRO</div>
-  <div>Total Visits: <span id="totalVisits">...</span></div>
-  <div>Online: <span id="onlineCount">...</span></div>
+  <div>Total Visits: <span id="totalVisits">Loading…</span></div>
+  <div>Online: <span id="onlineCount">Loading…</span></div>
 </div>
 
-	<script>
-// GET TOTAL VISITS
-fetch("https://kivro-counter.vercel.app/api/visitors")
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("totalVisits").innerText = data.total;
-  });
+<script>
+  const VISITORS_API = "https://kivro-counter.vercel.app/api/visitors";
+  const ONLINE_API = "https://kivro-counter.vercel.app/api/online";
 
-// JOIN ONLINE COUNT
-fetch("https://kivro-counter.vercel.app/api/online", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ action: "join" })
-})
-  .then(r => r.json())
-  .then(data => {
-    document.getElementById("onlineCount").innerText = data.online;
-  });
+  // --- UNIQUE VISITOR COUNT ---
+  function countUniqueVisitor() {
+    if (!localStorage.getItem("kivro-visited")) {
+      fetch(VISITORS_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ increase: true })
+      }).catch(err => console.log(err));
+      localStorage.setItem("kivro-visited", "yes");
+    }
 
-// LEAVE ONLINE COUNT
-window.addEventListener("beforeunload", () => {
-  navigator.sendBeacon(
-    "https://kivro-counter.vercel.app/api/online",
-    JSON.stringify({ action: "leave" })
-  );
-});
-		
-		function loadGameStats(gameId, elementId){
-    fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${gameId}`)
-    .then(r => r.json())
-    .then(d => {
-        document.getElementById(elementId).innerText = d.totalPlays;
-    });
-}
+    fetch(VISITORS_API)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("totalVisits").innerText = data.totalVisitors;
+      })
+      .catch(err => console.log(err));
+  }
 
-</script>
+  // --- ONLINE USERS ---
+  function joinOnline() {
+    fetch(ONLINE_API, {
+      method: "POST"
+    }).catch(err => console.log(err));
+  }
 
+  function leaveOnline() {
+    navigator.sendBeacon(ONLINE_API);
+  }
 
+  function updateOnlineCount() {
+    fetch(ONLINE_API)
+		</script>
 
 
 	
