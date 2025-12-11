@@ -1397,6 +1397,9 @@
          */
 // 🚀 OPEN GAME IN NEW WEBSITE — NO MODAL, NO IFRAME
 window.openGameModal = function (url, gameId) {
+
+	fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${game.id}`);
+	
     // Ignore modal completely — just redirect
     window.location.href = url;
 };
@@ -1812,12 +1815,12 @@ function showAdThenPlay(gameUrl) {
 </script>
 
 	<script>
-// COUNT TOTAL VISITS
 fetch("https://kivro-counter.vercel.app/api/visitors")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("totalVisits").innerText = data.total;
-  });
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById("totalVisitors").innerText = d.totalUniqueVisitors;
+    });
+
 
 // LIVE ONLINE USERS
 fetch("https://kivro-counter.vercel.app/api/online", {
@@ -1868,6 +1871,15 @@ window.addEventListener("beforeunload", () => {
     JSON.stringify({ action: "leave" })
   );
 });
+		
+		function loadGameStats(gameId, elementId){
+    fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${gameId}`)
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById(elementId).innerText = d.totalPlays;
+    });
+}
+
 </script>
 
 
