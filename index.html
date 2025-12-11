@@ -1813,7 +1813,7 @@ function showAdThenPlay(gameUrl) {
 }
 </script>
 
-<!-- KIVRO Visitor + Online Counter Overlay -->
+<!-- KIVRO Total Visits Overlay -->
 <style>
   #kivro-widget {
     position: fixed;
@@ -1830,6 +1830,7 @@ function showAdThenPlay(gameUrl) {
     backdrop-filter: blur(6px);
     border: 1px solid rgba(255,255,255,0.25);
   }
+
   #kivro-widget .kivro-title {
     font-weight: bold;
     margin-bottom: 4px;
@@ -1840,59 +1841,30 @@ function showAdThenPlay(gameUrl) {
 
 <div id="kivro-widget">
   <div class="kivro-title">KIVRO</div>
-  <div>Total Visits: <span id="totalVisits">Loading…</span></div>
-  <div>Online: <span id="onlineCount">Loading…</span></div>
+  <div>Total Visits Today: <span id="totalVisits">Loading…</span></div>
 </div>
 
 <script>
   const VISITORS_API = "https://kivro-counter.vercel.app/api/visitors";
-  const ONLINE_API = "https://kivro-counter.vercel.app/api/online";
 
-  // --- Count Unique Visitor ---
-  function countUniqueVisitor() {
-    if (!localStorage.getItem("kivro-visited")) {
-      fetch(VISITORS_API, { method: "POST" })
-        .catch(err => console.error("Visitor POST failed:", err));
-      localStorage.setItem("kivro-visited", "yes");
-    }
-
+  function updateTotalVisits() {
     fetch(VISITORS_API)
       .then(res => res.json())
       .then(data => {
-        document.getElementById("totalVisits").innerText = data.totalVisitors;
+        const totalElem = document.getElementById("totalVisits");
+        if (totalElem) {
+          totalElem.innerText = data.totalVisitors;
+        }
       })
-      .catch(err => console.error("Visitor GET failed:", err));
+      .catch(err => console.error("Failed to fetch total visits:", err));
   }
 
-  // --- Join Online Users ---
-  function joinOnline() {
-    fetch(ONLINE_API, { method: "POST" })
-      .catch(err => console.error("Online join failed:", err));
-  }
+  // Initial load
+  updateTotalVisits();
 
-  // --- Update Online Count ---
-  function updateOnlineCount() {
-    fetch(ONLINE_API)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("onlineCount").innerText = data.online;
-      })
-      .catch(err => console.error("Online GET failed:", err));
-  }
-
-  // --- Leave Online on close ---
-  function leaveOnline() {
-    navigator.sendBeacon(ONLINE_API);
-  }
-
-  // --- Initialize Counters ---
-  countUniqueVisitor();
-  joinOnline();
-  updateOnlineCount();
-  setInterval(updateOnlineCount, 2000);
-  window.addEventListener("beforeunload", leaveOnline);
+  // Refresh every 10 minutes
+  setInterval(updateTotalVisits, 10 * 60 * 1000);
 </script>
-
 
 	
 </body>
