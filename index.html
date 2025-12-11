@@ -1813,14 +1813,14 @@ function showAdThenPlay(gameUrl) {
 
 	<script>
 // COUNT TOTAL VISITS
-fetch("https://kivro-counter.vercel.app//api/visitors")
+fetch("https://kivro-counter.vercel.app/api/visitors")
   .then(res => res.json())
   .then(data => {
     document.getElementById("totalVisits").innerText = data.total;
   });
 
 // LIVE ONLINE USERS
-fetch("https://kivro-counter.vercel.app//api/online", {
+fetch("https://kivro-counter.vercel.app/api/online", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ action: "join" })
@@ -1828,7 +1828,7 @@ fetch("https://kivro-counter.vercel.app//api/online", {
 
 window.addEventListener("beforeunload", () => {
   navigator.sendBeacon(
-    "https://kivro-counter.vercel.app//api/online",
+    "https://kivro-counter.vercel.app/api/online",
     JSON.stringify({ action: "leave" })
   );
 });
