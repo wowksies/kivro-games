@@ -1397,11 +1397,10 @@
          */
 // 🚀 OPEN GAME IN NEW WEBSITE — NO MODAL, NO IFRAME
 window.openGameModal = function (url, gameId) {
-
-	fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${game.id}`);
 	
     // Ignore modal completely — just redirect
     window.location.href = url;
+	fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${game.id}`);
 };
 
 
