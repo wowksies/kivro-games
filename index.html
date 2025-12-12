@@ -1590,6 +1590,8 @@ window.openGameModal = function (url, gameId) {
 
 <!-- Top-Left Add-to-Home Mini Prompt + Full Popup -->
 
+<!-- Top-Left Add-to-Home Mini Prompt + Full Popup -->
+
 <!-- Mini top-left note -->
 <div id="mini-add-note" class="fixed top-4 left-4 bg-gray-900 text-gray-100 px-4 py-2 rounded-lg shadow-lg z-[5000] cursor-pointer hover:bg-gray-800 transition select-none">
   📌 Add Kivro Games to your Home Screen?
@@ -1631,21 +1633,29 @@ window.openGameModal = function (url, gameId) {
 </div>
 
 <script>
-// Ensure elements exist before attaching events
-window.addEventListener('DOMContentLoaded', function () {
+// Use original logic but only show when user clicks
+window.addEventListener('DOMContentLoaded', () => {
   const popup = document.getElementById('install-popup');
   const closeBtn = document.getElementById('close-popup');
   const mini = document.getElementById('mini-add-note');
   const icons = document.querySelectorAll('.select-icon');
 
-  if (!popup || !closeBtn || !mini) return;
+  function showPopup() {
+    popup.classList.remove('hidden');
+    popup.setAttribute('aria-hidden','false');
+  }
 
-  function showPopup(){ popup.classList.remove('hidden'); }
-  function hidePopup(){ popup.classList.add('hidden'); }
+  function hidePopup() {
+    popup.classList.add('hidden');
+    popup.setAttribute('aria-hidden','true');
+  }
 
   mini.addEventListener('click', showPopup);
   closeBtn.addEventListener('click', hidePopup);
-  popup.addEventListener('click', (e)=>{ if(e.target===popup) hidePopup(); });
+
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) hidePopup();
+  });
 
   icons.forEach(icon => {
     icon.addEventListener('click', () => {
