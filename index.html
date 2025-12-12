@@ -1631,95 +1631,33 @@ window.openGameModal = function (url, gameId) {
 </div>
 
 <script>
-(function(){
+// Ensure elements exist before attaching events
+window.addEventListener('DOMContentLoaded', function () {
   const popup = document.getElementById('install-popup');
   const closeBtn = document.getElementById('close-popup');
   const mini = document.getElementById('mini-add-note');
   const icons = document.querySelectorAll('.select-icon');
+
+  if (!popup || !closeBtn || !mini) return;
 
   function showPopup(){ popup.classList.remove('hidden'); }
   function hidePopup(){ popup.classList.add('hidden'); }
 
   mini.addEventListener('click', showPopup);
   closeBtn.addEventListener('click', hidePopup);
-
   popup.addEventListener('click', (e)=>{ if(e.target===popup) hidePopup(); });
 
-  icons.forEach(icon=>{
-    icon.addEventListener('click', ()=>{
-      icons.forEach(i=>i.classList.remove('border-indigo-400'));
+  icons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      icons.forEach(i => i.classList.remove('border-indigo-400'));
       icon.classList.add('border-indigo-400');
-      const link=document.querySelector("link[rel='apple-touch-icon']");
-      if(link) link.href = icon.src;
+      const link = document.querySelector("link[rel='apple-touch-icon']");
+      if (link) link.href = icon.src;
     });
   });
-})();
+});
 </script>
 
-<script>
-  const searchInput = document.getElementById('search-input');
-  const clearButton = document.getElementById('clear-search');
-
-  // Show/hide the X icon when user types
-  searchInput.addEventListener('input', () => {
-    clearButton.classList.toggle('hidden', searchInput.value.trim() === '');
-  });
-
-  // Clear search + reset results
-  clearButton.addEventListener('click', () => {
-    // Clear the input box
-    searchInput.value = '';
-
-    // Hide the clear (X) button
-    clearButton.classList.add('hidden');
-
-    // Reset the searchTerm used by main game script
-    window.searchTerm = '';
-
-    // Re-render the full game grid
-    if (typeof renderGameCards === 'function') {
-      renderGameCards();
-    }
-  });
-</script>
-
-    <script>
-  (function(){
-    const input = document.getElementById('search-input');
-    const clearBtn = document.getElementById('clear-search');
-
-    if (!input || !clearBtn) return;
-
-    // show/hide X while typing (trimmed check)
-    input.addEventListener('input', () => {
-      clearBtn.classList.toggle('hidden', input.value.trim() === '');
-    });
-
-    // Clear + reset module searchTerm + re-render
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
-      clearBtn.classList.add('hidden');
-
-      // Use helper exposed by module. If not present, fallback to rerender via global function
-      if (typeof window.setSearchTerm === 'function') {
-        window.setSearchTerm('');
-      } else if (typeof window.renderGameCards === 'function') {
-        window.searchTerm = '';
-        window.renderGameCards();
-      } else {
-        // last resort: trigger input event so whatever listener runs
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    });
-
-    // optional: clear on Escape key when input focused
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        clearBtn.click();
-      }
-    });
-  })();
-</script>
 
 	<script>
 // Store your ad script as a constant string
