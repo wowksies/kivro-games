@@ -1573,7 +1573,7 @@ window.openGameModal = function (url, gameId) {
 
 <button 
   id="install-trigger-btn" 
-  class="fixed top-4 left-4 z-[3000] bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform transform hover:scale-110 active:scale-95"
+  class="fixed top-16 left-4 z-[3000] bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform transform hover:scale-110 active:scale-95"
   aria-label="Install App">
   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -1644,17 +1644,24 @@ window.openGameModal = function (url, gameId) {
     const closeBtn = document.getElementById('close-popup');
     const icons = document.querySelectorAll('.select-icon');
 
+    // DEBUG: Check if elements are found
+    if (!popup) console.error("Install Popup element not found");
+    if (!openBtn) console.error("Install Trigger Button not found");
+    
     if (!popup || !openBtn || !closeBtn) return;
 
-    // --- 1. Open Popup (Only when button is clicked) ---
+    // --- 1. Open Popup Logic ---
     openBtn.addEventListener('click', () => {
+      console.log("Install button clicked"); // Debug log
       popup.classList.remove('hidden');
+      popup.style.display = 'flex'; // Force flex in case classList fails
       popup.setAttribute('aria-hidden', 'false');
     });
 
     // --- 2. Close Popup Functions ---
     const hidePopup = () => {
       popup.classList.add('hidden');
+      popup.style.display = ''; // Reset inline style
       popup.setAttribute('aria-hidden', 'true');
     };
 
@@ -1678,12 +1685,8 @@ window.openGameModal = function (url, gameId) {
     if (icons.length) {
       icons.forEach(icon => {
         icon.addEventListener('click', () => {
-          // Remove border from all
           icons.forEach(i => i.classList.remove('border-indigo-400'));
-          // Add border to clicked
           icon.classList.add('border-indigo-400');
-          
-          // Update Apple Touch Icon link if it exists
           const link = document.querySelector("link[rel='apple-touch-icon']");
           if (link) link.href = icon.src;
         });
@@ -1691,6 +1694,7 @@ window.openGameModal = function (url, gameId) {
     }
   });
 </script>
+	
 // Store your ad script as a constant string
 const AD_SCRIPT_HTML = `
     <script type="text/javascript">
