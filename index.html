@@ -1571,38 +1571,46 @@ window.openGameModal = function (url, gameId) {
   });
 </script>
 
-<!-- Add-to-Home Popup (REPLACE your current popup block with this) -->
+<button 
+  id="install-trigger-btn" 
+  class="fixed top-4 left-4 z-[3000] bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform transform hover:scale-110 active:scale-95"
+  aria-label="Install App">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+</button>
+
 <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden" aria-hidden="true">
   <div id="install-content" class="bg-gray-900 text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl animate-fadeIn overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
 
     <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
     <p class="text-gray-300 mb-4 text-center">For the best experience, follow these quick steps:</p>
-      <h2 class="text-2xl font-bold text-purple-300 mb-2">🎨 Customize Your Icon</h2>
-      <!-- Icon selection (with glowing backdrop) -->
-<div class="flex justify-center gap-5 mb-5 flex-wrap">
-  <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-    <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
-         class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-         alt="Icon 1">
-  </div>
+    
+    <h2 class="text-2xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
+    
+    <div class="flex justify-center gap-5 mb-5 flex-wrap">
+      <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+        <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
+             class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+             alt="Icon 1">
+      </div>
 
-  <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-    <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
-         class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-         alt="Icon 2">
-  </div>
+      <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+        <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
+             class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+             alt="Icon 2">
+      </div>
 
-  <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-    <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
-         class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-         alt="Icon 3">
-  </div>
-</div>
+      <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+        <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
+             class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+             alt="Icon 3">
+      </div>
+    </div>
 
-    <!-- Steps (compact grid so it fits landscape) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
       <div class="install-step">
         <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
@@ -1623,184 +1631,66 @@ window.openGameModal = function (url, gameId) {
       </div>
     </div>
 
-
-
-    <!-- Single button (centered) -->
     <div class="flex justify-center mt-4">
-      <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-md text-sm font-semibold">Got it — Finish</button>
+      <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-md text-sm font-semibold text-white">Got it — Finish</button>
     </div>
   </div>
 </div>
 
 <script>
-  (function () {
-    // Defensive: only run once DOM is ready
-    function initInstallPopup() {
-      const popup = document.getElementById('install-popup');
-      const closeBtn = document.getElementById('close-popup');
-      const icons = document.querySelectorAll('.select-icon');
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('install-popup');
+    const openBtn = document.getElementById('install-trigger-btn');
+    const closeBtn = document.getElementById('close-popup');
+    const icons = document.querySelectorAll('.select-icon');
 
-      if (!popup || !closeBtn) return;
+    if (!popup || !openBtn || !closeBtn) return;
 
-      const LS_KEY = 'installDismissedV2';
+    // --- 1. Open Popup (Only when button is clicked) ---
+    openBtn.addEventListener('click', () => {
+      popup.classList.remove('hidden');
+      popup.setAttribute('aria-hidden', 'false');
+    });
 
-      // Show popup function (removes hidden)
-      function showPopup() {
-        if (!popup.classList.contains('hidden')) return;
-        popup.classList.remove('hidden');
-        popup.setAttribute('aria-hidden', 'false');
-        // focus button for keyboard users
-        closeBtn.focus({ preventScroll: true });
-      }
+    // --- 2. Close Popup Functions ---
+    const hidePopup = () => {
+      popup.classList.add('hidden');
+      popup.setAttribute('aria-hidden', 'true');
+    };
 
-      // Hide popup function (adds hidden)
-      function hidePopup() {
-        if (popup.classList.contains('hidden')) return;
-        popup.classList.add('hidden');
-        popup.setAttribute('aria-hidden', 'true');
-      }
+    closeBtn.addEventListener('click', hidePopup);
 
-      // Only show if not dismissed
-      try {
-        if (!localStorage.getItem(LS_KEY)) {
-          showPopup();
-        }
-      } catch (e) {
-        // localStorage could be unavailable in some browsers; still show popup
-        showPopup();
-      }
-
-      // Closing
-      closeBtn.addEventListener('click', () => {
-        try { localStorage.setItem(LS_KEY, 'true'); } catch (e) {}
+    // Close if clicking outside the content box
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
         hidePopup();
-      });
+      }
+    });
 
-      // click outside content closes
-      popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-          try { localStorage.setItem(LS_KEY, 'true'); } catch (e) {}
-          hidePopup();
-        }
-      });
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
+        hidePopup();
+      }
+    });
 
-      // ESC closes
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
-          try { localStorage.setItem(LS_KEY, 'true'); } catch (e) {}
-          hidePopup();
-        }
-      });
-
-      // Icon selection behavior (update apple-touch-icon link if present)
-      if (icons && icons.length) {
-        icons.forEach(icon => {
-          icon.addEventListener('click', () => {
-            icons.forEach(i => i.classList.remove('border-indigo-400'));
-            icon.classList.add('border-indigo-400');
-            const link = document.querySelector("link[rel='apple-touch-icon']");
-            if (link) link.href = icon.src;
-          });
+    // --- 3. Icon Selection Logic ---
+    if (icons.length) {
+      icons.forEach(icon => {
+        icon.addEventListener('click', () => {
+          // Remove border from all
+          icons.forEach(i => i.classList.remove('border-indigo-400'));
+          // Add border to clicked
+          icon.classList.add('border-indigo-400');
+          
+          // Update Apple Touch Icon link if it exists
+          const link = document.querySelector("link[rel='apple-touch-icon']");
+          if (link) link.href = icon.src;
         });
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initInstallPopup);
-    } else {
-      initInstallPopup();
-    }
-  })();
-</script>
-
-
-
-
-<script>
-  // Show popup a few seconds after load
- // window.addEventListener('load', () => {  <----------------------------------------–|----------------
-    setTimeout(() => {
-      document.getElementById('install-popup').classList.add('active');
-    }, 3500);
-  });
-
-  // Close it
-  document.getElementById('close-popup').addEventListener('click', () => {
-    document.getElementById('install-popup').classList.remove('active');
-  });
-
-    // Close it
-  document.getElementById('skip-popup').addEventListener('click', () => {
-    document.getElementById('install-popup').classList.remove('active');
-  });
-</script>
-
-<script>
-  const searchInput = document.getElementById('search-input');
-  const clearButton = document.getElementById('clear-search');
-
-  // Show/hide the X icon when user types
-  searchInput.addEventListener('input', () => {
-    clearButton.classList.toggle('hidden', searchInput.value.trim() === '');
-  });
-
-  // Clear search + reset results
-  clearButton.addEventListener('click', () => {
-    // Clear the input box
-    searchInput.value = '';
-
-    // Hide the clear (X) button
-    clearButton.classList.add('hidden');
-
-    // Reset the searchTerm used by main game script
-    window.searchTerm = '';
-
-    // Re-render the full game grid
-    if (typeof renderGameCards === 'function') {
-      renderGameCards();
+      });
     }
   });
 </script>
-
-    <script>
-  (function(){
-    const input = document.getElementById('search-input');
-    const clearBtn = document.getElementById('clear-search');
-
-    if (!input || !clearBtn) return;
-
-    // show/hide X while typing (trimmed check)
-    input.addEventListener('input', () => {
-      clearBtn.classList.toggle('hidden', input.value.trim() === '');
-    });
-
-    // Clear + reset module searchTerm + re-render
-    clearBtn.addEventListener('click', () => {
-      input.value = '';
-      clearBtn.classList.add('hidden');
-
-      // Use helper exposed by module. If not present, fallback to rerender via global function
-      if (typeof window.setSearchTerm === 'function') {
-        window.setSearchTerm('');
-      } else if (typeof window.renderGameCards === 'function') {
-        window.searchTerm = '';
-        window.renderGameCards();
-      } else {
-        // last resort: trigger input event so whatever listener runs
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    });
-
-    // optional: clear on Escape key when input focused
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        clearBtn.click();
-      }
-    });
-  })();
-</script>
-
-	<script>
 // Store your ad script as a constant string
 const AD_SCRIPT_HTML = `
     <script type="text/javascript">
