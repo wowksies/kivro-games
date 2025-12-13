@@ -1644,25 +1644,36 @@ window.openGameModal = function (url, gameId) {
     const closeBtn = document.getElementById('close-popup');
     const icons = document.querySelectorAll('.select-icon');
 
-    // DEBUG: Check if elements are found
-    if (!popup) console.error("Install Popup element not found");
-    if (!openBtn) console.error("Install Trigger Button not found");
-    
-    if (!popup || !openBtn || !closeBtn) return;
+    // DEBUG: Ensure elements exist
+    if (!popup || !openBtn || !closeBtn) {
+        console.error("Popup elements missing");
+        return;
+    }
 
     // --- 1. Open Popup Logic ---
     openBtn.addEventListener('click', () => {
-      console.log("Install button clicked"); // Debug log
+      // Remove 'hidden' so it renders
       popup.classList.remove('hidden');
-      popup.style.display = 'flex'; // Force flex in case classList fails
-      popup.setAttribute('aria-hidden', 'false');
+      popup.style.display = 'flex';
+      
+      // Add 'active' class after a tiny delay to trigger CSS transition (opacity)
+      setTimeout(() => {
+        popup.classList.add('active');
+        popup.setAttribute('aria-hidden', 'false');
+      }, 10);
     });
 
     // --- 2. Close Popup Functions ---
     const hidePopup = () => {
-      popup.classList.add('hidden');
-      popup.style.display = ''; // Reset inline style
+      // Remove 'active' first to trigger fade out
+      popup.classList.remove('active');
       popup.setAttribute('aria-hidden', 'true');
+
+      // Wait 300ms for fade out animation, then hide display
+      setTimeout(() => {
+        popup.classList.add('hidden');
+        popup.style.display = 'none';
+      }, 300);
     };
 
     closeBtn.addEventListener('click', hidePopup);
@@ -1687,6 +1698,8 @@ window.openGameModal = function (url, gameId) {
         icon.addEventListener('click', () => {
           icons.forEach(i => i.classList.remove('border-indigo-400'));
           icon.classList.add('border-indigo-400');
+          
+          // Update Apple Touch Icon link if it exists
           const link = document.querySelector("link[rel='apple-touch-icon']");
           if (link) link.href = icon.src;
         });
