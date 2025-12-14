@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kivro Games</title>
     <meta name="description" content="Premium unblocked games library.">
-    
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f1a;
+            background-color: #050505;
             color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
@@ -36,17 +34,16 @@
         @keyframes movePlasma { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 
         /* --- GLASSMOPHISM --- */
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
         .glass-header {
             background: rgba(15, 15, 26, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         /* --- ANIMATIONS --- */
@@ -72,13 +69,15 @@
             border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.2);
         }
+        
+        /* --- BRIGHTER THUMBNAILS (Requested) --- */
         .game-card img {
             transition: transform 0.5s ease;
-            filter: brightness(1.1) contrast(1.1); /* Brighter thumbnails */
+            filter: brightness(1.2) contrast(1.15) saturate(1.1); /* BOOSTED BRIGHTNESS */
         }
         .game-card:hover img {
             transform: scale(1.08);
-            filter: brightness(1.2) contrast(1.15);
+            filter: brightness(1.3) contrast(1.2) saturate(1.2);
         }
 
         /* --- SHINY TEXT --- */
@@ -92,14 +91,15 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- STAR FAVORITE BUTTON --- */
+        /* --- STAR BUTTON (Fixed Z-Index) --- */
         .star-btn {
-            position: absolute; top: 10px; left: 10px; z-index: 20;
-            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.6); border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
-            color: #9ca3af; transition: all 0.2s;
+            position: absolute; top: 10px; left: 10px; z-index: 50; /* Higher than card link */
+            width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+            color: #9ca3af; transition: all 0.2s; cursor: pointer;
         }
-        .star-btn:hover { background: white; color: #fbbf24; transform: scale(1.1); }
+        .star-btn:hover { background: white; color: #fbbf24; transform: scale(1.1); border-color: white; }
         .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.15); border-color: #fbbf24; }
 
         /* --- UTILS --- */
@@ -179,7 +179,7 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
                 Library <span id="game-count" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
             </h2>
-            <div class="text-xs text-gray-500 font-mono">v5.2 Stable</div>
+            <div class="text-xs text-gray-500 font-mono">v5.3 Stable</div>
         </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
@@ -195,23 +195,30 @@
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
 
-        // --- FAVORITES LOGIC ---
+        // --- FAVORITES LOGIC (GLITCH FIXED) ---
         let favorites = [];
-        try {
-            favorites = JSON.parse(localStorage.getItem('kivro_favs')) || [];
-        } catch(e) {
-            console.warn("LocalStorage blocked - Favorites disabled");
-        }
+        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
 
         function toggleFav(e, id) {
-            e.stopPropagation(); // Don't open game
+            // STOP propagation so we don't click the card
+            e.stopPropagation(); 
+            e.preventDefault();
+
             if(favorites.includes(id)) {
                 favorites = favorites.filter(fav => fav !== id);
             } else {
                 favorites.push(id);
             }
             try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
-            renderGrid(); // Refresh UI
+
+            // SMART UPDATE: Only re-render if we are in "Favs" tab to avoid jumping
+            if (currentTab === 'Favs') {
+                renderGrid();
+            } else {
+                // Just toggle class visually for smooth UX
+                const btn = e.currentTarget;
+                btn.classList.toggle('star-active');
+            }
         }
 
         // --- GAME DATA ---
