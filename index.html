@@ -13,151 +13,175 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f1a;
+            background-color: #050505;
             color: #ffffff;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
         }
 
-        /* --- PLASMA BACKGROUND --- */
-        .plasma-background {
-            background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        #0f0f1a;
-            background-size: 200% 200%;
-            animation: movePlasma 30s ease-in-out infinite alternate;
-            min-height: 100vh;
+        /* --- BACKGROUND --- */
+        .ambient-glow {
             position: fixed;
-            inset: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.08), transparent 25%);
             z-index: -1;
+            pointer-events: none;
         }
-        @keyframes movePlasma { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 
-        /* --- SPLASH SCREEN ANIMATIONS --- */
-        #splash {
-            background-color: #0f0f1a;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            position: fixed; inset: 0; z-index: 9999;
-            transition: opacity 0.6s ease;
-        }
-        .splash-logo { animation: breathe 3s ease-in-out infinite; }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); }
-        }
-        .fade-out { opacity: 0; pointer-events: none; }
-
-        /* --- GLASS HEADER & CARDS --- */
+        /* --- GLASS HEADER --- */
         .glass-header {
-            background: rgba(15, 15, 26, 0.7);
+            background: rgba(5, 5, 5, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* --- GAME CARDS --- */
         .game-card {
-            background: rgba(30, 41, 59, 0.4);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
         .game-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            background: rgba(40, 50, 70, 0.6);
-            border-color: rgba(129, 140, 248, 0.5);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(129, 140, 248, 0.3);
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.1);
         }
 
-        /* --- SHINY TEXT --- */
-        .shiny-text {
-            background: linear-gradient(90deg, #818cf8 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #818cf8 100%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 4s linear infinite;
+        /* --- BRIGHTER THUMBNAILS --- */
+        .game-card img {
+            transition: transform 0.6s ease;
+            filter: brightness(1.15) contrast(1.05); /* Makes images pop */
         }
-        @keyframes shine { to { background-position: 200% center; } }
+        .game-card:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.25) contrast(1.1);
+        }
 
-        /* --- UTILS --- */
+        /* --- STAR ICON --- */
+        .star-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            padding: 6px;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .star-btn:hover {
+            background: #ffffff;
+            color: #fbbf24; /* Gold */
+            transform: scale(1.1);
+        }
+        .star-active {
+            color: #fbbf24 !important;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+
+        /* --- UI UTILS --- */
         .tab-btn { transition: all 0.3s ease; }
-        .tab-active { background: #6366f1; color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
-        .tab-inactive { color: #9ca3af; background: transparent; }
+        .tab-active { background: #ffffff; color: #000000; }
+        .tab-inactive { color: #888888; }
         .tab-inactive:hover { color: #ffffff; background: rgba(255,255,255,0.05); }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f0f1a; }
-        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
 <body class="antialiased">
 
-    <div class="plasma-background"></div>
-
-    <div id="splash">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" alt="Logo" class="w-32 h-32 splash-logo mb-6 rounded-2xl">
-        <h1 class="text-5xl font-black shiny-text tracking-tight">Kivro Games</h1>
-    </div>
+    <div class="ambient-glow"></div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
             
-            <div class="flex items-center gap-3 min-w-max">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
-                <span class="text-2xl font-black tracking-tight text-white hidden sm:block"><span class="shiny-text">Kivro</span></span>
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white">Kivro</span>
             </div>
 
-            <div class="flex bg-black/40 p-1 rounded-full border border-white/10 backdrop-blur-md">
-                <button id="tab-games" class="tab-btn tab-active px-6 py-2 rounded-full text-xs sm:text-sm font-bold tracking-wide">GAMES</button>
-                <button id="tab-apps" class="tab-btn tab-inactive px-6 py-2 rounded-full text-xs sm:text-sm font-bold tracking-wide">APPS</button>
+            <div class="hidden md:flex bg-[#111] p-1 rounded-full border border-white/5">
+                <button id="tab-games" class="tab-btn tab-active px-6 py-2 rounded-full text-sm font-semibold">Games</button>
+                <button id="tab-apps" class="tab-btn tab-inactive px-6 py-2 rounded-full text-sm font-semibold">Apps</button>
+                <button id="tab-favs" class="tab-btn tab-inactive px-6 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
+                    <span>Favorites</span>
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </button>
             </div>
 
-            <div class="relative group w-full max-w-xs hidden sm:block">
-                <input type="text" id="search-input" placeholder="Search..." 
-                       class="bg-black/40 text-sm text-gray-200 rounded-full pl-10 pr-4 py-2.5 w-full border border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all placeholder-gray-500">
-                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <input type="text" id="search-input" placeholder="Search..." 
+                           class="bg-[#111] text-sm text-gray-300 rounded-full pl-10 pr-4 py-2.5 w-32 md:w-64 border border-white/5 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all group-hover:bg-[#161616]">
+                    <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
             </div>
-        </div>
-        <div class="sm:hidden px-4 pb-3">
-            <input type="text" id="search-input-mobile" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-xl px-4 py-2.5 w-full border border-white/10 outline-none">
         </div>
     </header>
 
-    <main class="max-w-[1400px] mx-auto px-4 md:px-6 py-8">
-        
-        <div class="glass-header rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/5 bg-gradient-to-r from-indigo-900/20 to-purple-900/20">
+    <div class="md:hidden px-4 py-3 border-b border-white/5 bg-[#050505]">
+        <div class="flex bg-[#111] p-1 rounded-lg border border-white/5">
+            <button id="tab-games-mobile" class="flex-1 tab-btn tab-active py-2 rounded-md text-sm font-semibold">Games</button>
+            <button id="tab-apps-mobile" class="flex-1 tab-btn tab-inactive py-2 rounded-md text-sm font-semibold">Apps</button>
+            <button id="tab-favs-mobile" class="flex-1 tab-btn tab-inactive py-2 rounded-md text-sm font-semibold">★ Favs</button>
+        </div>
+    </div>
+
+    <main class="max-w-[1400px] mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div class="flex items-end justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-white mb-2">Welcome Back 👋</h1>
-                <p class="text-gray-400 text-sm">Browse <span id="game-count" class="text-indigo-400 font-bold">0</span> optimized games. Tap to play in a new tab.</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">Library</h1>
+                <p class="text-gray-500 text-sm">Browsing <span id="game-count" class="text-gray-300 font-semibold">0</span> items.</p>
             </div>
-            <div class="flex gap-3">
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                   class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition shadow-lg shadow-indigo-600/20">
-                   Request Game
-                </a>
-            </div>
+            
+            <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
+               class="text-xs font-semibold text-gray-400 hover:text-white transition-colors flex items-center gap-1 border border-white/10 px-3 py-1.5 rounded-full hover:bg-white/5">
+                <span>+ Request Game</span>
+            </a>
         </div>
 
-        <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
-            </div>
-
+        <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6"></div>
     </main>
-
-    <button onclick="window.location.href='https://member.foodvillage.ie/login'" 
-            class="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl shadow-red-600/40 transition-transform hover:scale-110 active:scale-95 font-black text-xs tracking-widest flex items-center gap-2 group">
-        <span class="hidden sm:inline">PANIC</span>
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-    </button>
 
     <script>
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
 
-        // --- FULL LIBRARY (ALL 77+ GAMES) ---
+        // --- FAVORITES SYSTEM ---
+        // Load favorites from local storage
+        let favorites = JSON.parse(localStorage.getItem('kivro_favs')) || [];
+
+        function toggleFav(e, id) {
+            e.stopPropagation(); // Stop click from opening game
+            
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id); // Remove
+            } else {
+                favorites.push(id); // Add
+            }
+            
+            // Save and re-render
+            localStorage.setItem('kivro_favs', JSON.stringify(favorites));
+            renderGrid();
+        }
+
+        // --- FULL LIBRARY ---
         const library = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://wowksies.github.io/kivro-Game-Library/2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/btd4/index.html" },
@@ -237,7 +261,7 @@
             { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html" },
             
             // APPS
-            { id: 1001, title: "My App", category: "App", gameUrl: "https://your-app-url.com", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon" }
+            { id: 1001, title: "My App", category: "App", gameUrl: "https://your-app-url.com", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App" }
         ];
 
         let currentTab = 'Games';
@@ -247,11 +271,27 @@
             const grid = document.getElementById('game-grid');
             grid.innerHTML = '';
             
-            const items = library.filter(item => {
-                const matchesTab = (currentTab === 'Games') ? item.category !== 'App' : item.category === 'App';
+            // Filter
+            let items = library.filter(item => {
                 const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-                return matchesTab && matchesSearch;
+                
+                if (currentTab === 'Favs') {
+                    return favorites.includes(item.id) && matchesSearch;
+                } else if (currentTab === 'Games') {
+                    return item.category !== 'App' && matchesSearch;
+                } else {
+                    return item.category === 'App' && matchesSearch;
+                }
             });
+
+            // Sort Favorites to Top (Only in Games tab)
+            if (currentTab === 'Games' && !searchTerm) {
+                items.sort((a, b) => {
+                    const aFav = favorites.includes(a.id);
+                    const bFav = favorites.includes(b.id);
+                    return (aFav === bFav) ? 0 : aFav ? -1 : 1;
+                });
+            }
 
             document.getElementById('game-count').innerText = items.length;
 
@@ -261,13 +301,18 @@
             }
 
             items.forEach(item => {
+                const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
                 card.className = "game-card group cursor-pointer";
                 
-                // --- CLICK ACTION: OPEN IN NEW TAB ---
-                card.onclick = () => window.open(item.gameUrl, '_blank');
+                const clickAction = (item.category === 'App') 
+                    ? `window.open('${item.gameUrl}', '_blank')`
+                    : `window.open('play.html?id=${item.id}', '_blank')`;
 
                 card.innerHTML = `
+                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="toggleFav(event, ${item.id})">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </button>
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400?text=Game'">
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
@@ -277,36 +322,53 @@
                         <p class="text-[10px] uppercase tracking-wide font-bold text-gray-500 group-hover:text-indigo-400 transition-colors">${item.category}</p>
                     </div>
                 `;
+                card.setAttribute('onclick', clickAction);
                 grid.appendChild(card);
             });
         }
 
-        // --- TABS & SEARCH LOGIC ---
+        // --- TABS & SEARCH ---
         const switchTab = (tab) => {
             currentTab = tab;
-            const btnG = document.getElementById('tab-games');
-            const btnA = document.getElementById('tab-apps');
-            if(tab === 'Games') {
-                btnG.classList.add('tab-active'); btnG.classList.remove('tab-inactive');
-                btnA.classList.remove('tab-active'); btnA.classList.add('tab-inactive');
-            } else {
-                btnA.classList.add('tab-active'); btnA.classList.remove('tab-inactive');
-                btnG.classList.remove('tab-active'); btnG.classList.add('tab-inactive');
-            }
+            
+            // Buttons
+            const buttons = {
+                'Games': [document.getElementById('tab-games'), document.getElementById('tab-games-mobile')],
+                'Apps': [document.getElementById('tab-apps'), document.getElementById('tab-apps-mobile')],
+                'Favs': [document.getElementById('tab-favs'), document.getElementById('tab-favs-mobile')]
+            };
+
+            // Reset all
+            Object.values(buttons).flat().forEach(btn => {
+                if(btn) {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                }
+            });
+
+            // Activate Selected
+            buttons[tab].forEach(btn => {
+                if(btn) {
+                    btn.classList.add('tab-active');
+                    btn.classList.remove('tab-inactive');
+                }
+            });
+
             renderGrid();
         };
 
         document.getElementById('search-input').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
         document.getElementById('search-input-mobile').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
         
-        document.getElementById('tab-games').addEventListener('click', () => switchTab('Games'));
-        document.getElementById('tab-apps').addEventListener('click', () => switchTab('Apps'));
+        ['tab-games', 'tab-apps', 'tab-favs', 'tab-games-mobile', 'tab-apps-mobile', 'tab-favs-mobile'].forEach(id => {
+            const btn = document.getElementById(id);
+            if(btn) {
+                const tabName = id.includes('games') ? 'Games' : id.includes('apps') ? 'Apps' : 'Favs';
+                btn.addEventListener('click', () => switchTab(tabName));
+            }
+        });
 
-        // --- INIT ---
-        window.onload = () => {
-            setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1200);
-            renderGrid();
-        };
+        window.onload = renderGrid;
     </script>
 </body>
 </html>
