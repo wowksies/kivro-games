@@ -135,18 +135,26 @@
             { id: 1001, url: "https://your-app-url.com" }
         ];
 
-        // LOAD GAME
+        // 1. Get Game ID from URL
         const params = new URLSearchParams(window.location.search);
         const gameId = parseInt(params.get('id'));
+
+        // 2. Find Game
         const game = library.find(g => g.id === gameId);
 
         if (game) {
             const iframe = document.getElementById('gameFrame');
             iframe.src = game.url;
-            iframe.onload = () => iframe.contentWindow.focus(); // Fix Controls
+            
+            // iPad Fix: Focus the iframe immediately so keyboard/touch works
+            iframe.onload = function() {
+                iframe.contentWindow.focus();
+            };
         } else {
-            window.location.href = 'index.html';
+            alert("Game not found!");
+            window.location.href = "index.html";
         }
     </script>
+
 </body>
 </html>
