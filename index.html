@@ -11,7 +11,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
@@ -21,40 +21,40 @@
             overflow-x: hidden;
         }
 
-        /* --- PLASMA BACKGROUND --- */
+        /* --- BACKGROUND --- */
         .plasma-background {
-            background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
+            background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.1) 0%, rgba(0, 0, 0, 0) 50%),
                         #0f0f1a;
             background-size: 200% 200%;
             animation: movePlasma 30s ease-in-out infinite alternate;
             min-height: 100vh;
-            position: fixed;
-            inset: 0;
-            z-index: -1;
+            position: fixed; inset: 0; z-index: -1;
         }
         @keyframes movePlasma { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 
-        /* --- GLASSMOPHISM --- */
+        /* --- GLASS HEADER (Z-INDEX 100 TO FIX OVERLAP) --- */
         .glass-header {
             background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 100; /* Higher than stars */
         }
 
-        /* --- ANIMATIONS --- */
-        .splash-logo { animation: breathe 3s ease-in-out infinite; }
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); }
+        /* --- NEW INTRO CARD --- */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.6) 0%, rgba(49, 46, 129, 0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
         }
-        .fade-out { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .hero-glow {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
 
         /* --- GAME CARDS --- */
         .game-card {
@@ -64,14 +64,10 @@
             overflow: hidden;
             transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
-            /* Fix mobile tap highlighting whole card */
             -webkit-touch-callout: none;
         }
-        .game-card:active {
-            transform: scale(0.98);
-        }
+        .game-card:active { transform: scale(0.97); }
         
-        /* Desktop Hover Only */
         @media (hover: hover) {
             .game-card:hover {
                 transform: translateY(-6px);
@@ -87,35 +83,25 @@
 
         .game-card img {
             transition: transform 0.5s ease;
-            filter: brightness(1.1) contrast(1.1); /* Brighter default */
+            filter: brightness(1.1) contrast(1.1);
         }
 
         /* --- SHINY TEXT --- */
         .shiny-text {
             background: linear-gradient(90deg, #818cf8 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #818cf8 100%);
             background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
+            color: transparent; -webkit-background-clip: text; background-clip: text;
             animation: shine 4s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- STAR BUTTON (Positioned Top Right) --- */
+        /* --- STAR BUTTON (Z-INDEX 20) --- */
         .star-btn {
-            position: absolute; 
-            top: 8px; 
-            right: 8px; /* Moved to Right to avoid overlap */
-            z-index: 50;
-            width: 36px; height: 36px; 
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.6); 
-            backdrop-filter: blur(4px);
-            border-radius: 50%; 
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #9ca3af; 
-            transition: all 0.2s; 
-            cursor: pointer;
+            position: absolute; top: 8px; right: 8px; z-index: 20; /* Lower than header */
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
+            color: #9ca3af; transition: all 0.2s; cursor: pointer;
         }
         .star-btn:active { transform: scale(0.9); }
         .star-active { color: #fbbf24 !important; background: rgba(255, 255, 255, 0.2); border-color: #fbbf24; }
@@ -125,6 +111,10 @@
         .tab-active { background: #6366f1; color: white; box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
         .tab-inactive { color: #9ca3af; }
         .tab-inactive:hover { color: white; background: rgba(255,255,255,0.05); }
+        
+        .splash-logo { animation: breathe 3s ease-in-out infinite; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); } }
+        .fade-out { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
     </style>
 </head>
 <body class="antialiased">
@@ -136,7 +126,7 @@
         <h1 class="text-5xl font-black shiny-text tracking-tight">Kivro Games</h1>
     </div>
 
-    <header class="sticky top-0 z-50 w-full glass-header">
+    <header class="sticky top-0 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
             
             <div class="flex items-center gap-3 min-w-max">
@@ -155,49 +145,47 @@
 
             <div class="relative group w-full max-w-xs hidden sm:block">
                 <input type="text" id="search-input" placeholder="Search..." 
-                       class="bg-black/40 text-sm text-gray-200 rounded-full pl-10 pr-4 py-2.5 w-full border border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all placeholder-gray-500">
+                       class="bg-black/40 text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full border border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all placeholder-gray-500">
                 <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden">✕</button>
             </div>
         </div>
         
-        <div class="sm:hidden px-4 pb-3">
-            <input type="text" id="search-input-mobile" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-xl px-4 py-2.5 w-full border border-white/10 outline-none">
+        <div class="sm:hidden px-4 pb-3 relative">
+            <input type="text" id="search-input-mobile" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full border border-white/10 outline-none">
+            <button id="clear-search-mobile" class="absolute right-7 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden text-sm font-bold p-2">✕</button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="md:col-span-2 glass-panel rounded-2xl p-6 flex items-center gap-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none"></div>
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-16 h-16 rounded-xl shadow-2xl z-10 hidden sm:block">
-                <div class="z-10">
-                    <h2 class="text-2xl font-bold text-white mb-2">Welcome Back</h2>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Tap any game to launch in a new tab for maximum speed. 
-                        Use the Star icon to save favorites.
-                    </p>
+        <div class="hero-card p-8 mb-10 text-center relative">
+            <div class="hero-glow"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl sm:text-4xl font-black text-white mb-2 tracking-tight">
+                    Welcome to <span class="text-indigo-400">Kivro</span>
+                </h1>
+                <p class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto mb-6">
+                    The premium destination for unblocked games. Optimized for speed and mobile performance.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-wider">
+                    <div class="px-4 py-2 bg-white/5 rounded-lg border border-white/5 text-gray-300">
+                        <span class="text-indigo-400">●</span> v5.5 Online
+                    </div>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
+                       class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white transition shadow-lg shadow-indigo-600/20">
+                       + Request Game
+                    </a>
                 </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-5 flex flex-col justify-center space-y-3">
-                <h3 class="text-indigo-400 font-bold text-xs uppercase tracking-widest">Updates</h3>
-                <ul class="text-sm text-gray-300 space-y-2">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Games open in new tabs</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>UI optimized for iPad</li>
-                </ul>
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                   class="mt-2 block text-center bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold py-2 rounded-lg transition-colors">
-                   + Request Game
-                </a>
             </div>
         </div>
 
-        <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
-            <h2 class="text-xl font-bold text-white flex items-center gap-2">
-                Library <span id="game-count" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+        <div class="flex items-center justify-between mb-6 pb-2 border-b border-white/5">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                All Games <span id="game-count" class="bg-white/10 text-gray-200 text-xs px-2 py-0.5 rounded-md">0</span>
             </h2>
-            <div class="text-xs text-gray-500 font-mono">v5.4 Mobile Optimized</div>
+            <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
         </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
@@ -213,12 +201,11 @@
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
 
-        // --- FAVORITES LOGIC (GLITCH FIXED) ---
+        // --- FAVORITES LOGIC ---
         let favorites = [];
         try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
 
         function toggleFav(e, id) {
-            // STOP propagation so we don't click the card
             e.stopPropagation(); 
             e.preventDefault();
 
@@ -229,13 +216,11 @@
             }
             try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
 
-            // Only re-render if we are actually viewing the "Favs" tab
-            // Otherwise just toggle the star color instantly to prevent jumping
+            // Update UI
             if (currentTab === 'Favs') {
                 renderGrid();
             } else {
-                const btn = e.currentTarget;
-                btn.classList.toggle('star-active');
+                e.currentTarget.classList.toggle('star-active');
             }
         }
 
@@ -341,7 +326,6 @@
                 }
             });
 
-            // Sort favorites to top if in 'Games' tab
             if(currentTab === 'Games' && !searchTerm) {
                 items.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
             }
@@ -358,14 +342,13 @@
                 const card = document.createElement('div');
                 card.className = "game-card group cursor-pointer";
                 
-                // CLICK ACTION: Apps -> URL | Games -> play.html
-                const action = `window.open('${item.gameUrl}', '_blank')`;
+                const action = (item.category === 'App') 
+                    ? `window.open('${item.gameUrl}', '_blank')`
+                    : `window.open('${item.gameUrl}', '_blank')`;
 
                 card.onclick = () => eval(action);
 
-                // --- UI LAYOUT FIXED FOR MOBILE ---
-                // Star: Top Right
-                // Category: Bottom Left (Inside Image)
+                // --- UI ADJUSTED FOR MOBILE & DESKTOP ---
                 card.innerHTML = `
                     <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="toggleFav(event, ${item.id})">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -386,7 +369,39 @@
             });
         }
 
-        // --- EVENTS ---
+        // --- SEARCH CLEAR & TABS ---
+        function toggleClearBtn(show, isMobile) {
+            const id = isMobile ? 'clear-search-mobile' : 'clear-search';
+            const btn = document.getElementById(id);
+            if(show) btn.classList.remove('hidden'); else btn.classList.add('hidden');
+        }
+
+        function clearSearch(isMobile) {
+            searchTerm = '';
+            if(isMobile) {
+                document.getElementById('search-input-mobile').value = '';
+                toggleClearBtn(false, true);
+            } else {
+                document.getElementById('search-input').value = '';
+                toggleClearBtn(false, false);
+            }
+            renderGrid();
+        }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            toggleClearBtn(searchTerm.length > 0, false);
+            renderGrid();
+        });
+        document.getElementById('search-input-mobile').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            toggleClearBtn(searchTerm.length > 0, true);
+            renderGrid();
+        });
+
+        document.getElementById('clear-search').onclick = () => clearSearch(false);
+        document.getElementById('clear-search-mobile').onclick = () => clearSearch(true);
+
         const switchTab = (tab) => {
             currentTab = tab;
             const buttons = ['tab-games','tab-apps','tab-favs','tab-games-mobile','tab-apps-mobile','tab-favs-mobile'];
@@ -394,19 +409,12 @@
             buttons.forEach(id => {
                 const el = document.getElementById(id);
                 if(!el) return;
-                
                 const isSelected = (id.includes(tab.toLowerCase()));
-                if(isSelected) {
-                    el.classList.add('tab-active'); el.classList.remove('tab-inactive');
-                } else {
-                    el.classList.remove('tab-active'); el.classList.add('tab-inactive');
-                }
+                if(isSelected) { el.classList.add('tab-active'); el.classList.remove('tab-inactive'); } 
+                else { el.classList.remove('tab-active'); el.classList.add('tab-inactive'); }
             });
             renderGrid();
         };
-
-        document.getElementById('search-input').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
-        document.getElementById('search-input-mobile').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
         
         ['tab-games','tab-apps','tab-favs'].forEach(t => {
             document.getElementById(t).onclick = () => switchTab(t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5));
@@ -414,7 +422,6 @@
             if(mob) mob.onclick = () => switchTab(t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5));
         });
 
-        // INIT
         window.onload = () => {
             setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1200);
             renderGrid();
