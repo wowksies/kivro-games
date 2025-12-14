@@ -23,23 +23,27 @@
             background-color: #1a1a2e;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
+            touch-action: pan-y; /* Fixes some iPad scrolling issues */
         }
 
-        /* --- PERFORMANCE & LAG FIX --- */
-        /* When a game is active, we kill all animations and hide background elements */
+        /* --- PERFORMANCE MODE (Active Game) --- */
         body.game-active {
             background: #000 !important;
             overflow: hidden !important;
         }
-        body.game-active .plasma-background {
-            animation: none !important;
+        
+        /* Kill all expensive render effects when game is on */
+        body.game-active .plasma-background,
+        body.game-active header,
+        body.game-active main,
+        body.game-active #install-trigger-btn {
             display: none !important;
         }
-        body.game-active header, 
-        body.game-active main, 
-        body.game-active #install-trigger-btn,
+
+        /* Ensure Panic Button stays visible above the game */
         body.game-active #panic-button {
-            display: none !important;
+            display: flex !important;
+            z-index: 99999 !important;
         }
 
         /* --- Plasma Background --- */
@@ -53,6 +57,7 @@
             position: fixed;
             inset: 0;
             z-index: -1;
+            will-change: transform; /* Hint to browser to use GPU */
         }
         @keyframes movePlasma {
             0% { background-position: 0% 0%; }
@@ -73,6 +78,7 @@
         /* --- UI Elements --- */
         .glass-panel {
             background: rgba(30, 41, 59, 0.7);
+            /* Backdrop filter is expensive on iPad, use carefully */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -135,7 +141,7 @@
             <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none"></div>
             <div class="flex-1 z-10">
                 <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Welcome Back! 👋</h2>
-                <p class="text-gray-400 leading-relaxed mb-6">Dive into our unblocked library. Optimized for speed.<br><span class="text-xs text-indigo-400 font-semibold bg-indigo-500/10 px-2 py-1 rounded mt-2 inline-block">v3.0 - Performance Mode Active</span></p>
+                <p class="text-gray-400 leading-relaxed mb-6">Dive into our unblocked library. Optimized for speed.<br><span class="text-xs text-indigo-400 font-semibold bg-indigo-500/10 px-2 py-1 rounded mt-2 inline-block">v4.0 - iPad Turbo Mode</span></p>
                 <div class="flex flex-wrap gap-3">
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition shadow-lg shadow-indigo-500/30 flex items-center gap-2"><span>✨ Suggest Game</span></a>
                 </div>
@@ -144,7 +150,7 @@
                 <h3 class="text-indigo-300 font-bold text-sm uppercase tracking-wider mb-3">Latest Updates</h3>
                 <ul class="space-y-3 text-sm text-gray-300">
                     <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">●</span><span>Fixed Game Lag (Turbo Mode)</span></li>
-                    <li class="flex items-start gap-2"><span class="text-blue-400 mt-0.5">●</span><span>Fixed Polytrack Controls</span></li>
+                    <li class="flex items-start gap-2"><span class="text-blue-400 mt-0.5">●</span><span>Controls Fixed (Polytrack, etc.)</span></li>
                 </ul>
             </div>
         </section>
@@ -161,7 +167,7 @@
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
     </button>
 
-    <button id="panic-button" class="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl shadow-red-600/40 transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2 font-bold group">
+    <button id="panic-button" class="fixed bottom-6 right-6 z-[99999] bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl shadow-red-600/40 transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2 font-bold group">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         <span class="hidden md:inline">PANIC</span>
     </button>
@@ -186,21 +192,28 @@
 
     <div id="game-modal" class="fixed inset-0 bg-black z-[6000] hidden flex flex-col">
         <div class="h-10 bg-gray-900 flex items-center justify-between px-4 border-b border-gray-800">
-            <span class="text-gray-400 text-xs font-mono">Game Active (Background Paused)</span>
+            <span class="text-gray-400 text-xs font-mono">⚡ Turbo Mode Enabled</span>
             <div class="flex gap-3">
                  <button onclick="window.open(document.getElementById('game-iframe').src, '_blank')" class="text-gray-400 hover:text-white text-xs font-bold transition">OPEN IN TAB ↗</button>
                  <button id="close-game-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded text-xs font-bold transition">CLOSE</button>
             </div>
         </div>
         <div class="flex-1 relative bg-black">
-            <div id="loading-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f0f1a] z-10">
+            <div id="loading-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f0f1a] z-10 pointer-events-none">
                 <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
                 <p class="text-gray-400 text-sm animate-pulse">Launching...</p>
             </div>
+            
+            <div id="click-to-focus" class="hidden absolute inset-0 bg-black/60 z-20 flex items-center justify-center cursor-pointer" onclick="this.style.display='none'; document.getElementById('game-iframe').focus();">
+                <div class="bg-indigo-600 text-white px-6 py-3 rounded-full font-bold shadow-2xl animate-bounce">
+                    👆 TAP TO START
+                </div>
+            </div>
+
             <iframe id="game-iframe" class="w-full h-full border-0" 
+                    tabindex="0"
                     allowfullscreen 
-                    allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope; payment; midi; sync-xhr; camera; microphone; keyboard-lock; pointer-lock"
-                    sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation">
+                    allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope; payment; midi; sync-xhr; camera; microphone; keyboard-lock; pointer-lock">
             </iframe>
         </div>
     </div>
@@ -229,7 +242,7 @@
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
 
         // COMPLETE GAME LIST
-        const library = [
+        const initialGames = [
             { id: 5, title: "2048", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/2048/index.html", imgUrl: THUMB_BASE + "2048.png" },
             { id: 7, title: "BTD4", category: "Tower Defense", gameUrl: "https://wowksies.github.io/kivro-Game-Library/btd4/index.html", imgUrl: THUMB_BASE + "BTD4.jpg" },
             { id: 6, title: "Bitlife", category: "Simulation", gameUrl: "https://wowksies.github.io/kivro-Game-Library/bitlife/index.html", imgUrl: THUMB_BASE + "Bitlife.webp" },
@@ -343,7 +356,7 @@
             const grid = document.getElementById('game-grid');
             grid.innerHTML = '';
             const term = searchTerm.toLowerCase();
-            const items = library.filter(item => {
+            const items = initialGames.filter(item => {
                 const matchesTab = (currentTab === 'Games') ? item.category !== 'App' : item.category === 'App';
                 const matchesSearch = item.title.toLowerCase().includes(term);
                 return matchesTab && matchesSearch;
@@ -379,18 +392,21 @@
             const modal = document.getElementById('game-modal');
             const iframe = document.getElementById('game-iframe');
             const loader = document.getElementById('loading-overlay');
+            const focusBtn = document.getElementById('click-to-focus');
             
             // ACTIVATE PERFORMANCE MODE
             document.body.classList.add('game-active');
 
             modal.classList.remove('hidden');
             loader.classList.remove('hidden');
+            focusBtn.classList.add('hidden'); // Reset focus btn
             
             setTimeout(() => {
                 iframe.src = url;
                 iframe.onload = () => {
                     loader.classList.add('hidden');
-                    iframe.contentWindow.focus();
+                    // Show "Tap to Focus" overlay for better iPad compatibility
+                    focusBtn.classList.remove('hidden');
                 };
             }, 100);
         };
