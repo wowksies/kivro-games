@@ -4,146 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kivro Games</title>
+    <meta name="description" content="Play free unblocked games on any device.">
+    
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { background-color: #1a1a2e; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f1a;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        /* --- AESTHETICS: Plasma Background --- */
         .plasma-background {
             background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%), #0f0f1a;
-            background-size: 200% 200%; animation: movePlasma 30s ease-in-out infinite alternate;
-            min-height: 100vh; position: fixed; inset: 0; z-index: -1;
+                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
+                        #0f0f1a;
+            background-size: 200% 200%;
+            animation: movePlasma 30s ease-in-out infinite alternate;
+            min-height: 100vh;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
         }
         @keyframes movePlasma { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+
+        /* --- AESTHETICS: Glass Panels & Text --- */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px); /* For Safari */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
         .shiny-text {
-            background: linear-gradient(90deg, #818cf8 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #818cf8 100%);
-            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shine 4s linear infinite;
+            background: linear-gradient(90deg, #a78bfa 0%, #f472b6 50%, #a78bfa 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 5s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .splash-logo { animation: breathe 3s ease-in-out infinite; }
-        @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); } }
-        .fade-out { animation: fadeOut 0.6s ease forwards; }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+        /* --- Card Hover Effects --- */
+        .game-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .game-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.3);
+            border-color: rgba(167, 139, 250, 0.5);
+        }
     </style>
 </head>
-<body class="text-gray-100 antialiased selection:bg-indigo-500 selection:text-white relative">
+<body class="text-gray-100 antialiased selection:bg-purple-500 selection:text-white">
+
     <div class="plasma-background"></div>
 
-    <div id="splash" class="fixed inset-0 z-[5000] flex flex-col items-center justify-center bg-[#0f0f1a]">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-32 h-32 splash-logo mb-6">
-        <h1 class="text-4xl md:text-5xl font-extrabold shiny-text">Kivro Games</h1>
-    </div>
-
-    <header class="sticky top-0 z-40 w-full glass-panel border-b border-white/5 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+    <header class="sticky top-0 z-50 w-full glass-panel shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            
             <div class="flex items-center space-x-3">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-lg">
-                <h1 class="text-2xl font-bold text-white"><span class="shiny-text">Kivro</span></h1>
+                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" alt="Logo" class="w-10 h-10 rounded-xl shadow-lg ring-2 ring-purple-500/20">
+                <h1 class="text-3xl font-black tracking-tighter text-white">
+                    <span class="shiny-text">Kivro</span>
+                </h1>
             </div>
-            <div class="flex flex-col items-center">
-                <div class="flex bg-gray-900/50 p-1 rounded-full border border-white/10 mb-1">
-                    <button id="tab-games" class="px-5 py-1.5 rounded-full text-sm font-bold bg-indigo-600 text-white shadow-md transition-all">🎮 Games</button>
-                    <button id="tab-apps" class="px-5 py-1.5 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-all">📱 Apps</button>
-                </div>
+
+            <div class="flex bg-gray-900/60 p-1.5 rounded-full border border-white/10 backdrop-blur-md">
+                <button id="tab-games" class="px-6 py-2 rounded-full text-sm font-bold bg-indigo-600 text-white shadow-lg transition-all transform hover:scale-105">🎮 Games</button>
+                <button id="tab-apps" class="px-6 py-2 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-all">📱 Apps</button>
             </div>
-            <div class="relative w-full md:w-64">
-                <input type="text" id="search-input" placeholder="Search..." class="w-full bg-gray-900/50 text-white text-sm rounded-xl py-2.5 px-4 border border-white/10 focus:ring-2 focus:ring-indigo-500 outline-none">
+
+            <div class="relative w-full md:w-72 group">
+                <input type="text" id="search-input" placeholder="Search library..." 
+                       class="w-full bg-gray-900/60 text-gray-100 text-sm rounded-2xl py-3 pl-11 pr-4 border border-white/10 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50 outline-none transition-all placeholder-gray-500 group-hover:bg-gray-900/80">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-hover:text-purple-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-8">
-        <div id="game-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-    </main>
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-200 flex items-center gap-2">
+                All Games <span id="game-count" class="bg-purple-600/20 text-purple-300 text-xs px-2 py-1 rounded-md border border-purple-500/20">0</span>
+            </h2>
+        </div>
 
-    <button onclick="window.location.href='https://member.foodvillage.ie/login'" class="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-105 font-bold">PANIC</button>
+        <div id="game-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            </div>
+    </main>
 
     <script>
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         
-        // --- DATA ---
         const library = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg" },
             { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp" },
-            { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg" },
-            { id: 9, title: "Cookie Clicker", category: "Idle Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg" },
-            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg" },
+            { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp" },
             { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg" },
-            { id: 3, title: "Geo Dash", category: "Rhythm", imgUrl: THUMB_BASE + "Geometry-Dash.webp" },
-            { id: 15, title: "Google Snake", category: "Arcade", imgUrl: THUMB_BASE + "Google-Snake.jpg" },
-            { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg" },
-            { id: 12, title: "PacMan", category: "Arcade", imgUrl: THUMB_BASE + "Pacman.jpg" },
-            { id: 1, title: "Retro Ball", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp" },
-            { id: 14, title: "Slope", category: "Endless Runner", imgUrl: THUMB_BASE + "slope.png" },
-            { id: 16, title: "Snow Battle", category: "Arcade", imgUrl: THUMB_BASE + "Snow-Battle.png" },
-            { id: 17, title: "Stack", category: "Puzzle", imgUrl: THUMB_BASE + "Stack.webp" },
-            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg" },
             { id: 18, title: "Subway Surfers", category: "Endless Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg" },
-            { id: 19, title: "Baldi's Basics", category: "Horror", imgUrl: THUMB_BASE + "BaldisBasics.webp" },
-            { id: 20, title: "Dino Runner", category: "Endless Runner", imgUrl: THUMB_BASE + "Dino.jpg" },
             { id: 21, title: "Stickman Hook", category: "Arcade", imgUrl: THUMB_BASE + "stickman-hook.png" },
             { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg" },
-            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png" },
-            { id: 25, title: "Hole.io", category: "Arcade", imgUrl: THUMB_BASE + "Hole.png" },
-            { id: 26, title: "Sausage Flip", category: "Arcade", imgUrl: THUMB_BASE + "sausage-flip.png" },
             { id: 27, title: "YoHoHo.io", category: "Battle Royale", imgUrl: THUMB_BASE + "Yohoho.jpg" },
-            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg" },
-            { id: 29, title: "Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png" },
             { id: 30, title: "Paper.io", category: "Strategy", imgUrl: THUMB_BASE + "paper-io.png" },
-            { id: 31, title: "Hill Climb", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png" },
-            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png" },
             { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg" },
-            { id: 36, title: "Gun Spin", category: "Arcade", imgUrl: THUMB_BASE + "gunspin.png" },
-            { id: 37, title: "SandBoxel", category: "Simulation", imgUrl: THUMB_BASE + "Sandboxel.png" },
-            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png" },
-            { id: 39, title: "Stacktris", category: "Arcade", imgUrl: THUMB_BASE + "stacktris.jpeg" },
-            { id: 40, title: "Tomb Of The Mask", category: "Arcade", imgUrl: THUMB_BASE + "TofM.jpg" },
-            { id: 41, title: "Paper Plane", category: "Arcade", imgUrl: THUMB_BASE + "Planef.jpg" },
-            { id: 42, title: "Curve Rush", category: "Arcade", imgUrl: THUMB_BASE + "curve-rush.webp" },
-            { id: 43, title: "Burrito Bison", category: "Action", imgUrl: THUMB_BASE + "Bb.png" },
-            { id: 43, title: "Golf Orbit", category: "Sports", imgUrl: THUMB_BASE + "golf-orbit.png" },
-            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg" },
-            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp" },
-            { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp" },
-            { id: 47, title: "Gobble", category: "Arcade", imgUrl: THUMB_BASE + "Gobble.png" },
-            { id: 48, title: "Swingo", category: "Platformer", imgUrl: THUMB_BASE + "swingo.jpg" },
-            { id: 49, title: "Spiral Roll", category: "Arcade", imgUrl: THUMB_BASE + "Spiralr.png" },
-            { id: 50, title: "Wordle", category: "Puzzle", imgUrl: THUMB_BASE + "IMG_0829.jpeg" },
-            { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg" },
-            { id: 53, title: "Game Inside Game", category: "Arcade", imgUrl: THUMB_BASE + "GameInsideGame.png" },
-            { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png" },
-            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg" },
-            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg" },
-            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png" },
-            { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png" },
-            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg" },
-            { id: 60, title: "Knife Hit", category: "Arcade", imgUrl: THUMB_BASE + "Knifehit.png" },
-            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png" },
-            { id: 62, title: "Bridge race", category: "Casual", imgUrl: THUMB_BASE + "IMG_0870.jpeg" },
-            { id: 63, title: "Papas Pizzaria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp" },
-            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png" },
-            { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp" },
-            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg" },
-            { id: 67, title: "Hide and Seek", category: "Arcade", imgUrl: THUMB_BASE + "hideandseek.webp" },
-            { id: 68, title: "Slice it All", category: "Arcade", imgUrl: THUMB_BASE + "sliceitall.png" },
-            { id: 69, title: "Bus Out", category: "Simulation", imgUrl: THUMB_BASE + "busout.webp" },
-            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp" },
-            { id: 72, title: "Rooftop Snipers 2", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp" },
-            { id: 72, title: "Bounce Masters", category: "Arcade", imgUrl: THUMB_BASE + "bouncemasters.webp" },
-            { id: 73, title: "Blumgi Ball", category: "Arcade", imgUrl: THUMB_BASE + "blumgiball.webp" },
-            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png" },
-            { id: 74, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg" },
-            { id: 75, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg" },
+            { id: 71, title: "Hills Of Steel", category: "Action", imgUrl: THUMB_BASE + "hills%20of%20steel.webp" },
             { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg" },
-            
-            // APPS (Will open directly)
-            { id: 1001, title: "My App", category: "App", gameUrl: "https://your-app-url.com", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon" }
+            { id: 1001, title: "My App", category: "App", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon", gameUrl: "https://google.com" } // Example App
         ];
 
-        // --- RENDER LOGIC ---
         let currentTab = 'Games';
         let searchTerm = '';
 
@@ -157,29 +136,28 @@
                 return matchesTab && matchesSearch;
             });
 
-            if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">No results found.</div>`;
-                return;
-            }
+            document.getElementById('game-count').textContent = items.length;
 
             items.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "group bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-white/5";
+                card.className = "game-card group relative bg-gray-800 rounded-2xl overflow-hidden cursor-pointer border border-white/5 shadow-xl";
                 
-                // CLICK LOGIC:
-                // If it is an APP, go directly to URL
-                // If it is a GAME, go to play.html?id=...
+                // IMPORTANT: THIS LINKS TO THE NEW play.html FILE
                 const clickAction = (item.category === 'App') 
                     ? `window.location.href='${item.gameUrl}'`
                     : `window.location.href='play.html?id=${item.id}'`;
 
                 card.innerHTML = `
-                    <div class="h-36 overflow-hidden relative">
-                        <img src="${item.imgUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur">${item.category}</span>
+                    <div class="h-40 overflow-hidden relative">
+                        <img src="${item.imgUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60"></div>
+                        <span class="absolute top-2 right-2 text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/10">
+                            ${item.category}
+                        </span>
                     </div>
-                    <div class="p-4 bg-gray-800/90 backdrop-blur-sm">
-                        <h3 class="font-bold text-white truncate">${item.title}</h3>
+                    <div class="p-4 relative">
+                        <h3 class="font-bold text-gray-100 truncate text-lg">${item.title}</h3>
+                        <p class="text-xs text-indigo-400 font-medium mt-1 uppercase tracking-wider group-hover:text-indigo-300">Tap to Play</p>
                     </div>
                 `;
                 card.setAttribute('onclick', clickAction);
@@ -187,27 +165,20 @@
             });
         }
 
-        // --- LISTENERS ---
+        // Listeners
         document.getElementById('search-input').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
-        
         document.getElementById('tab-games').addEventListener('click', () => { 
-            currentTab = 'Games'; 
-            document.getElementById('tab-games').classList.add('bg-indigo-600', 'text-white'); 
-            document.getElementById('tab-apps').classList.remove('bg-indigo-600', 'text-white'); 
-            renderGrid(); 
+            currentTab = 'Games'; renderGrid();
+            document.getElementById('tab-games').className = "px-6 py-2 rounded-full text-sm font-bold bg-indigo-600 text-white shadow-lg transition-all transform hover:scale-105";
+            document.getElementById('tab-apps').className = "px-6 py-2 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-all";
         });
         document.getElementById('tab-apps').addEventListener('click', () => { 
-            currentTab = 'Apps'; 
-            document.getElementById('tab-apps').classList.add('bg-indigo-600', 'text-white'); 
-            document.getElementById('tab-games').classList.remove('bg-indigo-600', 'text-white'); 
-            renderGrid(); 
+            currentTab = 'Apps'; renderGrid();
+            document.getElementById('tab-apps').className = "px-6 py-2 rounded-full text-sm font-bold bg-indigo-600 text-white shadow-lg transition-all transform hover:scale-105";
+            document.getElementById('tab-games').className = "px-6 py-2 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-all";
         });
 
-        // INIT
-        window.onload = () => {
-            setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1000);
-            renderGrid();
-        };
+        window.onload = renderGrid;
     </script>
 </body>
 </html>
