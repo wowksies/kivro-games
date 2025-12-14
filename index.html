@@ -3,394 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kivro Games – Play Free Unblocked Games Online</title>
-    <meta name="description" content="Kivro Games is your place to play free, fun, and unblocked browser games. Works on school iPads, desktops, and mobile devices.">
-    <meta name="robots" content="index, follow">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Kivro Games">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
-
+    <title>Kivro Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a2e;
-            -webkit-tap-highlight-color: transparent;
-            overflow-x: hidden;
-            touch-action: pan-y;
-        }
-
-        /* --- Plasma Background --- */
+        body { background-color: #1a1a2e; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .plasma-background {
             background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        #0f0f1a;
-            background-size: 200% 200%;
-            animation: movePlasma 30s ease-in-out infinite alternate;
-            min-height: 100vh;
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            will-change: transform;
+                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%), #0f0f1a;
+            background-size: 200% 200%; animation: movePlasma 30s ease-in-out infinite alternate;
+            min-height: 100vh; position: fixed; inset: 0; z-index: -1;
         }
-        @keyframes movePlasma {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-        }
-
-        /* --- Shiny Text --- */
+        @keyframes movePlasma { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
         .shiny-text {
             background: linear-gradient(90deg, #818cf8 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #818cf8 100%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 4s linear infinite;
+            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shine 4s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
-
-        /* --- UI Elements --- */
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* --- Animations --- */
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); }
-        }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .splash-logo { animation: breathe 3s ease-in-out infinite; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(192, 132, 252, 0.8)); } }
         .fade-out { animation: fadeOut 0.6s ease forwards; }
         @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-
-        /* --- Custom Scrollbar --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1a1a2e; }
-        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
     </style>
 </head>
 <body class="text-gray-100 antialiased selection:bg-indigo-500 selection:text-white relative">
-
     <div class="plasma-background"></div>
 
     <div id="splash" class="fixed inset-0 z-[5000] flex flex-col items-center justify-center bg-[#0f0f1a]">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" alt="Logo" class="w-32 h-32 splash-logo mb-6">
-        <h1 class="text-4xl md:text-5xl font-extrabold shiny-text tracking-tight">Kivro Games</h1>
-        <p class="mt-4 text-gray-500 text-sm font-mono animate-pulse">Loading Library...</p>
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-32 h-32 splash-logo mb-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold shiny-text">Kivro Games</h1>
     </div>
 
     <header class="sticky top-0 z-40 w-full glass-panel border-b border-white/5 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-3">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center self-start md:self-auto space-x-3">
-                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" alt="Logo" class="w-10 h-10 rounded-lg shadow-lg">
-                    <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
-                        <span class="shiny-text">Kivro</span>
-                    </h1>
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-lg">
+                <h1 class="text-2xl font-bold text-white"><span class="shiny-text">Kivro</span></h1>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="flex bg-gray-900/50 p-1 rounded-full border border-white/10 mb-1">
+                    <button id="tab-games" class="px-5 py-1.5 rounded-full text-sm font-bold bg-indigo-600 text-white shadow-md transition-all">🎮 Games</button>
+                    <button id="tab-apps" class="px-5 py-1.5 rounded-full text-sm font-bold text-gray-400 hover:text-white transition-all">📱 Apps</button>
                 </div>
-
-                <div class="flex flex-col items-center w-full md:w-auto order-3 md:order-2">
-                    <div class="flex bg-gray-900/50 p-1 rounded-full border border-white/10 mb-1">
-                        <button id="tab-games" class="px-5 py-1.5 rounded-full text-sm font-bold transition-all bg-indigo-600 text-white shadow-md">🎮 Games</button>
-                        <button id="tab-apps" class="px-5 py-1.5 rounded-full text-sm font-bold transition-all text-gray-400 hover:text-white">📱 Apps</button>
-                    </div>
-                    <div class="text-[10px] text-gray-500 font-mono">ID: <span id="user-id-display" class="text-indigo-400">...</span></div>
-                </div>
-
-                <div class="relative w-full md:w-64 lg:w-80 order-2 md:order-3">
-                    <input type="text" id="search-input" placeholder="Search..." class="w-full bg-gray-900/50 text-gray-200 text-sm rounded-xl py-2.5 pl-10 pr-10 border border-white/10 focus:ring-2 focus:ring-indigo-500 outline-none transition-all placeholder-gray-500">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white hidden">✕</button>
-                </div>
+            </div>
+            <div class="relative w-full md:w-64">
+                <input type="text" id="search-input" placeholder="Search..." class="w-full bg-gray-900/50 text-white text-sm rounded-xl py-2.5 px-4 border border-white/10 focus:ring-2 focus:ring-indigo-500 outline-none">
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-6 md:py-8 space-y-8">
-        <section class="glass-panel rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none"></div>
-            <div class="flex-1 z-10">
-                <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">Welcome Back! 👋</h2>
-                <p class="text-gray-400 leading-relaxed mb-6">Dive into our unblocked library. Games open in new tabs for max speed.<br><span class="text-xs text-indigo-400 font-semibold bg-indigo-500/10 px-2 py-1 rounded mt-2 inline-block">v5.0 - Direct Launch Mode</span></p>
-                <div class="flex flex-wrap gap-3">
-                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition shadow-lg shadow-indigo-500/30 flex items-center gap-2"><span>✨ Suggest Game</span></a>
-                </div>
-            </div>
-            <div class="w-full md:w-80 bg-gray-900/40 rounded-xl p-5 border border-white/5 z-10">
-                <h3 class="text-indigo-300 font-bold text-sm uppercase tracking-wider mb-3">Latest Updates</h3>
-                <ul class="space-y-3 text-sm text-gray-300">
-                    <li class="flex items-start gap-2"><span class="text-green-400 mt-0.5">●</span><span>Switched to Direct Launch (Fixes Lag/Controls)</span></li>
-                </ul>
-            </div>
-        </section>
-
-        <div>
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-bold text-white flex items-center gap-2">Library <span id="game-count" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">0</span></h3>
-            </div>
-            <div id="game-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6"></div>
-        </div>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div id="game-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
     </main>
 
-    <button id="install-trigger-btn" class="fixed top-24 left-4 z-30 bg-gray-800/80 backdrop-blur text-indigo-400 p-3 rounded-full shadow-xl border border-white/10 hover:bg-indigo-600 hover:text-white transition-all transform hover:scale-110 group" aria-label="Install">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-    </button>
+    <button onclick="window.location.href='https://member.foodvillage.ie/login'" class="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-105 font-bold">PANIC</button>
 
-    <button id="panic-button" class="fixed bottom-6 right-6 z-[99999] bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl shadow-red-600/40 transition-transform transform hover:scale-105 active:scale-95 flex items-center gap-2 font-bold group">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <span class="hidden md:inline">PANIC</span>
-    </button>
-
-    <div id="install-popup" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999] hidden flex items-center justify-center p-4">
-        <div class="bg-[#1a1632] w-full max-w-2xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden relative p-6 md:p-8 text-center">
-            <button id="close-popup" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
-            <h2 class="text-2xl font-bold text-white mb-2">Install Kivro Games</h2>
-            <p class="text-gray-400 mb-6 text-sm">Add to Home Screen for fullscreen play.</p>
-            <div class="flex justify-center gap-4 mb-8">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon w-14 h-14 rounded-xl cursor-pointer border-2 border-transparent hover:border-indigo-500 opacity-70 hover:opacity-100">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon w-14 h-14 rounded-xl cursor-pointer border-2 border-transparent hover:border-indigo-500 opacity-70 hover:opacity-100">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="select-icon w-14 h-14 rounded-xl cursor-pointer border-2 border-indigo-500 opacity-100">
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-                <div class="bg-white/5 p-4 rounded-xl border border-white/5"><span class="text-indigo-400 font-bold text-xl block mb-1">1</span><p class="text-xs text-gray-300">Tap <strong class="text-white">Share</strong> icon.</p></div>
-                <div class="bg-white/5 p-4 rounded-xl border border-white/5"><span class="text-indigo-400 font-bold text-xl block mb-1">2</span><p class="text-xs text-gray-300">Tap <strong class="text-white">Add to Home Screen</strong>.</p></div>
-                <div class="bg-white/5 p-4 rounded-xl border border-white/5"><span class="text-indigo-400 font-bold text-xl block mb-1">3</span><p class="text-xs text-gray-300">Tap <strong class="text-white">Add</strong>.</p></div>
-            </div>
-        </div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDsZADq5g-Pi8W4cVaGIY32PYTNODSl_CY",
-            authDomain: "kivro-counter.firebaseapp.com",
-            projectId: "kivro-counter",
-            storageBucket: "kivro-counter.firebasestorage.app",
-            messagingSenderId: "1013388311382",
-            appId: "1:1013388311382:web:37e78bbd5a4279e20f74f7",
-            measurementId: "G-HJRJ0CH6ZT"
-        };
-
-        let db, auth;
-        let userId = 'Guest';
-        let currentTab = 'Games';
-        let searchTerm = '';
-        const PANIC_URL = "https://member.foodvillage.ie/login";
-        const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
+    <script>
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
-
-        // COMPLETE GAME LIST
-        const initialGames = [
-            { id: 5, title: "2048", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/2048/index.html", imgUrl: THUMB_BASE + "2048.png" },
-            { id: 7, title: "BTD4", category: "Tower Defense", gameUrl: "https://wowksies.github.io/kivro-Game-Library/btd4/index.html", imgUrl: THUMB_BASE + "BTD4.jpg" },
-            { id: 6, title: "Bitlife", category: "Simulation", gameUrl: "https://wowksies.github.io/kivro-Game-Library/bitlife/index.html", imgUrl: THUMB_BASE + "Bitlife.webp" },
-            { id: 8, title: "Chess", category: "Strategy", gameUrl: GITHUB_BASE + "chess/index.html", imgUrl: THUMB_BASE + "chess.jpg" },
-            { id: 9, title: "Cookie Clicker", category: "Idle Clicker", gameUrl: GITHUB_BASE + "cookieclicker/index.html", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg" },
-            { id: 10, title: "Drive Mad", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/drivemad/index.html", imgUrl: THUMB_BASE + "Drive-Mad.jpg" },
-            { id: 2, title: "Flappy Bird", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/flappybird/index.html", imgUrl: THUMB_BASE + "Flappy-Bird.jpg" },
-            { id: 3, title: "Geo Dash", category: "Rhythm", gameUrl: "https://geometryite.vercel.app/", imgUrl: THUMB_BASE + "Geometry-Dash.webp" },
-            { id: 15, title: "Google Snake", category: "Arcade", gameUrl: "https://raw.githack.com/KAYAZzz/kivro-library/main/Snake/index.html", imgUrl: THUMB_BASE + "Google-Snake.jpg" },
-            { id: 11, title: "Monkey Mart", category: "Simulation", gameUrl: "https://wowksies.github.io/kivro-Game-Library/monkeymart/index.html", imgUrl: THUMB_BASE + "Monkey-Mart.jpg" },
-            { id: 12, title: "PacMan", category: "Arcade", gameUrl: GITHUB_BASE + "pacman/index.html", imgUrl: THUMB_BASE + "Pacman.jpg" },
-            { id: 1, title: "Retro Ball", category: "Sports", gameUrl: GITHUB_BASE + "retrobowl/index.html", imgUrl: THUMB_BASE + "Retro-Ball.webp" },
-            { id: 14, title: "Slope", category: "Endless Runner", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Slope/index.html", imgUrl: THUMB_BASE + "slope.png" },
-            { id: 16, title: "Snow Battle", category: "Arcade", gameUrl: GITHUB_BASE + "snowbattle/index.html", imgUrl: THUMB_BASE + "Snow-Battle.png" },
-            { id: 17, title: "Stack", category: "Puzzle", gameUrl: GITHUB_BASE + "stack/index.html", imgUrl: THUMB_BASE + "Stack.webp" },
-            { id: 4, title: "Drift Boss", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DriftBoss/index.html", imgUrl: THUMB_BASE + "Drift1.jpg" },
-            { id: 18, title: "Subway Surfers", category: "Endless Runner", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html", imgUrl: THUMB_BASE + "Subway-Surfers.jpg" },
-            { id: 19, title: "Baldi's Basics", category: "Horror", gameUrl: GITHUB_BASE + "baldisbasics/index.html", imgUrl: THUMB_BASE + "BaldisBasics.webp" },
-            { id: 20, title: "Dino Runner", category: "Endless Runner", gameUrl: "https://wowksies.github.io/kivro-Game-Library/chromedino/index.html", imgUrl: THUMB_BASE + "Dino.jpg" },
-            { id: 21, title: "Stickman Hook", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/StickmanHook/index.html", imgUrl: THUMB_BASE + "stickman-hook.png" },
-            { id: 23, title: "Block Blast", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blockblast/index.html", imgUrl: THUMB_BASE + "block-blast.jpeg" },
-            { id: 24, title: "Merge Rot", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/MergeRot/index.html", imgUrl: THUMB_BASE + "merge-rot.png" },
-            { id: 25, title: "Hole.io", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/HoleIO/index.html", imgUrl: THUMB_BASE + "Hole.png" },
-            { id: 26, title: "Sausage Flip", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/sausage-flip/index.html", imgUrl: THUMB_BASE + "sausage-flip.png" },
-            { id: 27, title: "YoHoHo.io", category: "Battle Royale", gameUrl: "https://wowksies.github.io/yohohoio/index.html", imgUrl: THUMB_BASE + "Yohoho.jpg" },
-            { id: 28, title: "Mr.Bullet", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/MrBullet/index.html", imgUrl: THUMB_BASE + "Bullet.jpg" },
-            { id: 29, title: "Impossible Quiz", category: "Puzzle", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html", imgUrl: THUMB_BASE + "Impossible.png" },
-            { id: 30, title: "Paper.io", category: "Strategy", gameUrl: GITHUB_BASE + "paperio/index.html", imgUrl: THUMB_BASE + "paper-io.png" },
-            { id: 31, title: "Hill Climb", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/HillClimbRacing/index.html", imgUrl: THUMB_BASE + "HillClimb.png" },
-            { id: 34, title: "Bottle Flip", category: "Skill", gameUrl: "https://wowksies.github.io/kivro-Game-Library/BottleFlip2/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bottleflip.png" },
-            { id: 35, title: "Penalty Kicks", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/PenaltyKicks/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/penalty.jpg" },
-            { id: 36, title: "Gun Spin", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gunspin/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/gunspin.png" },
-            { id: 37, title: "SandBoxel", category: "Simulation", gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Sandboxel.png" },
-            { id: 38, title: "Ballistic", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ballistic/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ballistic.png" },
-            { id: 39, title: "Stacktris", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/stacktris/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stacktris.jpeg" },
-            { id: 40, title: "Tomb Of The Mask", category: "Arcade", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/TofM.jpg" },
-            { id: 41, title: "Paper Plane", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/PaperFlight1/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Planef.jpg" },
-            { id: 42, title: "Curve Rush", category: "Arcade", gameUrl: "https://curverush.com/curve-rush.embed", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/curve-rush.webp" },
-            { id: 43, title: "Burrito Bison", category: "Action", gameUrl: "https://burrito-bison-cnm.vercel.app/", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Bb.png" },
-            { id: 43, title: "Golf Orbit", category: "Sports", gameUrl: "https://golf-orbit-k8ue.vercel.app/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/golf-orbit.png" },
-            { id: 44, title: "Ragdoll Archers", category: "Action", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ragdoll-Archers/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ragdoll-archers.jpg" },
-            { id: 45, title: "Helix Jump", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/helixjump/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/HelixJ.webp" },
-            { id: 46, title: "PolyTrack", category: "Racing", gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Polyt.webp" },
-            { id: 47, title: "Gobble", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gobble/gobble/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Gobble.png" },
-            { id: 48, title: "Swingo", category: "Platformer", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Swingo/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/swingo.jpg" },
-            { id: 49, title: "Spiral Roll", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/spralr/index.html", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Spiralr.png" },
-            { id: 50, title: "Wordle", category: "Puzzle", gameUrl: "https://wordle-actual.vercel.app", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0829.jpeg" },
-            { id: 51, title: "Unicycle Heroes", category: "Physics", gameUrl: "https://unicycleh.vercel.app", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0832.jpeg" },
-            { id: 52, title: "Sheep Sheep", category: "Puzzle", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Sheep.jpeg" },
-            { id: 53, title: "Game Inside Game", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/game-inside/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/GameInsideGame.png" },
-            { id: 54, title: "Black Jack", category: "Card", gameUrl: "https://blackjack-self.vercel.app/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Blackjack.png" },
-            { id: 55, title: "Raft Wars", category: "Action", gameUrl: "https://wowksies.github.io/kivro-Game-Library/raft-war/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Raftwars.jpg" },
-            { id: 56, title: "Small World Cup", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/a-smallwc/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Asworldc.jpg" },
-            { id: 57, title: "BowMasters", category: "Action", gameUrl: "https://wowksies.github.io//bowmasters/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0856.png" },
-            { id: 58, title: "State.io", category: "Strategy", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0862.png" },
-            { id: 59, title: "Day of Meat", category: "Defense", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DayOfMeat/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Deathofmeat.jpg" },
-            { id: 60, title: "Knife Hit", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/knifehit/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Knifehit.png" },
-            { id: 61, title: "Solar Smash", category: "Simulation", gameUrl: "https://wowksies.github.io//solar-smash/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0868.png" },
-            { id: 62, title: "Bridge race", category: "Casual", gameUrl: "https://wowksies.github.io//bridge-race/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0870.jpeg" },
-            { id: 63, title: "Papas Pizzaria", category: "Cooking", gameUrl: "https://wowksies.github.io/kivro-Game-Library/papsp/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/papaspiz.webp" },
-            { id: 64, title: "Little Alchemy", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/little-alchemy/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/littleA.png" },
-            { id: 65, title: "8 Ball Pool", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/pool-pixijs/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/8ballpool.webp" },
-            { id: 66, title: "Stealth Master", category: "Action", gameUrl: "https://wowksies.github.io//stealth-master/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stealthmaster.jpg" },
-            { id: 67, title: "Hide and Seek", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/hideandseek.webp" },
-            { id: 68, title: "Slice it All", category: "Arcade", gameUrl: "https://wowksies.github.io//slice-it-all/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/sliceitall.png" },
-            { id: 69, title: "Bus Out", category: "Simulation", gameUrl: "https://gamesbun.github.io/busout-school/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/busout.webp" },
-            { id: 70, title: "Blumgi Racers", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgir/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/br.webp" },
-            { id: 72, title: "Rooftop Snipers 2", category: "Action", gameUrl: "https://wowksies.github.io/kivro-Game-Library/rooftopsnipers/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/rooftop-snipers.webp" },
-            { id: 72, title: "Bounce Masters", category: "Arcade", gameUrl: "https://wowksies.github.io//bouncemasters/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bouncemasters.webp" },
-            { id: 73, title: "Blumgi Ball", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgiball/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/blumgiball.webp" },
-            { id: 74, title: "Draw Joust", category: "Action", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DrawJoustindex.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0959.png" },
-            { id: 74, title: "Basketball Legends", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/basketball-legends-main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0963.jpeg" },
-            { id: 75, title: "Football Legends", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Football-Legends.jpg" },
-            { id: 77, title: "GetAway Shootout", category: "Action", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0980.jpeg" },
+        
+        // --- DATA ---
+        const library = [
+            { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png" },
+            { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg" },
+            { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp" },
+            { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg" },
+            { id: 9, title: "Cookie Clicker", category: "Idle Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg" },
+            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg" },
+            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg" },
+            { id: 3, title: "Geo Dash", category: "Rhythm", imgUrl: THUMB_BASE + "Geometry-Dash.webp" },
+            { id: 15, title: "Google Snake", category: "Arcade", imgUrl: THUMB_BASE + "Google-Snake.jpg" },
+            { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg" },
+            { id: 12, title: "PacMan", category: "Arcade", imgUrl: THUMB_BASE + "Pacman.jpg" },
+            { id: 1, title: "Retro Ball", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp" },
+            { id: 14, title: "Slope", category: "Endless Runner", imgUrl: THUMB_BASE + "slope.png" },
+            { id: 16, title: "Snow Battle", category: "Arcade", imgUrl: THUMB_BASE + "Snow-Battle.png" },
+            { id: 17, title: "Stack", category: "Puzzle", imgUrl: THUMB_BASE + "Stack.webp" },
+            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg" },
+            { id: 18, title: "Subway Surfers", category: "Endless Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg" },
+            { id: 19, title: "Baldi's Basics", category: "Horror", imgUrl: THUMB_BASE + "BaldisBasics.webp" },
+            { id: 20, title: "Dino Runner", category: "Endless Runner", imgUrl: THUMB_BASE + "Dino.jpg" },
+            { id: 21, title: "Stickman Hook", category: "Arcade", imgUrl: THUMB_BASE + "stickman-hook.png" },
+            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg" },
+            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png" },
+            { id: 25, title: "Hole.io", category: "Arcade", imgUrl: THUMB_BASE + "Hole.png" },
+            { id: 26, title: "Sausage Flip", category: "Arcade", imgUrl: THUMB_BASE + "sausage-flip.png" },
+            { id: 27, title: "YoHoHo.io", category: "Battle Royale", imgUrl: THUMB_BASE + "Yohoho.jpg" },
+            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg" },
+            { id: 29, title: "Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png" },
+            { id: 30, title: "Paper.io", category: "Strategy", imgUrl: THUMB_BASE + "paper-io.png" },
+            { id: 31, title: "Hill Climb", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png" },
+            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png" },
+            { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg" },
+            { id: 36, title: "Gun Spin", category: "Arcade", imgUrl: THUMB_BASE + "gunspin.png" },
+            { id: 37, title: "SandBoxel", category: "Simulation", imgUrl: THUMB_BASE + "Sandboxel.png" },
+            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png" },
+            { id: 39, title: "Stacktris", category: "Arcade", imgUrl: THUMB_BASE + "stacktris.jpeg" },
+            { id: 40, title: "Tomb Of The Mask", category: "Arcade", imgUrl: THUMB_BASE + "TofM.jpg" },
+            { id: 41, title: "Paper Plane", category: "Arcade", imgUrl: THUMB_BASE + "Planef.jpg" },
+            { id: 42, title: "Curve Rush", category: "Arcade", imgUrl: THUMB_BASE + "curve-rush.webp" },
+            { id: 43, title: "Burrito Bison", category: "Action", imgUrl: THUMB_BASE + "Bb.png" },
+            { id: 43, title: "Golf Orbit", category: "Sports", imgUrl: THUMB_BASE + "golf-orbit.png" },
+            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg" },
+            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp" },
+            { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp" },
+            { id: 47, title: "Gobble", category: "Arcade", imgUrl: THUMB_BASE + "Gobble.png" },
+            { id: 48, title: "Swingo", category: "Platformer", imgUrl: THUMB_BASE + "swingo.jpg" },
+            { id: 49, title: "Spiral Roll", category: "Arcade", imgUrl: THUMB_BASE + "Spiralr.png" },
+            { id: 50, title: "Wordle", category: "Puzzle", imgUrl: THUMB_BASE + "IMG_0829.jpeg" },
+            { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg" },
+            { id: 53, title: "Game Inside Game", category: "Arcade", imgUrl: THUMB_BASE + "GameInsideGame.png" },
+            { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png" },
+            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg" },
+            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg" },
+            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png" },
+            { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png" },
+            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg" },
+            { id: 60, title: "Knife Hit", category: "Arcade", imgUrl: THUMB_BASE + "Knifehit.png" },
+            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png" },
+            { id: 62, title: "Bridge race", category: "Casual", imgUrl: THUMB_BASE + "IMG_0870.jpeg" },
+            { id: 63, title: "Papas Pizzaria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp" },
+            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png" },
+            { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp" },
+            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg" },
+            { id: 67, title: "Hide and Seek", category: "Arcade", imgUrl: THUMB_BASE + "hideandseek.webp" },
+            { id: 68, title: "Slice it All", category: "Arcade", imgUrl: THUMB_BASE + "sliceitall.png" },
+            { id: 69, title: "Bus Out", category: "Simulation", imgUrl: THUMB_BASE + "busout.webp" },
+            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp" },
+            { id: 72, title: "Rooftop Snipers 2", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp" },
+            { id: 72, title: "Bounce Masters", category: "Arcade", imgUrl: THUMB_BASE + "bouncemasters.webp" },
+            { id: 73, title: "Blumgi Ball", category: "Arcade", imgUrl: THUMB_BASE + "blumgiball.webp" },
+            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png" },
+            { id: 74, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg" },
+            { id: 75, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg" },
+            { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg" },
+            
+            // APPS (Will open directly)
             { id: 1001, title: "My App", category: "App", gameUrl: "https://your-app-url.com", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon" }
         ];
 
-        async function init() {
-            try {
-                setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1500);
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (!user) await signInAnonymously(auth);
-                    userId = auth.currentUser ? auth.currentUser.uid.substring(0,6) : 'Guest';
-                    document.getElementById('user-id-display').textContent = userId;
-                    trackDailyVisit(auth.currentUser?.uid);
-                });
-                renderGrid();
-            } catch (e) {
-                console.error("Init Error:", e);
-                document.getElementById('splash').style.display = 'none';
-                renderGrid(); 
-            }
-        }
-
-        async function trackDailyVisit(uid) {
-            if (!db || !uid) return;
-            const today = new Date().toISOString().slice(0,10);
-            const ref = doc(db, "dailyVisits", today);
-            try {
-                const snap = await getDoc(ref);
-                if (!snap.exists()) await setDoc(ref, { visitors: [uid] });
-                else await updateDoc(ref, { visitors: arrayUnion(uid) });
-            } catch (e) {}
-        }
+        // --- RENDER LOGIC ---
+        let currentTab = 'Games';
+        let searchTerm = '';
 
         function renderGrid() {
             const grid = document.getElementById('game-grid');
             grid.innerHTML = '';
-            const term = searchTerm.toLowerCase();
-            const items = initialGames.filter(item => {
+            
+            const items = library.filter(item => {
                 const matchesTab = (currentTab === 'Games') ? item.category !== 'App' : item.category === 'App';
-                const matchesSearch = item.title.toLowerCase().includes(term);
+                const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
                 return matchesTab && matchesSearch;
             });
 
-            document.getElementById('game-count').textContent = items.length;
-
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">No results found for "${searchTerm}"</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">No results found.</div>`;
                 return;
             }
 
             items.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "group relative bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-white/5";
-                const safeUrl = item.gameUrl.replace(/'/g, "\\'");
+                card.className = "group bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-white/5";
+                
+                // CLICK LOGIC:
+                // If it is an APP, go directly to URL
+                // If it is a GAME, go to play.html?id=...
+                const clickAction = (item.category === 'App') 
+                    ? `window.location.href='${item.gameUrl}'`
+                    : `window.location.href='play.html?id=${item.id}'`;
+
                 card.innerHTML = `
                     <div class="h-36 overflow-hidden relative">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all"></div>
                         <span class="absolute top-2 right-2 text-[10px] font-bold px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur">${item.category}</span>
                     </div>
                     <div class="p-4 bg-gray-800/90 backdrop-blur-sm">
                         <h3 class="font-bold text-white truncate">${item.title}</h3>
                     </div>
                 `;
-                // DIRECT LAUNCH IN NEW TAB
-                card.addEventListener('click', () => window.open(item.gameUrl, '_blank'));
+                card.setAttribute('onclick', clickAction);
                 grid.appendChild(card);
             });
         }
 
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            document.getElementById('clear-search').classList.toggle('hidden', !searchTerm);
-            renderGrid();
-        });
-        document.getElementById('clear-search').addEventListener('click', () => {
-            document.getElementById('search-input').value = '';
-            searchTerm = '';
-            document.getElementById('clear-search').classList.add('hidden');
-            renderGrid();
-        });
-
-        function setTab(tab) {
-            currentTab = tab;
-            const btnG = document.getElementById('tab-games');
-            const btnA = document.getElementById('tab-apps');
-            const activeClass = ['bg-indigo-600', 'text-white', 'shadow-md'];
-            const inactiveClass = ['text-gray-400', 'hover:text-white'];
-            if(tab === 'Games') {
-                btnG.classList.add(...activeClass); btnG.classList.remove(...inactiveClass);
-                btnA.classList.remove(...activeClass); btnA.classList.add(...inactiveClass);
-            } else {
-                btnA.classList.add(...activeClass); btnA.classList.remove(...inactiveClass);
-                btnG.classList.remove(...activeClass); btnG.classList.add(...inactiveClass);
-            }
-            renderGrid();
-        }
-        document.getElementById('tab-games').addEventListener('click', () => setTab('Games'));
-        document.getElementById('tab-apps').addEventListener('click', () => setTab('Apps'));
-
-        document.getElementById('panic-button').addEventListener('click', () => window.location.href = PANIC_URL);
+        // --- LISTENERS ---
+        document.getElementById('search-input').addEventListener('input', (e) => { searchTerm = e.target.value; renderGrid(); });
         
-        const installPopup = document.getElementById('install-popup');
-        document.getElementById('install-trigger-btn').addEventListener('click', () => installPopup.classList.remove('hidden'));
-        document.getElementById('close-popup').addEventListener('click', () => installPopup.classList.add('hidden'));
-        
-        document.querySelectorAll('.select-icon').forEach(icon => {
-            icon.addEventListener('click', function() {
-                document.querySelectorAll('.select-icon').forEach(i => i.classList.remove('border-indigo-500', 'shadow-[0_0_15px_rgba(99,102,241,0.5)]', 'opacity-100'));
-                this.classList.add('border-indigo-500', 'shadow-[0_0_15px_rgba(99,102,241,0.5)]', 'opacity-100');
-                this.classList.remove('opacity-70');
-            });
+        document.getElementById('tab-games').addEventListener('click', () => { 
+            currentTab = 'Games'; 
+            document.getElementById('tab-games').classList.add('bg-indigo-600', 'text-white'); 
+            document.getElementById('tab-apps').classList.remove('bg-indigo-600', 'text-white'); 
+            renderGrid(); 
+        });
+        document.getElementById('tab-apps').addEventListener('click', () => { 
+            currentTab = 'Apps'; 
+            document.getElementById('tab-apps').classList.add('bg-indigo-600', 'text-white'); 
+            document.getElementById('tab-games').classList.remove('bg-indigo-600', 'text-white'); 
+            renderGrid(); 
         });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (!installPopup.classList.contains('hidden')) installPopup.classList.add('hidden');
-                else window.location.href = PANIC_URL;
-            }
-        });
-
-        init();
+        // INIT
+        window.onload = () => {
+            setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1000);
+            renderGrid();
+        };
     </script>
 </body>
 </html>
