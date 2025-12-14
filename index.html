@@ -537,55 +537,51 @@
   <h1 class="mt-6 text-5xl font-extrabold shiny-text opacity-0 animate-textFade">Kivro Games</h1>
 </div>
 
-    <!-- Header/Nav Bar -->
-    <header class="bg-gray-900/80 backdrop-blur-sm shadow-2xl z-50 w-full">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row justify-between items-start md:items-center">
+<header class="bg-gray-900/80 backdrop-blur-sm shadow-2xl z-50 w-full sticky top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             
-            <!-- Title -->
-            <div class="mb-4 md:mb-0 flex items-center">
-                <svg class="w-10 h-10 mr-3 text-pink-400 transform -rotate-15" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div class="flex items-center self-start md:self-auto">
+                <svg class="w-10 h-10 mr-3 text-pink-400 transform -rotate-15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     <circle cx="12" cy="12" r="8" stroke-width="2" />
                     <line x1="12" y1="8" x2="12" y2="12" stroke-width="2" />
                     <line x1="12" y1="12" x2="15" y2="15" stroke-width="2" />
                 </svg>
-                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
                     <span class="shiny-text">Kivro Games</span>
                 </h1>
             </div>
 
-            <!-- User ID Display -->
-            <p class="text-xs text-gray-400 mt-2 md:mt-0">User ID: <span id="user-id-display" class="font-mono text-purple-400 break-all">Authenticating...</span></p>
+            <div class="flex flex-col items-center space-y-2">
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">
+                    ID: <span id="user-id-display" class="font-mono text-purple-400">Loading...</span>
+                </p>
 
-<!-- Search Input (replace existing block) -->
-<div class="w-full md:w-80 lg:w-96 mt-4 md:mt-0">
-  <div class="relative">
-    <input 
-      type="text" 
-      id="search-input"
-      placeholder="Search title or category..." 
-      class="w-full py-3 pl-12 pr-10 border border-indigo-500/50 rounded-full focus:ring-4 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300 bg-gray-800 text-gray-50 placeholder-gray-400 shadow-xl"
-    />
-    <!-- Search Icon -->
-    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
+                <div class="flex bg-gray-800 rounded-full p-1 border border-gray-700 shadow-inner">
+                    <button id="tab-games" class="px-4 py-1 rounded-full text-xs font-bold transition-all bg-indigo-600 text-white shadow-md">
+                        🎮 Games
+                    </button>
+                    <button id="tab-apps" class="px-4 py-1 rounded-full text-xs font-bold transition-all text-gray-400 hover:text-white">
+                        📱 Apps
+                    </button>
+                </div>
+            </div>
 
-    <!-- Clear Button (X). Hidden by default. -->
-<button 
-  id="clear-search" 
-  class="absolute right-4 top-1/2 transform -translate-y-1/2 hidden 
-         text-indigo-400 hover:text-white focus:outline-none transition 
-         duration-200 ease-in-out text-lg font-bold drop-shadow-[0_0_6px_rgba(99,102,241,0.8)] 
-         hover:drop-shadow-[0_0_10px_rgba(139,92,246,0.9)]">
-  ✕
-</button>
+            <div class="w-full md:w-72 lg:w-80 relative">
+                <input 
+                  type="text" 
+                  id="search-input"
+                  placeholder="Search..." 
+                  class="w-full py-2 pl-10 pr-10 border border-indigo-500/30 rounded-full focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-gray-800 text-gray-100 text-sm placeholder-gray-500 shadow-sm"
+                />
+                <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <button id="clear-search" class="absolute right-3 top-1/2 transform -translate-y-1/2 hidden text-indigo-400 hover:text-white font-bold text-xs">✕</button>
+            </div>
 
-  </div>
-</div>
-
-
-    </header>
+        </div>
+</header>
 
 
     <!-- Intro + Side panels (Suggestions & Updates) -->
@@ -645,6 +641,8 @@
                 <span id="game-count" class="text-pink-400 text-4xl font-extrabold tracking-tight">0</span>
             </div>
         </div>
+
+		
 
         <!-- Game Grid Container -->
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
@@ -709,21 +707,25 @@
         // --- Firebase Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { 
-            getFirestore, doc, getDoc, setDoc, serverTimestamp, setLogLevel 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Global Firebase & State Vars ---
         let db;
         let auth;
         let userId = 'loading'; 
         let currentGameId = null; 
+        
+        // --- Tab State ---
+        let searchTerm = '';
+        let currentTab = 'Games'; // Default tab
+        let loadTimeout;
+        const PANIC_URL = "https://member.foodvillage.ie/login"; 
 
         // Environment variables for Firebase config
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
 
-        // --- Game Data (FIXED TO USE ABSOLUTE GITHUB RAW PATHS) ---
+        // --- Game Data ---
         const GITHUB_BASE_URL = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
         const THUMBNAILS_DIR = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
 
@@ -744,489 +746,82 @@
             { id: 16, title: "Snow Battle", description: "Throw snowballs at your enemies and duck behind cover in this fun, tactical winter battle game.", category: "Arcade", gameUrl: GITHUB_BASE_URL + "snowbattle/index.html", imgUrl: THUMBNAILS_DIR + "Snow-Battle.png" }, 
             { id: 17, title: "Stack", description: "A fast-paced reflex game where you try to stack blocks perfectly to build the tallest tower.", category: "Puzzle", gameUrl: GITHUB_BASE_URL + "stack/index.html", imgUrl: THUMBNAILS_DIR + "Stack.webp" },
             { id: 4, title: "Drift Boss", description: "Drift!", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DriftBoss/index.html", imgUrl: THUMBNAILS_DIR + "Drift1.jpg" },
-            { 
-                id: 18, 
-                title: "Subway Surfers", 
-                description: "Hosted externally. May require opening in a new tab.", 
-                category: "Endless Runner", 
-                gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html", 
-                imgUrl: THUMBNAILS_DIR + "Subway-Surfers.jpg" 
-            },
-            // --- NEW GAMES ADDED BELOW ---
+            { id: 18, title: "Subway Surfers", description: "Hosted externally. May require opening in a new tab.", category: "Endless Runner", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html", imgUrl: THUMBNAILS_DIR + "Subway-Surfers.jpg" },
             { id: 19, title: "Baldi's Basics", description: "Collect notebooks while avoiding the terrifying teacher, Baldi, in this survival horror parody.", category: "Horror/Educational", gameUrl: GITHUB_BASE_URL + "baldisbasics/index.html", imgUrl: THUMBNAILS_DIR + "BaldisBasics.webp" },
+            { id: 20, title: "Dino Runner", description: "The classic offline runner. Jump over cacti and duck under pterodactyls to survive.", category: "Endless Runner", gameUrl: "https://wowksies.github.io/kivro-Game-Library/chromedino/index.html", imgUrl: THUMBNAILS_DIR + "Dino.jpg" },
+            { id: 21, title: "Stickman Hook", description: "Swing like Spider-Man using your hook to navigate levels without falling.", category: "Arcade/Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/StickmanHook/index.html", imgUrl: THUMBNAILS_DIR + "stickman-hook.png" },
+            { id: 23, title: "Block Blast", description: "Drag and drop colorful blocks to complete lines and squares in this challenging puzzle game.", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blockblast/index.html", imgUrl: THUMBNAILS_DIR + "block-blast.jpeg" },
+            { id: 24, title: "Merge Rot", description: "Merge rotating blocks and achieve the highest score in this spatial puzzle challenge.", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/MergeRot/index.html", imgUrl: THUMBNAILS_DIR + "merge-rot.png" },
+            { id: 25, title: "Hole.io", description: "Gobble Up The City and Players Around you to be Victorious!", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/HoleIO/index.html", imgUrl: THUMBNAILS_DIR + "Hole.png" },
+            { id: 26, title: "Sausage Flip", description: "Flip the Sausage of the pan to get to the Finish Line!", category: "Arcade/Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/sausage-flip/index.html", imgUrl: THUMBNAILS_DIR + "sausage-flip.png" },
+            { id: 27, title: "YoHoHo.io", description: "A battle Royale Amongst Pirates on Your Island", category: "Battle Royale", gameUrl: "https://wowksies.github.io/yohohoio/index.html", imgUrl: THUMBNAILS_DIR + "Yohoho.jpg" },
+            { id: 28, title: "Mr.Bullet", description: "Assassinate Criminals around You using your Pistol", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/MrBullet/index.html", imgUrl: THUMBNAILS_DIR + "Bullet.jpg" },
+            { id: 29, title: "The Impossible Quiz", description: "Solve Questions In this Quiz to see how Smart You really are!", category: "Puzzle", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html", imgUrl: THUMBNAILS_DIR + "Impossible.png" },
+            { id: 30, title: "Paper.io", description: "Claim territory and surround opponents in this addictive multiplayer strategy game.", category: "Strategy/IO", gameUrl: GITHUB_BASE_URL + "paperio/index.html", imgUrl: THUMBNAILS_DIR + "paper-io.png" },
+            { id: 31, title: "Hill Climb Racing", description: "Drive across hilly terrain, collect coins, and avoid flipping your vehicle.", category: "Racing", gameUrl: "https://wowksies.github.io/kivro-Game-Library/HillClimbRacing/index.html", imgUrl: THUMBNAILS_DIR + "HillClimb.png" },
+            { id: 34, title: "Bottle Flip", description: "Flip the bottle perfectly onto platforms and test your timing and skill.", category: "Skill/Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/BottleFlip2/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bottleflip.png" },
+            { id: 35, title: "Penalty Kicks", description: "Score goals and defend shots in this fast-paced soccer penalty shootout game.", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/PenaltyKicks/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/penalty.jpg" },
+            { id: 36, title: "Gun Spin", description: "Score goals and defend shots in this fast-paced soccer penalty shootout game.", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gunspin/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/gunspin.png" },
+            { id: 37, title: "SandBoxel", description: "Create, destroy, and experiment with different materials in a physics-based sandbox world.", category: "Simulation", gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Sandboxel.png" },
+            { id: 38, title: "Ballistic", description: "Aim and shoot volleys of balls to smash numbered bricks — don’t let the stack reach the bottom.", category: "Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ballistic/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ballistic.png" },
+            { id: 39, title: "Stacktris", description: "Stack spinning blocks to build the tallest tower without letting it fall.", category: "Arcade/Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/stacktris/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stacktris.jpeg" },
+            { id: 40, title: "Tomb Of The Mask", description: "Climb walls and race through fast vertical mazes, collecting coins and avoiding traps.", category: "Arcade/Puzzle", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/TofM.jpg" },
+            { id: 41, title: "Paper Plane", description: "Fly your paper plane as far as possible, dodging obstacles and performing stunts.", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/PaperFlight1/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Planef.jpg" },
+            { id: 42, title: "Curve Rush", description: "Guide your ball along twisting tracks at high speed without falling off.", category: "Arcade", gameUrl: "https://curverush.com/curve-rush.embed", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/curve-rush.webp" },
+            { id: 43, title: "Burrito Bison", description: "Launch yourself through the air, smash gummies, and upgrade to fly even farther.", category: "Action / Arcade", gameUrl: "https://burrito-bison-cnm.vercel.app/", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Bb.png" },
+            { id: 43, title: "Golf Orbit", description: "Launch golf balls into orbit and see how far across the planet you can hit them.", category: "Sports / Arcade", gameUrl: "https://golf-orbit-k8ue.vercel.app/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/golf-orbit.png" },
+            { id: 44, title: "Ragdoll Archers", description: "Aim and shoot arrows in ragdoll physics battles against opponents.", category: "Action / Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ragdoll-Archers/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ragdoll-archers.jpg" },
+            { id: 45, title: "Helix Jump", description: "Bounce a ball down a twisting helix tower while avoiding the colored traps", category: "Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/helixjump/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/HelixJ.webp" },
+            { id: 46, title: "PolyTrack", description: "Race through vibrant low-poly tracks and compete for the fastest time.", category: "Racing", gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Polyt.webp" },
+            { id: 47, title: "Gobble", description: "Eat smaller objects to grow bigger while avoiding anything larger than you", category: "Arcade / IO", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gobble/gobble/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Gobble.png" },
+            { id: 48, title: "Swingo", description: "Swing and bounce through colorful levels using a stretchy grappling hook.", category: "Arcade / Platformer", gameUrl: "https://wowksies.github.io/kivro-Game-Library/Swingo/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/swingo.jpg" },
+            { id: 49, title: "Spiral Roll", description: "Carve wood to create spirals that clear obstacles and earn points.", category: "Arcade / Skill", gameUrl: "https://wowksies.github.io/kivro-Game-Library/spralr/index.html", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Spiralr.png" },
+            { id: 50, title: "Wordle", description: "Word puzzle game where players have six tries to guess a hidden five-letter word using color-coded clues", category: "Puzzle", gameUrl: "https://wordle-actual.vercel.app", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0829.jpeg" },
+            { id: 51, title: "Unicycle Heroes", description: "Unicycle Hero is a physics-based sports game where you balance on a unicycle and compete in throwing events.", category: "Physics", gameUrl: "https://unicycleh.vercel.app", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0832.jpeg" },
+            { id: 52, title: "Sheep Sheep", description: "Match and collect adorable sheep in this relaxing puzzle game.", category: "Puzzle", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/", imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Sheep.jpeg" },
+            { id: 53, title: "Game Inside Game", description: "Play a series of mini-games that appear within each other in a fun, layered challenge.", category: "Arcade / Puzzle", gameUrl: "https://wowksies.github.io/kivro-Game-Library/game-inside/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/GameInsideGame.png" },
+            { id: 54, title: "Black Jack", description: "Try to beat the dealer by getting as close to 21 as possible without going over.", category: "Card / Casino", gameUrl: "https://blackjack-self.vercel.app/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Blackjack.png" },
+            { id: 55, title: "Raft Wars", description: "Fire tennis balls at enemies to protect your treasure in this fun, turn-based water battle.", category: "Action / Strategy", gameUrl: "https://wowksies.github.io/kivro-Game-Library/raft-war/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Raftwars.jpg" },
+            { id: 56, title: "Small World Cup", description: "Control tiny soccer teams and compete in a fun, fast-paced world cup tournament.", category: "Sports / Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/a-smallwc/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Asworldc.jpg" },
+            { id: 57, title: "BowMasters", description: "Bowmasters is a colorful, physics-based action game where players take turns aiming and shooting at opponents using various weapons and characters.", category: "Action / Arcade", gameUrl: "https://wowksies.github.io//bowmasters/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0856.png" },
+            { id: 58, title: "State.io", description: "State.io is a fast-paced strategy game where you capture territories and conquer opponents to dominate the map.", category: "Strategy / IO", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0862.png" },
+            { id: 59, title: "Day of Meat", description: "Defend your base from waves of mutated creatures using powerful weapons and upgrades.", category: "Action / Defense", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DayOfMeat/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Deathofmeat.jpg" },
+            { id: 60, title: "Knife Hit", description: "Throw knives to break spinning logs while avoiding hitting your own blades.", category: "Arcade / Skill", gameUrl: "https://wowksies.github.io/kivro-Game-Library/knifehit/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Knifehit.png" },
+            { id: 61, title: "Solar Smash", description: "Solar Smash is a planet destruction simulator where players use powerful weapons—like lasers, asteroids, and black holes—to obliterate worlds in spectacular fashion.", category: "Simulation", gameUrl: "https://wowksies.github.io//solar-smash/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0868.png" },
+            { id: 62, title: "Bridge race", description: "Bridge Race is a fun casual racing game where players collect bricks to build bridges and reach the finish line before opponents.", category: "Casual / Arcade", gameUrl: "https://wowksies.github.io//bridge-race/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0870.jpeg" },
+            { id: 63, title: "Papas Pizzaria", description: "Take orders, bake pizzas, and manage the shop to keep customers happy.", category: "Cooking / Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/papsp/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/papaspiz.webp" },
+            { id: 64, title: "Little Alchemy", description: "Combine basic elements to create new items and discover hundreds of unique combinations.", category: "Puzzle / Creativity", gameUrl: "https://wowksies.github.io/kivro-Game-Library/little-alchemy/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/littleA.png" },
+            { id: 65, title: "8 Ball Pool", description: "Line up your shots and sink balls in competitive online billiards matches.", category: "Sports / Pool", gameUrl: "https://wowksies.github.io/kivro-Game-Library/pool-pixijs/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/8ballpool.webp" },
+            { id: 66, title: "Stealth Master", description: "Sneak through levels, defeat enemies, and complete missions without being detected.", category: "Action / Stealth", gameUrl: "https://wowksies.github.io//stealth-master/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stealthmaster.jpg" },
+            { id: 67, title: "Hide and Seek", description: "Run, hide, or chase as you play a fast-paced game of hiding and finding opponents.", category: "Arcade / Casual", gameUrl: "https://wowksies.github.io/kivro-Game-Library/hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/hideandseek.webp" },
+            { id: 68, title: "Slice it All", description: "Flip your blade and slice through obstacles while keeping your momentum.", category: "Arcade / Skill", gameUrl: "https://wowksies.github.io//slice-it-all/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/sliceitall.png" },
+            { id: 69, title: "Bus Out", description: "Drive your bus through challenging routes, avoiding crashes and picking up passengers", category: "Driving / Simulation", gameUrl: "https://gamesbun.github.io/busout-school/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/busout.webp" },
+            { id: 70, title: "Blumgi Racers", description: "Use slingshot physics to launch your racer across tricky tracks and reach the finish line.", category: "Racing / Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgir/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/br.webp" },
+            { id: 71, title: "Hills Of Steel", description: "Drive a tank over hills, shoot enemies, and collect loot to upgrade your firepower.", category: "Action / Vehicle Combat", gameUrl: "https://hillofsteele.vercel.app/", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/hills%20of%20steel.webp" },
+            { id: 72, title: "Rooftop Snipers 2", description: "Duel atop rooftops using wild weapons and knock your opponent off to win.", category: "Action / Shooter", gameUrl: "https://wowksies.github.io/kivro-Game-Library/rooftopsnipers/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/rooftop-snipers.webp" },
+            { id: 72, title: "Bounce Masters", description: "Bounce your way through levels, defeat enemies, and collect coins to upgrade.", category: "Arcade / Action", gameUrl: "https://wowksies.github.io//bouncemasters/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bouncemasters.webp" },
+            { id: 73, title: "Blumgi Ball", description: "Use a slingshot to launch the ball and teleport through obstacles to score.", category: "Arcade / Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgiball/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/blumgiball.webp" },
+            { id: 74, title: "Draw Joust", description: "Draw Joust is a mobile action game where you draw a vehicle with weapons and battle opponents using physics-based combat.", category: "Action / Physics", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DrawJoustindex.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0959.png" },
+            { id: 74, title: "Basketball Legends", description: "Basketball legends are iconic players known for their exceptional skill and lasting impact on the sport. They inspire fans and shape the history of basketball.", category: "Sports", gameUrl: "https://wowksies.github.io/kivro-Game-Library/basketball-legends-main/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0963.jpeg" },
+            { id: 75, title: "Football Legends", description: "Play fast-paced soccer matches using special moves and powerful shots to outscore opponents.", category: "Sports / Arcade", gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Football-Legends.jpg" },
+            { id: 76, title: "Crossy Road", description: "Crossy Road is an arcade game where you hop across roads and obstacles to survive as long as possible.", category: "Arcade / Endless Runner", gameUrl: "https://wowksies.github.io//crossy-road/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/CrossyR.jpg" },
+            { id: 77, title: "GetAway Shootout", description: "Getaway Shootout is a fast, chaotic 2D action shooter where players race to a getaway point using quirky, physics-based movement.", category: "Action / Shooter", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html", imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0980.jpeg" },
+            
+            // --- YOUR NEW APP ENTRY ---
             { 
-                id: 20, 
-                title: "Dino Runner", 
-                description: "The classic offline runner. Jump over cacti and duck under pterodactyls to survive.", 
-                category: "Endless Runner", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/chromedino/index.html", // UPDATED URL
-                imgUrl: THUMBNAILS_DIR + "Dino.jpg" 
-            },
-            { 
-                id: 21, 
-                title: "Stickman Hook", 
-                description: "Swing like Spider-Man using your hook to navigate levels without falling.", 
-                category: "Arcade/Physics", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/StickmanHook/index.html", 
-                imgUrl: THUMBNAILS_DIR + "stickman-hook.png" 
-            },
-            { 
-                id: 23, 
-                title: "Block Blast", 
-                description: "Drag and drop colorful blocks to complete lines and squares in this challenging puzzle game.", 
-                category: "Puzzle", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/blockblast/index.html", 
-                imgUrl: THUMBNAILS_DIR + "block-blast.jpeg" 
-            },
-            { 
-                id: 24, 
-                title: "Merge Rot", 
-                description: "Merge rotating blocks and achieve the highest score in this spatial puzzle challenge.", 
-                category: "Puzzle", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/MergeRot/index.html", 
-                imgUrl: THUMBNAILS_DIR + "merge-rot.png" // Updated to use the provided thumbnail
-            },
-            { 
-                id: 25, 
-                title: "Hole.io", 
-                description: "Gobble Up The City and Players Around you to be Victorious!", 
-                category: "Arcade", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/HoleIO/index.html", 
-                imgUrl: THUMBNAILS_DIR + "Hole.png" // Updated to use the provided thumbnail
-            },
-            {
-                id: 26, 
-                title: "Sausage Flip", 
-                description: "Flip the Sausage of the pan to get to the Finish Line!", 
-                category: "Arcade/Physics", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/sausage-flip/index.html", 
-                imgUrl: THUMBNAILS_DIR + "sausage-flip.png" // Updated to use the provided thumbnail
-            },
-            {
-                id: 27, 
-                title: "YoHoHo.io", 
-                description: "A battle Royale Amongst Pirates on Your Island", 
-                category: "Battle Royale", 
-                gameUrl: "https://wowksies.github.io/yohohoio/index.html", 
-                imgUrl: THUMBNAILS_DIR + "Yohoho.jpg" // Updated to use the provided thumbnail
-            },
-            {
-                id: 28, 
-                title: "Mr.Bullet", 
-                description: "Assassinate Criminals around You using your Pistol", 
-                category: "Puzzle", 
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/MrBullet/index.html", 
-                imgUrl: THUMBNAILS_DIR + "Bullet.jpg" // Updated to use the provided thumbnail
-            },
-            {
-                id: 29, 
-                title: "The Impossible Quiz", 
-                description: "Solve Questions In this Quiz to see how Smart You really are!", 
-                category: "Puzzle", 
-                gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html", 
-                imgUrl: THUMBNAILS_DIR + "Impossible.png" // Updated to use the provided thumbnail
-            },
-            {
-                id: 30,
-                title: "Paper.io",
-                description: "Claim territory and surround opponents in this addictive multiplayer strategy game.",
-                category: "Strategy/IO",
-                gameUrl: GITHUB_BASE_URL + "paperio/index.html",
-                imgUrl: THUMBNAILS_DIR + "paper-io.png"
-            },
-            {
-                id: 31,
-                title: "Hill Climb Racing",
-                description: "Drive across hilly terrain, collect coins, and avoid flipping your vehicle.",
-                category: "Racing",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/HillClimbRacing/index.html",
-                imgUrl: THUMBNAILS_DIR + "HillClimb.png"
-            },
-            {
-                id: 34,
-                title: "Bottle Flip",
-                description: "Flip the bottle perfectly onto platforms and test your timing and skill.",
-                category: "Skill/Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/BottleFlip2/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bottleflip.png"
-            },
-            {
-                id: 35,
-                title: "Penalty Kicks",
-                description: "Score goals and defend shots in this fast-paced soccer penalty shootout game.",
-                category: "Sports",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/PenaltyKicks/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/penalty.jpg"
-            },
-            {
-                id: 36,
-                title: "Gun Spin",
-                description: "Score goals and defend shots in this fast-paced soccer penalty shootout game.",
-                category: "Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gunspin/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/gunspin.png"
-            },
-            {
-                id: 37,
-                title: "SandBoxel",
-                description: "Create, destroy, and experiment with different materials in a physics-based sandbox world.",
-                category: "Simulation",
-                gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Sandboxel.png"
-            },
-            {
-                id: 38,
-                title: "Ballistic",
-                description: "Aim and shoot volleys of balls to smash numbered bricks — don’t let the stack reach the bottom.",
-                category: "Puzzle",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ballistic/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ballistic.png"
-            },
-            {
-                id: 39,
-                title: "Stacktris",
-                description: "Stack spinning blocks to build the tallest tower without letting it fall.",
-                category: "Arcade/Puzzle",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/stacktris/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stacktris.jpeg"
-            },
-            {
-                id: 40,
-                title: "Tomb Of The Mask",
-                description: "Climb walls and race through fast vertical mazes, collecting coins and avoiding traps.",
-                category: "Arcade/Puzzle",
-                gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/TofM.jpg"
-            },
-            {
-                id: 41,
-                title: "Paper Plane",
-                description: "Fly your paper plane as far as possible, dodging obstacles and performing stunts.",
-                category: "Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/PaperFlight1/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Planef.jpg"
-            },
-            {
-                id: 42,
-                title: "Curve Rush",
-                description: "Guide your ball along twisting tracks at high speed without falling off.",
-                category: "Arcade",
-                gameUrl: "https://curverush.com/curve-rush.embed",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/curve-rush.webp"
-            },
-            {
-                id: 43,
-                title: "Burrito Bison",
-                description: "Launch yourself through the air, smash gummies, and upgrade to fly even farther.",
-                category: "Action / Arcade",
-                gameUrl: "https://burrito-bison-cnm.vercel.app/",
-                imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Bb.png"
-            },
-            {
-                id: 43,
-                title: "Golf Orbit",
-                description: "Launch golf balls into orbit and see how far across the planet you can hit them.",
-                category: "Sports / Arcade",
-                gameUrl: "https://golf-orbit-k8ue.vercel.app/",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/golf-orbit.png"
-            },
-            {
-                id: 44,
-                title: "Ragdoll Archers",
-                description: "Aim and shoot arrows in ragdoll physics battles against opponents.",
-                category: "Action / Physics",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/Ragdoll-Archers/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/ragdoll-archers.jpg"
-            },
-            {
-                id: 45,
-                title: "Helix Jump",
-                description: "Bounce a ball down a twisting helix tower while avoiding the colored traps",
-                category: "Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/helixjump/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/HelixJ.webp"
-            },
-            {
-                id: 46,
-                title: "PolyTrack",
-                description: "Race through vibrant low-poly tracks and compete for the fastest time.",
-                category: "Racing",
-                gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Polyt.webp"
-            },
-            {
-                id: 47,
-                title: "Gobble",
-                description: "Eat smaller objects to grow bigger while avoiding anything larger than you",
-                category: "Arcade / IO",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/Gobble/gobble/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Gobble.png"
-            },
-            {
-                id: 48,
-                title: "Swingo",
-                description: "Swing and bounce through colorful levels using a stretchy grappling hook.",
-                category: "Arcade / Platformer",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/Swingo/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/swingo.jpg"
-            },
-            {
-                id: 49,
-                title: "Spiral Roll",
-                description: "Carve wood to create spirals that clear obstacles and earn points.",
-                category: "Arcade / Skill",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/spralr/index.html",
-                imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Spiralr.png"
-            },
-            {
-                id: 50,
-                title: "Wordle",
-                description: "Word puzzle game where players have six tries to guess a hidden five-letter word using color-coded clues",
-                category: "Puzzle",
-                gameUrl: "https://wordle-actual.vercel.app",
-                imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0829.jpeg"
-            },
-            {
-                id: 51,
-                title: "Unicycle Heroes",
-                description: "Unicycle Hero is a physics-based sports game where you balance on a unicycle and compete in throwing events.",
-                category: "Physics",
-                gameUrl: "https://unicycleh.vercel.app",
-                imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/IMG_0832.jpeg"
-            },
-            {
-                id: 52,
-                title: "Sheep Sheep",
-                description: "Match and collect adorable sheep in this relaxing puzzle game.",
-                category: "Puzzle",
-                gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/",
-                imgUrl: "https://raw.githack.com/KAYAZzz/cnm-games.github.io/main/Thumbnails/Sheep.jpeg"
-            },
-            {
-                id: 53,
-                title: "Game Inside Game",
-                description: "Play a series of mini-games that appear within each other in a fun, layered challenge.",
-                category: "Arcade / Puzzle",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/game-inside/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/GameInsideGame.png"
-            },
-            {
-                id: 54,
-                title: "Black Jack",
-                description: "Try to beat the dealer by getting as close to 21 as possible without going over.",
-                category: "Card / Casino",
-                gameUrl: "https://blackjack-self.vercel.app/",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Blackjack.png"
-            },
-            {
-                id: 55,
-                title: "Raft Wars",
-                description: "Fire tennis balls at enemies to protect your treasure in this fun, turn-based water battle.",
-                category: "Action / Strategy",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/raft-war/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Raftwars.jpg"
-            },
-            {
-                id: 56,
-                title: "Small World Cup",
-                description: "Control tiny soccer teams and compete in a fun, fast-paced world cup tournament.",
-                category: "Sports / Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/a-smallwc/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Asworldc.jpg"
-            },
-            {
-                id: 57,
-                title: "BowMasters",
-                description: "Bowmasters is a colorful, physics-based action game where players take turns aiming and shooting at opponents using various weapons and characters.",
-                category: "Action / Arcade",
-                gameUrl: "https://wowksies.github.io//bowmasters/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0856.png"
-            }, 
-            {
-                id: 58,
-                title: "State.io",
-                description: "State.io is a fast-paced strategy game where you capture territories and conquer opponents to dominate the map.",
-                category: "Strategy / IO",
-                gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0862.png"
-            },
-            {
-                id: 59,
-                title: "Day of Meat",
-                description: "Defend your base from waves of mutated creatures using powerful weapons and upgrades.",
-                category: "Action / Defense",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/DayOfMeat/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Deathofmeat.jpg"
-            },
-            {
-                id: 60,
-                title: "Knife Hit",
-                description: "Throw knives to break spinning logs while avoiding hitting your own blades.",
-                category: "Arcade / Skill",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/knifehit/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Knifehit.png"
-            },
-            {
-                id: 61,
-                title: "Solar Smash",
-                description: "Solar Smash is a planet destruction simulator where players use powerful weapons—like lasers, asteroids, and black holes—to obliterate worlds in spectacular fashion.",
-                category: "Simulation",
-                gameUrl: "https://wowksies.github.io//solar-smash/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0868.png"
-            },
-            {
-                id: 62,
-                title: "Bridge race",
-                description: "Bridge Race is a fun casual racing game where players collect bricks to build bridges and reach the finish line before opponents.",
-                category: "Casual / Arcade",
-                gameUrl: "https://wowksies.github.io//bridge-race/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0870.jpeg"
-            },
-            {
-                id: 63,
-                title: "Papas Pizzaria",
-                description: "Take orders, bake pizzas, and manage the shop to keep customers happy.",
-                category: "Cooking / Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/papsp/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/papaspiz.webp"
-            },
-            {
-                id: 64,
-                title: "Little Alchemy",
-                description: "Combine basic elements to create new items and discover hundreds of unique combinations.",
-                category: "Puzzle / Creativity",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/little-alchemy/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/littleA.png"
-            },
-			{
-                id: 65,
-                title: "8 Ball Pool",
-                description: "Line up your shots and sink balls in competitive online billiards matches.",
-                category: "Sports / Pool",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/pool-pixijs/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/8ballpool.webp"
-            },
-			{
-                id: 66,
-                title: "Stealth Master",
-                description: "Sneak through levels, defeat enemies, and complete missions without being detected.",
-                category: "Action / Stealth",
-                gameUrl: "https://wowksies.github.io//stealth-master/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/stealthmaster.jpg"
-            },
-			{
-                id: 67,
-                title: "Hide and Seek",
-                description: "Run, hide, or chase as you play a fast-paced game of hiding and finding opponents.",
-                category: "Arcade / Casual",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/hideandseek.webp"
-            },
-			{
-                id: 68,
-                title: "Slice it All",
-                description: "Flip your blade and slice through obstacles while keeping your momentum.",
-                category: "Arcade / Skill",
-                gameUrl: "https://wowksies.github.io//slice-it-all/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/sliceitall.png"
-            },
-			{
-                id: 69,
-                title: "Bus Out",
-                description: "Drive your bus through challenging routes, avoiding crashes and picking up passengers",
-                category: "Driving / Simulation",
-                gameUrl: "https://gamesbun.github.io/busout-school/",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/busout.webp"
-            },
-			{
-                id: 70,
-                title: "Blumgi Racers",
-                description: "Use slingshot physics to launch your racer across tricky tracks and reach the finish line.",
-                category: "Racing / Physics",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgir/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/br.webp"
-            },
-			{
-                id: 71,
-                title: "Hills Of Steel",
-                description: "Drive a tank over hills, shoot enemies, and collect loot to upgrade your firepower.",
-                category: "Action / Vehicle Combat",
-                gameUrl: "https://hillofsteele.vercel.app/",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/hills%20of%20steel.webp"
-            },
-			{
-                id: 72,
-                title: "Rooftop Snipers 2",
-                description: "Duel atop rooftops using wild weapons and knock your opponent off to win.",
-                category: "Action / Shooter",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/rooftopsnipers/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/rooftop-snipers.webp"
-            },
-			{
-                id: 72,
-                title: "Bounce Masters",
-                description: "Bounce your way through levels, defeat enemies, and collect coins to upgrade.",
-                category: "Arcade / Action",
-                gameUrl: "https://wowksies.github.io//bouncemasters/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/bouncemasters.webp"
-            },
-			{
-                id: 73,
-                title: "Blumgi Ball",
-                description: "Use a slingshot to launch the ball and teleport through obstacles to score.",
-                category: "Arcade / Physics",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgiball/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/blumgiball.webp"
-            },
-			{
-                id: 74,
-                title: "Draw Joust",
-                description: "Draw Joust is a mobile action game where you draw a vehicle with weapons and battle opponents using physics-based combat.",
-                category: "Action / Physics",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/DrawJoustindex.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0959.png"
-            },
-			{
-                id: 74,
-                title: "Basketball Legends",
-                description: "Basketball legends are iconic players known for their exceptional skill and lasting impact on the sport. They inspire fans and shape the history of basketball.",
-                category: "Sports",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/basketball-legends-main/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0963.jpeg"
-            },
-			{
-                id: 75,
-                title: "Football Legends",
-                description: "Play fast-paced soccer matches using special moves and powerful shots to outscore opponents.",
-                category: "Sports / Arcade",
-                gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/Football-Legends.jpg"
-            },
-			{
-                id: 76,
-                title: "Crossy Road",
-                description: "Crossy Road is an arcade game where you hop across roads and obstacles to survive as long as possible.",
-                category: "Arcade / Endless Runner",
-                gameUrl: "https://wowksies.github.io//crossy-road/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/CrossyR.jpg"
-            },
-			{
-                id: 77,
-                title: "GetAway Shootout",
-                description: "Getaway Shootout is a fast, chaotic 2D action shooter where players race to a getaway point using quirky, physics-based movement.",
-                category: "Action / Shooter",
-                gameUrl: "https://wowksies.github.io/getaway-shootout/index.html",
-                imgUrl: "https://wowksies.github.io/kivro-games/Thumbnails/IMG_0980.jpeg"
-            },
-
-
-
-			
+                id: 1001, 
+                title: "My App", 
+                description: "Description of your app goes here.", 
+                category: "App", // <--- THIS CATEGORY SHOWS IN "APPS" TAB
+                gameUrl: "https://your-app-url.com", 
+                imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon" 
+            }
         ];
 
         // --- DOM Elements ---
         const gameGrid = document.getElementById('game-grid');
         const searchInput = document.getElementById('search-input');
+        const clearButton = document.getElementById('clear-search');
         const gameCountDisplay = document.getElementById('game-count');
         const userIdDisplay = document.getElementById('user-id-display'); 
         const gameModal = document.getElementById('game-modal');
@@ -1241,31 +836,15 @@
         const linkFallback = document.getElementById('link-fallback');
         const openInNewTabLink = document.getElementById('open-in-new-tab');
 
-        // --- State ---
-        let searchTerm = '';
-        let loadTimeout;
-        const PANIC_URL = "https://member.foodvillage.ie/login"; 
-
         // =========================================================================
         // === UTILITY FUNCTIONS ===================================================
         // =========================================================================
 
-        /**
-         * Redirects the user to the panic URL immediately.
-         */
         function handlePanic() {
             console.warn("PANIC TRIGGERED. Redirecting to safe URL...");
             window.location.href = PANIC_URL;
         }
 
-
-        // =========================================================================
-        // === FIREBASE INITIALIZATION & DATA SAVING LOGIC =========================
-        // =========================================================================
-
-        /**
-         * Initializes Firebase and authenticates the user, guaranteeing a defined userId.
-         */
         async function initializeFirebase() {
             if (Object.keys(firebaseConfig).length === 0) {
                  console.warn("Firebase config is empty. Data persistence disabled.");
@@ -1273,14 +852,11 @@
                  userIdDisplay.textContent = userId + " (Persistence Disabled)";
                  return;
             }
-            
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 setLogLevel('debug'); 
-                
                 await new Promise((resolve) => {
                     const unsubscribe = onAuthStateChanged(auth, async (user) => {
                         if (!user) {
@@ -1291,16 +867,13 @@
                                 await signInAnonymously(auth);
                             }
                         }
-                        
                         userId = auth.currentUser?.uid || crypto.randomUUID();
                         userIdDisplay.textContent = userId;
                         console.log(`Firebase Initialized. User ID: ${userId}`);
-                        
                         unsubscribe();
                         resolve();
                     });
                 });
-
             } catch (error) {
                 console.error("Error initializing Firebase or during sign-in:", error);
                 userId = crypto.randomUUID(); 
@@ -1308,29 +881,21 @@
             }
         }
 
-        /**
-         * Constructs the Firestore document path for game progress.
-         */
         function getGameDocRef(gameId) {
             if (!db || !userId || !gameId) {
                 console.error("Cannot get doc ref: Firebase or IDs missing.");
                 return null;
             }
-            // Path: /artifacts/{appId}/users/{userId}/game_saves/{gameId}
             const path = `/artifacts/${appId}/users/${userId}/game_saves`;
             return doc(db, path, String(gameId));
         }
 
-        /**
-         * Saves game data to Firestore (Called by postMessage listener).
-         */
         async function saveGameProgress(gameId, data) {
             const docRef = getGameDocRef(gameId);
             if (!docRef) {
                 console.warn(`[Save Skipped] Persistence is disabled. Game ID: ${gameId}`);
                 return { success: false, error: "Persistence disabled." };
             }
-            
             try {
                 await setDoc(docRef, { 
                     gameId: String(gameId), 
@@ -1345,15 +910,9 @@
             }
         }
 
-        /**
-         * Loads game data from Firestore (Called by postMessage listener).
-         */
         async function loadGameProgress(gameId) {
             const docRef = getGameDocRef(gameId);
-            if (!docRef) {
-                 return { data: null, success: false, error: "Persistence disabled." };
-            }
-
+            if (!docRef) return { data: null, success: false, error: "Persistence disabled." };
             try {
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
@@ -1371,21 +930,11 @@
             }
         }
 
-        /**
-         * PostMessage listener to handle SAVE/LOAD requests from the iframe.
-         */
         function handleIframeMessage(event) {
-            // Only accept messages from the currently active iframe source
-            if (event.source !== gameIframe.contentWindow) {
-                return; 
-            }
-            
+            if (event.source !== gameIframe.contentWindow) return;
             const message = event.data;
             const iframeWindow = gameIframe.contentWindow;
-
-            if (typeof message !== 'object' || !message.type || message.gameId !== currentGameId) {
-                return; 
-            }
+            if (typeof message !== 'object' || !message.type || message.gameId !== currentGameId) return;
 
             switch (message.type) {
                 case 'LOAD_DATA':
@@ -1398,47 +947,36 @@
                         iframeWindow.postMessage({ type: 'SAVE_RESPONSE', success: result.success }, '*');
                     });
                     break;
-                default:
-                    break;
+                default: break;
             }
         }
 
-        // =========================================================================
-        // === UI AND GAME LAUNCH LOGIC ============================================
-        // =========================================================================
+        // =========================================================
+        // === UI / RENDER LOGIC ===================================
+        // =========================================================
 
-        /**
-         * Opens the game modal with the specified URL and ID.
-         */
-// 🚀 OPEN GAME IN NEW WEBSITE — NO MODAL, NO IFRAME
-window.openGameModal = function (url, gameId) {
-	
-    // Ignore modal completely — just redirect
-    window.location.href = url;
-	fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${game.id}`);
-};
-
+        window.openGameModal = function (url, gameId) {
+            // Simply redirect as requested in previous config
+            window.location.href = url;
+            // Note: trackGame API call was here in previous version
+            try { fetch(`https://kivro-counter.vercel.app/api/trackGame?gameId=${gameId}`); } catch(e){}
+        };
 
         function closeGameModal() {
             clearTimeout(loadTimeout);
             gameIframe.onload = null;
-            
             gameModal.classList.add('hidden');
             gameModal.classList.remove('flex');
-            gameIframe.src = ''; // Stop the iframe content
-            currentGameId = null; // Clear game context
+            gameIframe.src = '';
+            currentGameId = null;
         }
 
-        /**
-         * Simulates the count-up text animation.
-         */
         function countUp(targetElement, finalNumber) {
             let count = 0;
             const duration = 1000;
             const interval = 30;
             const totalSteps = duration / interval;
-            const increment = finalNumber === 0 ? 0 : finalNumber / totalSteps; 
-
+            const increment = finalNumber === 0 ? 0 : finalNumber / totalSteps;
             function updateCount() {
                 if (count < finalNumber) {
                     count += increment;
@@ -1448,115 +986,120 @@ window.openGameModal = function (url, gameId) {
                     targetElement.textContent = finalNumber;
                 }
             }
-            if (targetElement.dataset.interval) {
-                 clearTimeout(targetElement.dataset.interval);
-            }
+            if (targetElement.dataset.interval) clearTimeout(targetElement.dataset.interval);
             targetElement.dataset.interval = setTimeout(updateCount, interval);
         }
 
-        /**
-         * Generates the HTML string for a single game card.
-         */
         function createGameCardHTML(game) {
             const safeUrl = game.gameUrl.replace(/'/g, "\\'");
-            
             return `
-                <div 
-                    class="bg-gray-800 rounded-xl shadow-xl overflow-hidden cursor-pointer transform transition duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-indigo-500/50"
-                    data-url="${game.gameUrl}"
-                    onclick="showAdThenPlay('${safeUrl}')"
-                >
-                    <!-- Thumbnail Area -->
+                <div class="bg-gray-800 rounded-xl shadow-xl overflow-hidden cursor-pointer transform transition duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-indigo-500/50"
+                    data-url="${game.gameUrl}" onclick="showAdThenPlay('${safeUrl}')">
                     <div class="h-40 bg-gray-900 relative overflow-hidden">
-                        <img 
-                            src="${game.imgUrl}" 
-                            alt="${game.title} Thumbnail" 
-                            class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110" 
-                            onerror="this.onerror=null; this.src='https://placehold.co/400x220/DC2626/ffffff?text=Image+Load+FAIL+CHECK+CONSOLE';"
-                        />
-                        <!-- Category tag -->
-                        <span class="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full bg-purple-600 text-white shadow-md">
-                            ${game.category}
-                        </span>
+                        <img src="${game.imgUrl}" alt="${game.title}" class="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110" onerror="this.onerror=null; this.src='https://placehold.co/400x220/DC2626/ffffff?text=Image+Load+FAIL';"/>
+                        <span class="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full bg-purple-600 text-white shadow-md">${game.category}</span>
                     </div>
-
-                    <!-- Game Info -->
                     <div class="p-4">
                         <h2 class="text-xl font-bold text-gray-50 truncate mb-1">${game.title}</h2>
                         <p class="text-sm text-gray-400 line-clamp-2">${game.description}</p>
-                        
-                        <button class="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold text-sm hover:bg-indigo-700 transition duration-150 transform hover:scale-[1.01] shadow-lg shadow-indigo-500/50 pointer-events-none">
-                            Launch Game
-                        </button>
+                        <button class="mt-4 w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold text-sm hover:bg-indigo-700 transition duration-150 transform hover:scale-[1.01] shadow-lg shadow-indigo-500/50 pointer-events-none">Launch</button>
                     </div>
                 </div>
             `;
         }
 
-
-        /**
-         * Filters games based on the search term and renders the grid.
-         */
+        // --- NEW TAB SWITCHING LOGIC ---
         function renderGameCards() {
             const term = searchTerm.toLowerCase();
-            const filteredGames = initialGames.filter(game =>
-                game.title.toLowerCase().includes(term) ||
-                game.category.toLowerCase().includes(term) ||
-                game.description.toLowerCase().includes(term)
-            );
+            const filteredGames = initialGames.filter(game => {
+                const matchesSearch = game.title.toLowerCase().includes(term) || game.category.toLowerCase().includes(term) || game.description.toLowerCase().includes(term);
+                
+                let matchesTab = false;
+                if (currentTab === 'Games') {
+                    matchesTab = game.category !== 'App'; 
+                } else {
+                    matchesTab = game.category === 'App';
+                }
+                return matchesSearch && matchesTab;
+            });
 
-            countUp(gameCountDisplay, filteredGames.length);
+            if (gameCountDisplay) countUp(gameCountDisplay, filteredGames.length);
             
             if (filteredGames.length > 0) {
                 gameGrid.innerHTML = filteredGames.map(createGameCardHTML).join('');
             } else {
-                gameGrid.innerHTML = `
-                    <p class="text-xl text-gray-400 col-span-full text-center py-10 border-2 border-dashed border-gray-700 p-6 rounded-xl">
-                        <span class="text-2xl block mb-2">😔</span>
-                        No games found matching "${searchTerm}". Try broadening your search!
-                    </p>
-                `;
+                gameGrid.innerHTML = `<p class="text-xl text-gray-400 col-span-full text-center py-10 border-2 border-dashed border-gray-700 p-6 rounded-xl"><span class="text-2xl block mb-2">😔</span>No ${currentTab === 'Games' ? 'games' : 'apps'} found matching "${searchTerm}".</p>`;
             }
         }
 
+        function switchTab(tabName) {
+            currentTab = tabName;
+            const btnGames = document.getElementById('tab-games');
+            const btnApps = document.getElementById('tab-apps');
+            const activeClass = "bg-indigo-600 text-white shadow-md shadow-indigo-500/50";
+            const inactiveClass = "text-gray-400 hover:text-white hover:bg-gray-700 shadow-none bg-transparent";
+
+            if (tabName === 'Games') {
+                btnGames.className = `px-4 py-1 rounded-full text-xs font-bold transition-all ${activeClass}`;
+                btnApps.className  = `px-4 py-1 rounded-full text-xs font-bold transition-all ${inactiveClass}`;
+            } else {
+                btnGames.className = `px-4 py-1 rounded-full text-xs font-bold transition-all ${inactiveClass}`;
+                btnApps.className  = `px-4 py-1 rounded-full text-xs font-bold transition-all ${activeClass}`;
+            }
+            renderGameCards();
+        }
 
         // --- Event Listeners and Initialization ---
-
         window.onload = async function() {
             await initializeFirebase();
-            
             window.addEventListener('message', handleIframeMessage);
+            
+            // TAB LISTENERS
+            const btnGames = document.getElementById('tab-games');
+            const btnApps = document.getElementById('tab-apps');
+            if (btnGames) btnGames.addEventListener('click', () => switchTab('Games'));
+            if (btnApps) btnApps.addEventListener('click', () => switchTab('Apps'));
+
             renderGameCards();
 
-            searchInput.addEventListener('input', (e) => {
-                searchTerm = e.target.value;
-                renderGameCards();
-            });
+            // Search logic
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    if(clearButton) clearButton.classList.toggle('hidden', searchTerm.trim() === '');
+                    renderGameCards();
+                });
+            }
+            if (clearButton) {
+                clearButton.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchTerm = '';
+                    clearButton.classList.add('hidden');
+                    renderGameCards();
+                });
+            }
 
-            closeModalBtn.addEventListener('click', closeGameModal);
-            panicButton.addEventListener('click', handlePanic); 
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeGameModal);
+            if (panicButton) panicButton.addEventListener('click', handlePanic); 
 
             document.addEventListener('keydown', (e) => {
-                // If the game modal is open, ESC closes the modal.
-                // Otherwise, ESC triggers the panic function.
                 if (e.key === 'Escape') {
-                    if (gameModal.classList.contains('flex')) {
+                    if (gameModal && gameModal.classList.contains('flex')) {
                         closeGameModal();
                         e.preventDefault(); 
                     } else {
-                        handlePanic(); // Panic button keyboard shortcut
+                        handlePanic(); 
                     }
                 }
             });
         };
 
-                // === Expose helper functions so external scripts can reset search ===
+        // Expose helpers
         window.renderGameCards = renderGameCards;
         window.setSearchTerm = (val) => {
             searchTerm = String(val || '');
             renderGameCards();
         };
-
     </script>
 
 <script>
