@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kivro Games</title>
     <meta name="description" content="Premium unblocked games library.">
+    
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -35,9 +37,9 @@
 
         /* --- GLASSMOPHISM --- */
         .glass-header {
-            background: rgba(15, 15, 26, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-panel {
@@ -60,24 +62,32 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
+            /* Fix mobile tap highlighting whole card */
+            -webkit-touch-callout: none;
         }
-        .game-card:hover {
-            transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(99, 102, 241, 0.5);
-            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.2);
+        .game-card:active {
+            transform: scale(0.98);
         }
         
-        /* --- BRIGHTER THUMBNAILS (Requested) --- */
+        /* Desktop Hover Only */
+        @media (hover: hover) {
+            .game-card:hover {
+                transform: translateY(-6px);
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(99, 102, 241, 0.5);
+                box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(99, 102, 241, 0.2);
+            }
+            .game-card:hover img {
+                transform: scale(1.08);
+                filter: brightness(1.25) contrast(1.15);
+            }
+        }
+
         .game-card img {
             transition: transform 0.5s ease;
-            filter: brightness(1.2) contrast(1.15) saturate(1.1); /* BOOSTED BRIGHTNESS */
-        }
-        .game-card:hover img {
-            transform: scale(1.08);
-            filter: brightness(1.3) contrast(1.2) saturate(1.2);
+            filter: brightness(1.1) contrast(1.1); /* Brighter default */
         }
 
         /* --- SHINY TEXT --- */
@@ -91,16 +101,24 @@
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- STAR BUTTON (Fixed Z-Index) --- */
+        /* --- STAR BUTTON (Positioned Top Right) --- */
         .star-btn {
-            position: absolute; top: 10px; left: 10px; z-index: 50; /* Higher than card link */
-            width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
-            color: #9ca3af; transition: all 0.2s; cursor: pointer;
+            position: absolute; 
+            top: 8px; 
+            right: 8px; /* Moved to Right to avoid overlap */
+            z-index: 50;
+            width: 36px; height: 36px; 
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.6); 
+            backdrop-filter: blur(4px);
+            border-radius: 50%; 
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #9ca3af; 
+            transition: all 0.2s; 
+            cursor: pointer;
         }
-        .star-btn:hover { background: white; color: #fbbf24; transform: scale(1.1); border-color: white; }
-        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.15); border-color: #fbbf24; }
+        .star-btn:active { transform: scale(0.9); }
+        .star-active { color: #fbbf24 !important; background: rgba(255, 255, 255, 0.2); border-color: #fbbf24; }
 
         /* --- UTILS --- */
         .tab-btn { transition: all 0.2s; }
@@ -151,22 +169,22 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             <div class="md:col-span-2 glass-panel rounded-2xl p-6 flex items-center gap-6 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none group-hover:bg-indigo-600/20 transition-all"></div>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 blur-[80px] rounded-full pointer-events-none"></div>
                 <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-16 h-16 rounded-xl shadow-2xl z-10 hidden sm:block">
                 <div class="z-10">
-                    <h2 class="text-2xl font-bold text-white mb-2">Welcome to Kivro Games</h2>
+                    <h2 class="text-2xl font-bold text-white mb-2">Welcome Back</h2>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Play premium web games, save your progress, and explore new titles. 
-                        Suggestions and updates are right here, so you don’t have to hunt through popups.
+                        Tap any game to launch in a new tab for maximum speed. 
+                        Use the Star icon to save favorites.
                     </p>
                 </div>
             </div>
 
             <div class="glass-panel rounded-2xl p-5 flex flex-col justify-center space-y-3">
-                <h3 class="text-indigo-400 font-bold text-xs uppercase tracking-widest">Latest Updates</h3>
+                <h3 class="text-indigo-400 font-bold text-xs uppercase tracking-widest">Updates</h3>
                 <ul class="text-sm text-gray-300 space-y-2">
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Added Favorites Tab</li>
-                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>iPad Controls Fixed</li>
+                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Games open in new tabs</li>
+                    <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>UI optimized for iPad</li>
                 </ul>
                 <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
                    class="mt-2 block text-center bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold py-2 rounded-lg transition-colors">
@@ -179,7 +197,7 @@
             <h2 class="text-xl font-bold text-white flex items-center gap-2">
                 Library <span id="game-count" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
             </h2>
-            <div class="text-xs text-gray-500 font-mono">v5.3 Stable</div>
+            <div class="text-xs text-gray-500 font-mono">v5.4 Mobile Optimized</div>
         </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
@@ -211,11 +229,11 @@
             }
             try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
 
-            // SMART UPDATE: Only re-render if we are in "Favs" tab to avoid jumping
+            // Only re-render if we are actually viewing the "Favs" tab
+            // Otherwise just toggle the star color instantly to prevent jumping
             if (currentTab === 'Favs') {
                 renderGrid();
             } else {
-                // Just toggle class visually for smooth UX
                 const btn = e.currentTarget;
                 btn.classList.toggle('star-active');
             }
@@ -341,12 +359,13 @@
                 card.className = "game-card group cursor-pointer";
                 
                 // CLICK ACTION: Apps -> URL | Games -> play.html
-                const action = (item.category === 'App') 
-                    ? `window.open('${item.gameUrl}', '_blank')`
-                    : `window.open('play.html?id=${item.id}', '_blank')`;
+                const action = `window.open('${item.gameUrl}', '_blank')`;
 
                 card.onclick = () => eval(action);
 
+                // --- UI LAYOUT FIXED FOR MOBILE ---
+                // Star: Top Right
+                // Category: Bottom Left (Inside Image)
                 card.innerHTML = `
                     <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="toggleFav(event, ${item.id})">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -354,10 +373,13 @@
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400?text=Game'">
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
+                        
+                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-black/70 text-white backdrop-blur-md border border-white/10 uppercase tracking-wider">
+                            ${item.category}
+                        </span>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-sm font-bold text-white truncate mb-1">${item.title}</h3>
-                        <p class="text-[10px] uppercase tracking-wide font-bold text-gray-500 group-hover:text-indigo-400 transition-colors">${item.category}</p>
+                    <div class="p-3">
+                        <h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3>
                     </div>
                 `;
                 grid.appendChild(card);
