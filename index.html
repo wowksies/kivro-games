@@ -115,66 +115,68 @@
 
     <button 
       id="install-trigger-btn" 
-      class="fixed top-16 left-4 z-[3000] bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition-transform transform hover:scale-110 active:scale-95"
+      class="fixed top-4 left-4 z-[3000] bg-indigo-600/40 hover:bg-indigo-600/60 text-white p-3 rounded-full shadow-lg shadow-indigo-500/20 backdrop-blur-md border border-white/20 transition-all transform hover:scale-110 active:scale-95 group"
       aria-label="Install App">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
       </svg>
     </button>
 
-    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden" aria-hidden="true">
-      <div id="install-content" class="bg-gray-900 text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl animate-fadeIn overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
+    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-sm" aria-hidden="true">
+      <div id="install-content" class="bg-gray-900/90 text-gray-100 rounded-3xl p-6 max-w-2xl w-[92%] shadow-2xl animate-fadeIn overflow-y-auto max-h-[90vh] border border-white/10 backdrop-blur-xl" role="dialog" aria-modal="true" aria-labelledby="install-title">
 
-        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
-        <p class="text-gray-300 mb-4 text-center">For the best experience, follow these quick steps:</p>
+        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Home Screen</h2>
+        <p class="text-gray-300 mb-6 text-center text-sm">For the best full-screen experience, follow these steps:</p>
         
-        <h2 class="text-2xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
+        <h3 class="text-lg font-bold text-gray-200 mb-4 text-center">Select App Icon</h3>
         
-        <div class="flex justify-center gap-5 mb-5 flex-wrap">
+        <div class="flex justify-center gap-6 mb-8 flex-wrap">
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
                  class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 1">
+                 alt="Teams Icon">
           </div>
 
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
                  class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 2">
+                 alt="Kahoot Icon">
           </div>
 
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 3">
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all duration-300 group-active:scale-95" 
+                 alt="Kivro Icon">
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
-          <div class="install-step">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
-            <p class="text-sm text-gray-300 mb-2">Tap the <strong>Share</strong> icon in Safari.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
+          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+            <div class="text-xl font-bold mb-1 text-indigo-400">1</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> in Safari.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
           </div>
 
-          <div class="install-step">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">2</div>
-            <p class="text-sm text-gray-300 mb-2">Scroll down in the menu that appears.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover">
+          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+            <div class="text-xl font-bold mb-1 text-indigo-400">2</div>
+            <p class="text-xs text-gray-300 mb-2">Scroll down menu.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
           </div>
 
-          <div class="install-step">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">3</div>
-            <p class="text-sm text-gray-300 mb-2">Tap <strong>Add to Home Screen</strong> — done!</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover">
+          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
+            <div class="text-xl font-bold mb-1 text-indigo-400">3</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home</strong>.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
           </div>
         </div>
 
-        <div class="flex justify-center mt-4">
-          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded-md text-sm font-semibold text-white">Got it — Finish</button>
+        <div class="flex justify-center">
+          <button id="close-popup" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-8 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-indigo-500/30 backdrop-blur-md border border-white/10 transition-all transform hover:scale-105">
+            Got it — Finish
+          </button>
         </div>
       </div>
     </div>
@@ -182,7 +184,7 @@
     <header class="sticky top-0 z-50 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
             
-            <div class="flex items-center gap-3 pl-12 sm:pl-0"> <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
+            <div class="flex items-center gap-3 pl-14 sm:pl-0"> <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
                 <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
             </div>
 
@@ -255,10 +257,7 @@
         const gl = canvas.getContext('webgl');
         
         if (gl) {
-            const vsSource = `
-                attribute vec2 position;
-                void main() { gl_Position = vec4(position, 0.0, 1.0); }
-            `;
+            const vsSource = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
             const fsSource = `
                 precision mediump float;
                 uniform float time;
@@ -270,7 +269,7 @@
                     float g = sin(uv.y * 3.0 + t * 1.2) * 0.5 + 0.5;
                     float b = sin((uv.x + uv.y) * 3.0 - t) * 0.5 + 0.5;
                     vec3 col = 0.5 + 0.5 * cos(time + uv.xyx + vec3(0, 2, 4));
-                    gl_FragColor = vec4(col * 0.15, 1.0); // Dark ambient
+                    gl_FragColor = vec4(col * 0.15, 1.0);
                 }
             `;
             const program = gl.createProgram();
@@ -417,7 +416,6 @@
                 }
             });
 
-            // Favorites Top Logic
             if(currentTab === 'Games' && !searchTerm) {
                 items.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
             }
@@ -432,7 +430,7 @@
                 // CLICK ACTION
                 const action = (item.category === 'App') 
                     ? `window.open('${item.gameUrl}', '_blank')`
-                    : `window.open('play.html?id=${item.id}', '_blank')`;
+                    : `window.open('${item.gameUrl}', '_blank')`;
 
                 card.onclick = () => eval(action);
 
