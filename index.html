@@ -218,12 +218,12 @@
         .animate-pulse-slow { animation: pulse 3s infinite; }
 
         /* Popup Animation Styles */
-        #install-popup {
+        #install-popup, #disclaimer-popup {
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
-        #install-popup.active {
+        #install-popup.active, #disclaimer-popup.active {
             opacity: 1;
             pointer-events: auto;
         }
@@ -315,6 +315,23 @@
         <div class="flex justify-center mt-4">
           <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
         </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER POPUP -->
+    <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
+      <div class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-md w-[90%] shadow-2xl text-center border border-indigo-500/30">
+        <div class="flex justify-center mb-4">
+            <span class="text-4xl">🤝</span>
+        </div>
+        <h2 class="text-xl font-bold text-indigo-300 mb-3">Partner App Notice</h2>
+        <p class="text-gray-300 text-sm mb-6 leading-relaxed">
+            BlackFlix is a partner app hosted on Kivro Games. We do not develop or maintain it directly. Please report any bugs to the BlackFlix creator, not Kivro Games.
+        </p>
+        
+        <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">
+            Wait <span id="disclaimer-timer">10</span>s...
+        </button>
       </div>
     </div>
 
@@ -520,9 +537,81 @@
         let currentTab = 'Games';
         let searchTerm = '';
 
-        // --- FUNCTIONS ---
+        // --- DISCLAIMER LOGIC ---
+        let disclaimerUrl = '';
+        let countdownInterval;
 
-        // TAB PILL ANIMATION
+        function openDisclaimer(url) {
+            disclaimerUrl = url;
+            const popup = document.getElementById('disclaimer-popup');
+            const btn = document.getElementById('disclaimer-btn');
+            
+            if(!popup || !btn) return;
+
+            // Reset state
+            let timeLeft = 10;
+            btn.disabled = true;
+            btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10";
+            btn.innerHTML = `Wait <span id="disclaimer-timer">${timeLeft}</span>s...`;
+            
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => {
+                popup.classList.add('active');
+            }, 10);
+
+            // Clear existing interval if any
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                const span = document.getElementById('disclaimer-timer');
+                if(span) span.innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    btn.disabled = false;
+                    btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg cursor-pointer";
+                    btn.innerHTML = "Continue to App";
+                }
+            }, 1000);
+        }
+
+        // Close Disclaimer
+        function closeDisclaimer() {
+            const popup = document.getElementById('disclaimer-popup');
+            if (popup) {
+                popup.classList.remove('active');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                    popup.style.display = 'none';
+                }, 300);
+            }
+            if (countdownInterval) clearInterval(countdownInterval);
+        }
+
+        // Event listener for the disclaimer button
+        const disclaimerBtn = document.getElementById('disclaimer-btn');
+        if (disclaimerBtn) {
+            disclaimerBtn.onclick = () => {
+                if (disclaimerUrl) {
+                    window.open(disclaimerUrl, '_blank');
+                    closeDisclaimer();
+                }
+            };
+        }
+
+        // Close disclaimer on outside click
+        const disclaimerPopup = document.getElementById('disclaimer-popup');
+        if (disclaimerPopup) {
+            disclaimerPopup.addEventListener('click', (e) => {
+                if (e.target === disclaimerPopup) {
+                    closeDisclaimer();
+                }
+            });
+        }
+
+        // --- TAB PILL ANIMATION ---
         function movePill(targetBtn) {
             const pill = document.getElementById('tab-pill');
             if(!pill || !targetBtn) return;
@@ -576,11 +665,13 @@
                 card.style.animationDelay = `${index * 50}ms`;
                 
                 // CLICK ACTION
-                const action = (item.category === 'App') 
-                    ? `window.open('${item.gameUrl}', '_blank')`
-                    : `window.open('${item.gameUrl}', '_blank')`;
-
-                card.onclick = () => eval(action);
+                card.onclick = () => {
+                    if (item.id === 1001) { // BlackFlix ID
+                        openDisclaimer(item.gameUrl);
+                    } else {
+                        window.open(item.gameUrl, '_blank');
+                    }
+                };
 
                 card.innerHTML = `
                     <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
@@ -703,6 +794,7 @@
         document.addEventListener('keydown', (e) => {
              if (e.key === 'Escape' && popup && !popup.classList.contains('hidden')) {
                  hidePopup();
+                 closeDisclaimer();
              }
         });
         
@@ -752,81 +844,3 @@
             }
         }
     </script>
-
-    <script type="module">
-        import { Renderer, Program, Triangle, Mesh } from 'https://unpkg.com/ogl@0.0.106/dist/ogl.mjs';
-
-        const initLightRays = () => {
-            const container = document.getElementById('gradient-canvas');
-            if(!container) return;
-
-            const renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio, 2) });
-            const gl = renderer.gl;
-            gl.canvas.style.width = '100%'; gl.canvas.style.height = '100%';
-            container.appendChild(gl.canvas);
-
-            const vert = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
-            const frag = `
-                precision highp float;
-                uniform float iTime;
-                uniform vec2 iResolution;
-                uniform vec3 raysColor;
-                
-                float noise(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
-
-                float rayStrength(vec2 raySource, vec2 coord, float seedA, float seedB, float speed) {
-                    vec2 sourceToCoord = coord - raySource;
-                    vec2 dirNorm = normalize(sourceToCoord);
-                    float dist = length(sourceToCoord);
-                    
-                    float distort = dot(dirNorm, vec2(0.0, 1.0)) + 0.05 * sin(iTime * 1.5 + dist * 0.005);
-                    float spread = pow(max(distort, 0.0), 4.0);
-                    
-                    float pulse = 0.9 + 0.1 * sin(iTime * speed + dist * 0.01);
-                    return clamp((0.4 * sin(distort * seedA + iTime * speed)) + (0.3 * cos(distort * seedB - iTime * speed)), 0.0, 1.0) * spread * pulse;
-                }
-
-                void main() {
-                    vec2 coord = gl_FragCoord.xy;
-                    vec2 rayPos = vec2(iResolution.x * 0.5, iResolution.y * 1.2); 
-                    
-                    vec4 rays1 = vec4(1.0) * rayStrength(rayPos, coord, 30.0, 20.0, 1.2);
-                    vec4 rays2 = vec4(1.0) * rayStrength(rayPos, coord, 15.0, 10.0, 0.8);
-                    
-                    vec3 col = (rays1.rgb * 0.4 + rays2.rgb * 0.3) * raysColor;
-                    float n = noise(coord * 0.005 + iTime * 0.05);
-                    col += n * 0.02; 
-                    
-                    gl_FragColor = vec4(col, 1.0);
-                }
-            `;
-
-            const uniforms = {
-                iTime: { value: 0 },
-                iResolution: { value: [window.innerWidth, window.innerHeight] },
-                raysColor: { value: [0.3, 0.0, 0.6] } // Deep Purple
-            };
-
-            const geometry = new Triangle(gl);
-            const program = new Program(gl, { vertex: vert, fragment: frag, uniforms });
-            const mesh = new Mesh(gl, { geometry, program });
-
-            function resize() {
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                uniforms.iResolution.value = [renderer.width, renderer.height];
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            requestAnimationFrame(function update(t) {
-                uniforms.iTime.value = t * 0.001;
-                renderer.render({ scene: mesh });
-                requestAnimationFrame(update);
-            });
-        };
-        
-        // Only run WebGL if screen is big enough (Save battery on phones)
-        if(window.innerWidth > 600) initLightRays();
-    </script>
-</body>
-</html>
