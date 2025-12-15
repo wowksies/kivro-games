@@ -34,46 +34,83 @@
             min-height: 100vh; position: fixed; inset: 0; z-index: -2;
         }
 
+        /* --- APPLE LIQUID GLASS EFFECT --- */
+        /* This mimics the iOS 'Material' look using saturation + blur */
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.03); /* Extremely subtle fill */
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Add a subtle shine to the glass on hover */
+        .liquid-glass::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
         /* --- UI STYLES --- */
         .glass-header {
-            background: rgba(10, 10, 12, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            /* Applying liquid glass to header */
+            background: rgba(10, 10, 12, 0.6);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: background 0.3s ease;
         }
         
         .intro-card {
-            background: rgba(20, 20, 25, 0.5);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(20, 20, 25, 0.4);
+            backdrop-filter: blur(24px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 32px;
             box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
         }
 
-        /* --- GAME CARDS --- */
+        /* --- ANIMATIONS --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        
+        .card-anim {
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        }
+
+        /* --- GAME CARDS (The main recipient of Liquid Glass) --- */
         .game-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 18px;
-            overflow: hidden;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            transform: translateZ(0); /* Hardware accel */
+            /* Inherits liquid-glass properties via class in JS, but defaults here: */
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateZ(0); 
         }
         
         @media (hover: hover) {
             .game-card:hover {
-                transform: translateY(-6px);
-                background: rgba(255, 255, 255, 0.08);
-                border-color: rgba(129, 140, 248, 0.4);
-                box-shadow: 0 15px 30px -5px rgba(0,0,0,0.5), 0 0 20px rgba(99, 102, 241, 0.2);
+                transform: translateY(-10px) scale(1.02);
+                border-color: rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.08); /* Brighter glass on hover */
+                box-shadow: 0 20px 40px -5px rgba(0,0,0,0.5), 
+                            0 0 0 1px rgba(255,255,255,0.1) inset; /* Inner glow */
             }
-            .game-card:hover img { transform: scale(1.08); filter: brightness(1.2); }
+            .game-card:hover::after {
+                left: 150%; /* Trigger shine animation */
+                transition: 0.7s ease-in-out;
+            }
+            .game-card:hover img { transform: scale(1.1); filter: brightness(1.15); }
         }
 
         .game-card img {
-            transition: transform 0.6s ease;
-            filter: brightness(1.05) saturate(1.1);
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: brightness(1.0) saturate(1.1);
         }
 
         /* --- ELEMENTS --- */
@@ -85,15 +122,45 @@
             display: flex; align-items: center; justify-content: center;
             color: #9ca3af; transition: all 0.2s; cursor: pointer;
         }
-        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.15); border-color: #fbbf24; }
+        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.2); border-color: #fbbf24; box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
 
-        .tab-active { background: #6366f1; color: white; box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-        .tab-inactive { color: #9ca3af; }
-        .tab-inactive:hover { color: white; background: rgba(255,255,255,0.05); }
+        /* Smooth Tab Transitions */
+        .tab-btn {
+            position: relative;
+            z-index: 10;
+            transition: color 0.3s ease;
+        }
+        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        .tab-inactive-text { color: #9ca3af; }
+        .tab-inactive-text:hover { color: white; }
 
         #splash { background-color: #050505; z-index: 9999; transition: opacity 0.5s ease; pointer-events: auto; }
         .fade-out { opacity: 0 !important; pointer-events: none !important; }
         .animate-pulse-slow { animation: pulse 3s infinite; }
+
+        /* Popup Animation Styles */
+        #install-popup {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        #install-popup.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Glass Input Fields */
+        .glass-input {
+            background: rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .glass-input:focus {
+            background: rgba(0, 0, 0, 0.5) !important;
+            border-color: rgba(129, 140, 248, 0.5) !important;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2), inset 0 2px 4px rgba(0,0,0,0.2);
+        }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
@@ -111,63 +178,109 @@
         <h1 class="text-4xl font-black text-white tracking-tight">Kivro Games</h1>
     </div>
 
-    <button 
-      id="install-trigger-btn" 
-      class="fixed top-4 left-4 z-[3000] bg-indigo-600/40 hover:bg-indigo-600/60 text-white p-3 rounded-full shadow-lg shadow-indigo-500/20 backdrop-blur-md border border-white/20 transition-all transform hover:scale-110 active:scale-95 group"
-      aria-label="Install App">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-      </svg>
-    </button>
+    <!-- NEW INSTALL POPUP -->
+    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-sm" aria-hidden="true">
+      <!-- Added liquid-glass class to popup content for consistency -->
+      <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
 
-    <div id="install-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[4000] hidden backdrop-blur-sm p-4">
-      <div id="install-content" class="bg-gray-900/90 text-gray-100 rounded-3xl p-6 max-w-2xl w-full shadow-2xl overflow-y-auto max-h-[90vh] border border-white/10 backdrop-blur-xl transform transition-all scale-95 opacity-0 duration-200">
-        <h2 class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Install App</h2>
-        <p class="text-gray-400 mb-6 text-center text-sm">Add to Home Screen for fullscreen & better performance.</p>
+        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
+        <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
         
-        <div class="flex justify-center gap-4 mb-8 flex-wrap">
-          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon w-14 h-14 rounded-xl border-2 border-transparent hover:border-indigo-400 cursor-pointer transition-all">
-          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon w-14 h-14 rounded-xl border-2 border-transparent hover:border-indigo-400 cursor-pointer transition-all">
-          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="select-icon w-14 h-14 rounded-xl border-2 border-indigo-500 cursor-pointer transition-all shadow-[0_0_15px_rgba(99,102,241,0.4)]">
+        <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
+        
+        <div class="flex justify-center gap-5 mb-5 flex-wrap">
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+                 alt="Icon 1">
+          </div>
+
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+                 alt="Icon 2">
+          </div>
+
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
+                 alt="Icon 3">
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-center text-xs text-gray-300">
-          <div class="bg-white/5 p-3 rounded-xl border border-white/5">1. Tap <strong>Share</strong></div>
-          <div class="bg-white/5 p-3 rounded-xl border border-white/5">2. Scroll down</div>
-          <div class="bg-white/5 p-3 rounded-xl border border-white/5">3. <strong>Add to Home</strong></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> icon in Safari.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover">
+          </div>
+
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">2</div>
+            <p class="text-xs text-gray-300 mb-2">Scroll down in the menu.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover">
+          </div>
+
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">3</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home Screen</strong>.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover">
+          </div>
         </div>
 
-        <div class="flex justify-center">
-          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-2.5 rounded-full text-sm font-bold shadow-lg transition-all">Got it</button>
+        <div class="flex justify-center mt-4">
+          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
         </div>
       </div>
     </div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3 pl-14 sm:pl-0">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-2 sm:gap-4">
+            <!-- Logo Section -->
+            <div class="flex items-center gap-3">
                 <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
                 <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
             </div>
             
-            <div class="flex bg-black/40 p-1 rounded-full border border-white/10 backdrop-blur-md">
-                <button id="tab-games" class="tab-btn tab-active px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all">GAMES</button>
-                <button id="tab-apps" class="tab-btn tab-inactive px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all">APPS</button>
-                <button id="tab-favs" class="tab-btn tab-inactive px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all flex gap-1 items-center">
-                    <span>FAVS</span>
-                    <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <!-- Tabs & Install Button -->
+            <div class="flex items-center gap-2">
+                <!-- Relative Container with Liquid Glass -->
+                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
+                    <!-- THE GLIDING PILL -->
+                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
+
+                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
+                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
+                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
+                        <span>FAVS</span>
+                        <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </button>
+                </div>
+                
+                <!-- Install Button with Liquid Glass -->
+                <button 
+                  id="install-trigger-btn" 
+                  class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center"
+                  aria-label="Install App">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
                 </button>
             </div>
 
+            <!-- Search Section -->
             <div class="relative group w-full max-w-xs hidden sm:block">
-                <input type="text" id="search-input" placeholder="Search..." class="bg-black/40 text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full border border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all">
+                <input type="text" id="search-input" placeholder="Search..." class="glass-input text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full outline-none transition-all">
                 <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden">✕</button>
             </div>
         </div>
         
         <div class="sm:hidden px-4 pb-3 relative">
-            <input type="text" id="search-input-mobile" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full border border-white/10 outline-none">
+            <input type="text" id="search-input-mobile" placeholder="Search library..." class="glass-input text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full outline-none">
             <button id="clear-search-mobile" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden p-2">✕</button>
         </div>
     </header>
@@ -199,7 +312,7 @@
                     </button>
                     
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                       class="px-8 py-3 bg-white/10 text-white font-bold rounded-full border border-white/20 hover:bg-white/20 transition backdrop-blur-md">
+                       class="liquid-glass px-8 py-3 text-white font-bold rounded-full hover:bg-white/10 transition">
                        Request Game
                     </a>
                 </div>
@@ -217,7 +330,7 @@
     </main>
 
     <button onclick="window.location.href='https://member.foodvillage.ie/login'" 
-            class="fixed bottom-6 right-6 z-50 bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-2xl shadow-red-600/40 transition-transform hover:scale-110 active:scale-95 group border-2 border-red-400/30">
+            class="liquid-glass fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95 group hover:bg-red-600/50">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
@@ -231,6 +344,10 @@
                 if(splash) splash.classList.add('fade-out');
             }, 1200);
             renderGrid();
+            
+            // Initialize pill position
+            const defaultTab = document.getElementById('tab-games');
+            if(defaultTab) movePill(defaultTab);
         });
 
         // --- APP DATA ---
@@ -324,6 +441,19 @@
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://my-flim-flam.lovable.app", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
 
+        // --- TAB PILL ANIMATION ---
+        function movePill(targetBtn) {
+            const pill = document.getElementById('tab-pill');
+            if(!pill || !targetBtn) return;
+            
+            // Set opacity to 1 on first move (if initially 0)
+            pill.style.opacity = '1';
+            
+            // Calculate relative position and width
+            pill.style.left = targetBtn.offsetLeft + 'px';
+            pill.style.width = targetBtn.offsetWidth + 'px';
+        }
+
         // --- GRID LOGIC ---
         function renderGrid() {
             const grid = document.getElementById('game-grid');
@@ -345,14 +475,21 @@
             document.getElementById('game-count').innerText = items.length;
 
             if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500">No results found.</div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500 animate-[fadeUp_0.5s_ease-out]">No results found.</div>`;
                 return;
             }
 
-            items.forEach(item => {
+            // Using DocumentFragment for better performance
+            const fragment = document.createDocumentFragment();
+
+            items.forEach((item, index) => {
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
-                card.className = "game-card group cursor-pointer";
+                // Added liquid-glass class to each card for the effect
+                card.className = "game-card group cursor-pointer card-anim liquid-glass";
+                
+                // Slightly more staggered delay for "wave" effect
+                card.style.animationDelay = `${index * 50}ms`;
                 
                 // CLICK ACTION
                 const action = (item.category === 'App') 
@@ -376,8 +513,9 @@
                         <h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3>
                     </div>
                 `;
-                grid.appendChild(card);
+                fragment.appendChild(card);
             });
+            grid.appendChild(fragment);
         }
 
         window.toggleFav = (e, id) => {
@@ -415,12 +553,23 @@
         document.getElementById('clear-search-mobile').onclick = () => clearSearch(true);
 
         ['tab-games','tab-apps','tab-favs'].forEach(t => {
-            document.getElementById(t).onclick = () => {
+            document.getElementById(t).onclick = (e) => {
+                // Handle logic
                 currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
+                
+                // Handle Visuals
                 ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
                     const btn = document.getElementById(btnId);
-                    if(btnId === t) { btn.classList.add('tab-active'); btn.classList.remove('tab-inactive'); }
-                    else { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); }
+                    if(btnId === t) {
+                        // Activate
+                        btn.classList.add('tab-active-text');
+                        btn.classList.remove('tab-inactive-text');
+                        movePill(btn); // Move the pill!
+                    } else {
+                        // Deactivate
+                        btn.classList.remove('tab-active-text');
+                        btn.classList.add('tab-inactive-text');
+                    }
                 });
                 renderGrid();
             };
@@ -434,27 +583,43 @@
 
         if(openBtn) {
             openBtn.addEventListener('click', () => {
+                // Show the container
                 popup.classList.remove('hidden');
                 popup.style.display = 'flex';
-                // Small delay to allow display:flex to apply before adding active class for transition
-                requestAnimationFrame(() => {
-                    popup.classList.remove('scale-95', 'opacity-0');
-                });
-                popup.setAttribute('aria-hidden', 'false');
+                
+                // Add active class for opacity transition
+                setTimeout(() => {
+                    popup.classList.add('active');
+                    popup.setAttribute('aria-hidden', 'false');
+                }, 10);
             });
         }
 
         const hidePopup = () => {
-            popup.classList.add('scale-95', 'opacity-0');
+            // Remove active class to trigger fade out
+            popup.classList.remove('active');
             popup.setAttribute('aria-hidden', 'true');
+            
+            // Wait for transition to finish before hiding container
             setTimeout(() => {
                 popup.classList.add('hidden');
                 popup.style.display = 'none';
-            }, 200);
+            }, 300);
         };
 
         if(closeBtn) closeBtn.addEventListener('click', hidePopup);
-        popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
+        
+        // Close when clicking outside content
+        popup.addEventListener('click', (e) => { 
+            if (e.target === popup) hidePopup(); 
+        });
+
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+             if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
+                 hidePopup();
+             }
+        });
         
         icons.forEach(icon => {
             icon.addEventListener('click', () => {
