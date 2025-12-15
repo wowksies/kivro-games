@@ -7,7 +7,11 @@
     <meta name="description" content="Premium unblocked games library.">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script type="module" src="https://unpkg.com/ogl@0.0.106/dist/ogl.mjs"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
         
@@ -19,36 +23,30 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- WEBGL BACKGROUND CANVAS --- */
-        #gradient-canvas {
+        /* --- LIGHT RAYS CANVAS --- */
+        #light-rays-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.8;
+            z-index: -1; pointer-events: none; opacity: 0.6; /* Adjust opacity as needed */
         }
 
-        /* --- GLASSMOPHISM --- */
+        /* --- GLASS UI --- */
         .glass-header {
-            background: rgba(10, 10, 12, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 15, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         
-        /* --- HERO SECTION --- */
-        .hero-title {
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3));
-        }
-        
-        .update-badge {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #a5b4fc;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+        .intro-card {
+            background: rgba(20, 20, 25, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
         }
 
-        /* --- GAME CARDS --- */
+        /* --- CARDS --- */
         .game-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -62,21 +60,15 @@
             .game-card:hover {
                 transform: translateY(-6px);
                 background: rgba(255, 255, 255, 0.08);
-                border-color: rgba(129, 140, 248, 0.4);
+                border-color: rgba(99, 102, 241, 0.5);
                 box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 20px rgba(99, 102, 241, 0.2);
             }
-            .game-card:hover img {
-                transform: scale(1.08);
-                filter: brightness(1.2);
-            }
+            .game-card:hover img { transform: scale(1.08); filter: brightness(1.2); }
         }
 
-        .game-card img {
-            transition: transform 0.6s ease;
-            filter: brightness(1.05) saturate(1.1);
-        }
+        .game-card img { transition: transform 0.6s ease; filter: brightness(1.05) saturate(1.1); }
 
-        /* --- UI ELEMENTS --- */
+        /* --- UI UTILS --- */
         .star-btn {
             position: absolute; top: 10px; right: 10px; z-index: 20;
             width: 32px; height: 32px; border-radius: 50%;
@@ -98,7 +90,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .animate-fadeIn { animation: fadeIn 0.3s ease-out forwards; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
@@ -106,7 +97,7 @@
 </head>
 <body class="antialiased">
 
-    <canvas id="gradient-canvas"></canvas>
+    <div id="light-rays-canvas"></div>
 
     <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center">
         <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-32 h-32 rounded-2xl shadow-2xl mb-6 animate-pulse">
@@ -115,79 +106,34 @@
 
     <button 
       id="install-trigger-btn" 
-      class="fixed top-4 left-40 z-[3000] bg-indigo-600/40 hover:bg-indigo-600/60 text-white p-3 rounded-full shadow-lg shadow-indigo-500/20 backdrop-blur-md border border-white/20 transition-all transform hover:scale-110 active:scale-95 group"
+      class="fixed top-4 left-4 z-[3000] bg-indigo-600/40 hover:bg-indigo-600/60 text-white p-3 rounded-full shadow-lg shadow-indigo-500/20 backdrop-blur-md border border-white/20 transition-all transform hover:scale-110 active:scale-95 group"
       aria-label="Install App">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
       </svg>
     </button>
 
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-sm" aria-hidden="true">
       <div id="install-content" class="bg-gray-900/90 text-gray-100 rounded-3xl p-6 max-w-2xl w-[92%] shadow-2xl animate-fadeIn overflow-y-auto max-h-[90vh] border border-white/10 backdrop-blur-xl" role="dialog" aria-modal="true" aria-labelledby="install-title">
-
-        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Home Screen</h2>
-        <p class="text-gray-300 mb-6 text-center text-sm">For the best full-screen experience, follow these steps:</p>
-        
-        <h3 class="text-lg font-bold text-gray-200 mb-4 text-center">Select App Icon</h3>
-        
+        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games</h2>
+        <p class="text-gray-300 mb-6 text-center text-sm">For the best full-screen experience:</p>
         <div class="flex justify-center gap-6 mb-8 flex-wrap">
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Teams Icon">
-          </div>
-
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Kahoot Icon">
-          </div>
-
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all duration-300 group-active:scale-95" 
-                 alt="Kivro Icon">
-          </div>
+          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon w-16 h-16 rounded-xl border-2 border-transparent hover:border-indigo-400 cursor-pointer">
+          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon w-16 h-16 rounded-xl border-2 border-transparent hover:border-indigo-400 cursor-pointer">
+          <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="select-icon w-16 h-16 rounded-xl border-2 border-indigo-500 cursor-pointer">
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-center">
-          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-            <div class="text-xl font-bold mb-1 text-indigo-400">1</div>
-            <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> in Safari.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
-          </div>
-
-          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-            <div class="text-xl font-bold mb-1 text-indigo-400">2</div>
-            <p class="text-xs text-gray-300 mb-2">Scroll down menu.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
-          </div>
-
-          <div class="bg-white/5 p-4 rounded-xl border border-white/5">
-            <div class="text-xl font-bold mb-1 text-indigo-400">3</div>
-            <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home</strong>.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover opacity-80 hover:opacity-100 transition-opacity">
-          </div>
-        </div>
-
-        <div class="flex justify-center">
-          <button id="close-popup" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-8 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-indigo-500/30 backdrop-blur-md border border-white/10 transition-all transform hover:scale-105">
-            Got it — Finish
-          </button>
+        <div class="flex justify-center mt-4">
+          <button id="close-popup" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-8 py-2.5 rounded-full text-sm font-bold shadow-lg backdrop-blur-md border border-white/10">Got it</button>
         </div>
       </div>
     </div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
-            
-            <div class="flex items-center gap-3 pl-14 sm:pl-0"> <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
+            <div class="flex items-center gap-3 pl-14 sm:pl-0">
+                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
                 <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
             </div>
-
             <div class="flex bg-black/40 p-1 rounded-full border border-white/10 backdrop-blur-md">
                 <button id="tab-games" class="tab-btn tab-active px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all">GAMES</button>
                 <button id="tab-apps" class="tab-btn tab-inactive px-5 py-2 rounded-full text-xs sm:text-sm font-bold transition-all">APPS</button>
@@ -196,14 +142,12 @@
                     <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 </button>
             </div>
-
             <div class="relative group w-full max-w-xs hidden sm:block">
                 <input type="text" id="search-input" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full border border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 outline-none transition-all">
                 <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden">✕</button>
             </div>
         </div>
-        
         <div class="sm:hidden px-4 pb-3 relative">
             <input type="text" id="search-input-mobile" placeholder="Search library..." class="bg-black/40 text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full border border-white/10 outline-none">
             <button id="clear-search-mobile" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden p-2">✕</button>
@@ -212,27 +156,35 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <div class="flex flex-col items-center text-center py-10 sm:py-16 space-y-6">
-            <span class="update-badge px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-sm animate-fade-in-up">
-                ✨ v6.0 Ultra Update
-            </span>
-            <h1 class="text-5xl sm:text-7xl font-black hero-title tracking-tighter">
-                Play Without Limits.
-            </h1>
-            <p class="text-gray-400 max-w-xl text-sm sm:text-lg leading-relaxed">
-                The ultimate unblocked library. Optimized for iPad & Mobile. 
-                Experience silky smooth gameplay with direct-launch technology.
-            </p>
+        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[350px] relative overflow-hidden">
+            <div class="absolute top-[-50%] left-[-20%] w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
+            <div class="absolute bottom-[-50%] right-[-20%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] pointer-events-none"></div>
             
-            <div class="flex gap-4 pt-2">
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                   class="px-6 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition transform text-sm">
-                   Request Game
-                </a>
-                <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
-                   class="px-6 py-3 bg-white/5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition text-sm backdrop-blur-sm">
-                   Browse Library
-                </button>
+            <div class="relative z-10 flex flex-col items-center">
+                <span class="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-[10px] font-bold uppercase tracking-widest mb-4 backdrop-blur-sm">
+                    ✨ v6.0 Ultra Update
+                </span>
+                
+                <h1 class="text-5xl sm:text-7xl font-black text-white mb-4 tracking-tighter drop-shadow-2xl">
+                    Kivro <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Games</span>
+                </h1>
+                
+                <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto mb-8 font-medium leading-relaxed drop-shadow-md">
+                    Dive into a premium collection of 75+ games. <br> Optimized for iPad, mobile, and blazing fast speeds.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
+                            class="px-8 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition transform shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        Start Playing
+                    </button>
+                    
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
+                       class="px-8 py-3 bg-white/10 text-white font-bold rounded-full border border-white/20 hover:bg-white/20 transition backdrop-blur-md">
+                       Request Game
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -251,70 +203,94 @@
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
-    <script>
-        // --- WEBGL COLOR BENDS SHADER ---
-        const canvas = document.getElementById('gradient-canvas');
-        const gl = canvas.getContext('webgl');
-        
-        if (gl) {
-            const vsSource = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
-            const fsSource = `
-                precision mediump float;
-                uniform float time;
-                uniform vec2 resolution;
+    <script type="module">
+        import { Renderer, Program, Triangle, Mesh } from 'https://unpkg.com/ogl@0.0.106/dist/ogl.mjs';
+
+        // --- 1. LIGHT RAYS BACKGROUND (Vanilla JS Port) ---
+        const initLightRays = () => {
+            const container = document.getElementById('light-rays-canvas');
+            if(!container) return;
+
+            const renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio, 2) });
+            const gl = renderer.gl;
+            gl.canvas.style.width = '100%'; gl.canvas.style.height = '100%';
+            container.appendChild(gl.canvas);
+
+            // Shaders (Ported from ReactBits)
+            const vert = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
+            const frag = `
+                precision highp float;
+                uniform float iTime;
+                uniform vec2 iResolution;
+                uniform vec3 raysColor;
+                
+                // Noise Function
+                float noise(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
+
+                float rayStrength(vec2 raySource, vec2 coord, float seedA, float seedB, float speed) {
+                    vec2 sourceToCoord = coord - raySource;
+                    vec2 dirNorm = normalize(sourceToCoord);
+                    float cosAngle = dot(dirNorm, vec2(0.0, 1.0)); // Top-down
+                    float dist = length(sourceToCoord);
+                    
+                    float distort = cosAngle + 0.05 * sin(iTime * 2.0 + dist * 0.01);
+                    float spread = pow(max(distort, 0.0), 1.0 / 0.8);
+                    
+                    float pulse = 0.8 + 0.2 * sin(iTime * speed * 3.0);
+                    return clamp((0.45 + 0.15 * sin(distort * seedA + iTime * speed)) + (0.3 + 0.2 * cos(-distort * seedB + iTime * speed)), 0.0, 1.0) * spread * pulse;
+                }
+
                 void main() {
-                    vec2 uv = gl_FragCoord.xy / resolution.xy;
-                    float t = time * 0.5;
-                    float r = sin(uv.x * 3.0 + t) * 0.5 + 0.5;
-                    float g = sin(uv.y * 3.0 + t * 1.2) * 0.5 + 0.5;
-                    float b = sin((uv.x + uv.y) * 3.0 - t) * 0.5 + 0.5;
-                    vec3 col = 0.5 + 0.5 * cos(time + uv.xyx + vec3(0, 2, 4));
-                    gl_FragColor = vec4(col * 0.15, 1.0);
+                    vec2 coord = gl_FragCoord.xy;
+                    vec2 rayPos = vec2(iResolution.x * 0.5, iResolution.y * 1.2); // Top Center Source
+                    
+                    vec4 rays1 = vec4(1.0) * rayStrength(rayPos, coord, 36.22, 21.11, 1.5);
+                    vec4 rays2 = vec4(1.0) * rayStrength(rayPos, coord, 22.39, 18.02, 1.1);
+                    
+                    vec4 color = rays1 * 0.5 + rays2 * 0.4;
+                    float n = noise(coord * 0.01 + iTime * 0.1);
+                    color.rgb *= (1.0 - 0.1 + 0.1 * n); // Noise
+                    color.rgb *= raysColor;
+                    
+                    gl_FragColor = color;
                 }
             `;
-            const program = gl.createProgram();
-            const vs = gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs, vsSource); gl.compileShader(vs);
-            const fs = gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs, fsSource); gl.compileShader(fs);
-            gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
-            gl.useProgram(program);
-            
-            const buffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
-            const posLoc = gl.getAttribLocation(program, 'position');
-            gl.enableVertexAttribArray(posLoc); gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
-            
-            const timeLoc = gl.getUniformLocation(program, 'time');
-            const resLoc = gl.getUniformLocation(program, 'resolution');
-            
-            function render(time) {
-                canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-                gl.viewport(0, 0, canvas.width, canvas.height);
-                gl.uniform1f(timeLoc, time * 0.001);
-                gl.uniform2f(resLoc, canvas.width, canvas.height);
-                gl.drawArrays(gl.TRIANGLES, 0, 6);
-                requestAnimationFrame(render);
-            }
-            requestAnimationFrame(render);
-        }
 
-        // --- APP LOGIC ---
+            const uniforms = {
+                iTime: { value: 0 },
+                iResolution: { value: [window.innerWidth, window.innerHeight] },
+                raysColor: { value: [0.0, 1.0, 1.0] } // Cyan Color (#00ffff)
+            };
+
+            const geometry = new Triangle(gl);
+            const program = new Program(gl, { vertex: vert, fragment: frag, uniforms });
+            const mesh = new Mesh(gl, { geometry, program });
+
+            function resize() {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.iResolution.value = [renderer.width, renderer.height];
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            requestAnimationFrame(function update(t) {
+                uniforms.iTime.value = t * 0.001;
+                renderer.render({ scene: mesh });
+                requestAnimationFrame(update);
+            });
+        };
+        initLightRays();
+
+        // --- 2. GAME LOGIC ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
         
         let favorites = [];
         try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
+        let currentTab = 'Games';
+        let searchTerm = '';
 
-        function toggleFav(e, id) {
-            e.stopPropagation(); e.preventDefault();
-            if(favorites.includes(id)) favorites = favorites.filter(fav => fav !== id);
-            else favorites.push(id);
-            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
-            
-            if (currentTab === 'Favs') renderGrid();
-            else e.currentTarget.classList.toggle('star-active');
-        }
-
+        // FULL LIBRARY
         const library = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://wowksies.github.io/kivro-Game-Library/2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/btd4/index.html" },
@@ -392,28 +368,21 @@
             { id: 75, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html" },
             { id: 76, title: "Crossy Road", category: "Arcade", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies.github.io//crossy-road/index.html" },
             { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html" },
-            
-            // APPS
-            { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://my-flim-flam.lovable.app", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
+            { id: 1001, title: "My App", category: "App", gameUrl: "https://your-app-url.com", imgUrl: "https://placehold.co/400x220/22c55e/ffffff?text=App+Icon" }
         ];
 
-        let currentTab = 'Games';
-        let searchTerm = '';
-
+        // --- GRID LOGIC ---
         function renderGrid() {
             const grid = document.getElementById('game-grid');
+            if(!grid) return;
             grid.innerHTML = '';
             
             let items = library.filter(item => {
-                const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase());
-                
-                if(currentTab === 'Favs') {
-                    return favorites.includes(item.id) && matchesSearch;
-                } else if(currentTab === 'Games') {
-                    return item.category !== 'App' && matchesSearch;
-                } else {
-                    return item.category === 'App' && matchesSearch;
-                }
+                const search = searchTerm.toLowerCase();
+                const matchesSearch = item.title.toLowerCase().includes(search);
+                if(currentTab === 'Favs') return favorites.includes(item.id) && matchesSearch;
+                if(currentTab === 'Games') return item.category !== 'App' && matchesSearch;
+                return item.category === 'App' && matchesSearch;
             });
 
             if(currentTab === 'Games' && !searchTerm) {
@@ -426,131 +395,103 @@
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
                 card.className = "game-card group cursor-pointer";
-                
-                // CLICK ACTION
-                const action = (item.category === 'App') 
-                    ? `window.open('${item.gameUrl}', '_blank')`
-                    : `window.open('${item.gameUrl}', '_blank')`;
-
-                card.onclick = () => eval(action);
+                card.onclick = () => window.open(item.gameUrl, '_blank');
 
                 card.innerHTML = `
-                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="toggleFav(event, ${item.id})">
+                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </button>
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
-                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-black/70 text-white backdrop-blur-md border border-white/10 uppercase tracking-wider">
-                            ${item.category}
-                        </span>
+                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-black/70 text-white backdrop-blur-md border border-white/10 uppercase tracking-wider">${item.category}</span>
                     </div>
-                    <div class="p-3">
-                        <h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3>
-                    </div>
+                    <div class="p-3"><h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3></div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // --- SEARCH CLEAR & TABS ---
-        function toggleClearBtn(show, isMobile) {
-            const id = isMobile ? 'clear-search-mobile' : 'clear-search';
-            const btn = document.getElementById(id);
-            if(show) btn.classList.remove('hidden'); else btn.classList.add('hidden');
-        }
+        window.toggleFav = (e, id) => {
+            e.stopPropagation();
+            if(favorites.includes(id)) favorites = favorites.filter(fav => fav !== id);
+            else favorites.push(id);
+            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
+            
+            if(currentTab === 'Favs') renderGrid();
+            else e.currentTarget.classList.toggle('star-active');
+        };
 
+        // --- SEARCH & TABS ---
         function clearSearch(isMobile) {
             searchTerm = '';
-            if(isMobile) {
-                document.getElementById('search-input-mobile').value = '';
-                toggleClearBtn(false, true);
-            } else {
-                document.getElementById('search-input').value = '';
-                toggleClearBtn(false, false);
-            }
+            document.getElementById(isMobile ? 'search-input-mobile' : 'search-input').value = '';
+            document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search').classList.add('hidden');
             renderGrid();
         }
 
         document.getElementById('search-input').addEventListener('input', (e) => {
             searchTerm = e.target.value;
-            toggleClearBtn(searchTerm.length > 0, false);
+            document.getElementById('clear-search').classList.toggle('hidden', !searchTerm);
             renderGrid();
         });
         document.getElementById('search-input-mobile').addEventListener('input', (e) => {
             searchTerm = e.target.value;
-            toggleClearBtn(searchTerm.length > 0, true);
+            document.getElementById('clear-search-mobile').classList.toggle('hidden', !searchTerm);
             renderGrid();
         });
 
         document.getElementById('clear-search').onclick = () => clearSearch(false);
         document.getElementById('clear-search-mobile').onclick = () => clearSearch(true);
 
-        const switchTab = (tab) => {
-            currentTab = tab;
-            const buttons = ['tab-games','tab-apps','tab-favs'];
-            
-            buttons.forEach(id => {
-                const el = document.getElementById(id);
-                if(!el) return;
-                const isSelected = (id.includes(tab.toLowerCase()));
-                if(isSelected) { el.classList.add('tab-active'); el.classList.remove('tab-inactive'); } 
-                else { el.classList.remove('tab-active'); el.classList.add('tab-inactive'); }
-            });
-            renderGrid();
-        };
-        
         ['tab-games','tab-apps','tab-favs'].forEach(t => {
-            document.getElementById(t).onclick = () => switchTab(t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5));
+            document.getElementById(t).onclick = () => {
+                currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
+                
+                ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
+                    const btn = document.getElementById(btnId);
+                    if(btnId === t) { btn.classList.add('tab-active'); btn.classList.remove('tab-inactive'); }
+                    else { btn.classList.remove('tab-active'); btn.classList.add('tab-inactive'); }
+                });
+                renderGrid();
+            };
         });
 
+        // --- INSTALL POPUP ---
+        const popup = document.getElementById('install-popup');
+        const openBtn = document.getElementById('install-trigger-btn');
+        const closeBtn = document.getElementById('close-popup');
+        const icons = document.querySelectorAll('.select-icon');
+
+        if(openBtn) {
+            openBtn.addEventListener('click', () => {
+                popup.classList.remove('hidden');
+                popup.style.display = 'flex';
+                setTimeout(() => { popup.classList.add('active'); popup.setAttribute('aria-hidden', 'false'); }, 10);
+            });
+        }
+
+        const hidePopup = () => {
+            popup.classList.remove('active');
+            popup.setAttribute('aria-hidden', 'true');
+            setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+        };
+
+        if(closeBtn) closeBtn.addEventListener('click', hidePopup);
+        
+        icons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                icons.forEach(i => i.classList.remove('border-indigo-400'));
+                icon.classList.add('border-indigo-400');
+                const link = document.querySelector("link[rel='apple-touch-icon']");
+                if (link) link.href = icon.src;
+            });
+        });
+
+        // --- INIT ---
         window.onload = () => {
             setTimeout(() => document.getElementById('splash').classList.add('fade-out'), 1200);
             renderGrid();
         };
-
-        // --- INSTALL POPUP LOGIC ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const popup = document.getElementById('install-popup');
-            const openBtn = document.getElementById('install-trigger-btn');
-            const closeBtn = document.getElementById('close-popup');
-            const icons = document.querySelectorAll('.select-icon');
-
-            if (!popup || !openBtn || !closeBtn) return;
-
-            openBtn.addEventListener('click', () => {
-                popup.classList.remove('hidden');
-                popup.style.display = 'flex';
-                setTimeout(() => {
-                    popup.classList.add('active');
-                    popup.setAttribute('aria-hidden', 'false');
-                }, 10);
-            });
-
-            const hidePopup = () => {
-                popup.classList.remove('active');
-                popup.setAttribute('aria-hidden', 'true');
-                setTimeout(() => {
-                    popup.classList.add('hidden');
-                    popup.style.display = 'none';
-                }, 300);
-            };
-
-            closeBtn.addEventListener('click', hidePopup);
-            popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !popup.classList.contains('hidden')) hidePopup(); });
-
-            if (icons.length) {
-                icons.forEach(icon => {
-                    icon.addEventListener('click', () => {
-                        icons.forEach(i => i.classList.remove('border-indigo-400'));
-                        icon.classList.add('border-indigo-400');
-                        const link = document.querySelector("link[rel='apple-touch-icon']");
-                        if (link) link.href = icon.src;
-                    });
-                });
-            }
-        });
     </script>
 </body>
 </html>
