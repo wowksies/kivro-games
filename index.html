@@ -21,61 +21,138 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- BACKGROUND (Fallback + WebGL) --- */
-        #gradient-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.6;
-        }
+        /* --- BACKGROUND LAYERS --- */
+        /* Z-Index Hierarchy: Plasma (-3) -> WebGL (-2) -> Falling Lights (-1) -> Content (0+) */
+
+        /* 1. Deepest Layer: Plasma */
         .plasma-background {
             background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
                         radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
                         #0f0f1a;
             background-size: 200% 200%;
-            min-height: 100vh; position: fixed; inset: 0; z-index: -2;
+            min-height: 100vh; position: fixed; inset: 0; z-index: -3;
+        }
+
+        /* 2. Middle Layer: WebGL Rays */
+        #gradient-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none; opacity: 0.6;
+        }
+
+        /* 3. Top Background Layer: Falling Lights */
+        .falling-lights-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+
+        .falling-light {
+            position: absolute;
+            top: -150px; /* Start above screen */
+            width: 1px;
+            height: 150px; /* Length of the beam */
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.15) 50%, rgba(255,255,255,0));
+            animation: fall-light linear infinite;
+        }
+
+        @keyframes fall-light {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(120vh); opacity: 0; }
         }
 
         /* --- APPLE LIQUID GLASS EFFECT --- */
-        /* This mimics the iOS 'Material' look using saturation + blur */
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.03); /* Extremely subtle fill */
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        /* Add a subtle shine to the glass on hover */
+        /* Shimmer Animation Keyframes */
+        @keyframes glass-shimmer {
+            0% { left: -100%; opacity: 0; }
+            5% { opacity: 1; }
+            40% { left: 200%; opacity: 1; }
+            100% { left: 200%; opacity: 0; }
+        }
+
         .liquid-glass::after {
             content: '';
             position: absolute;
             top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
             transform: skewX(-25deg);
-            transition: 0.5s;
             pointer-events: none;
+            animation: glass-shimmer 6s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            animation-delay: var(--shimmer-delay, 0s);
         }
 
         /* --- UI STYLES --- */
         .glass-header {
-            /* Applying liquid glass to header */
-            background: rgba(10, 10, 12, 0.6);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            background: rgba(5, 5, 8, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: background 0.3s ease;
         }
         
         .intro-card {
-            background: rgba(20, 20, 25, 0.4);
-            backdrop-filter: blur(24px) saturate(150%);
+            /* Deeper glass look with subtle gradient */
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.2); /* Highlight on top edge */
+            border-radius: 40px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* --- ANIMATIONS --- */
+        /* Add a noise texture overlay for premium feel */
+        .intro-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            z-index: 1;
+        }
+
+        .hero-text-gradient {
+            background: linear-gradient(to right, #a5b4fc, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Glowing text effect */
+            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
+        }
+
+        /* --- BLOB ANIMATIONS --- */
+        @keyframes blob-float {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px); /* Softer blur */
+            opacity: 0.5;
+            animation: blob-float 12s infinite ease-in-out; /* Slower, smoother */
+            pointer-events: none;
+        }
+        .blob-1 { background: rgba(99, 102, 241, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
+        .blob-2 { background: rgba(168, 85, 247, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
+        .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
+
+        /* --- CARD ANIMATIONS --- */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
             to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
@@ -85,44 +162,46 @@
             animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
         }
 
-        /* --- GAME CARDS (The main recipient of Liquid Glass) --- */
+        /* --- GAME CARDS --- */
         .game-card {
-            /* Inherits liquid-glass properties via class in JS, but defaults here: */
-            border-radius: 20px;
+            border-radius: 24px; /* More rounded */
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform: translateZ(0); 
+            background: rgba(255, 255, 255, 0.05); /* Slight fill */
         }
         
         @media (hover: hover) {
             .game-card:hover {
-                transform: translateY(-10px) scale(1.02);
-                border-color: rgba(255, 255, 255, 0.3);
-                background: rgba(255, 255, 255, 0.08); /* Brighter glass on hover */
-                box-shadow: 0 20px 40px -5px rgba(0,0,0,0.5), 
-                            0 0 0 1px rgba(255,255,255,0.1) inset; /* Inner glow */
+                transform: translateY(-10px) scale(1.03);
+                border-color: rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.1); 
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 
+                            0 0 0 1px rgba(255,255,255,0.1) inset;
+                z-index: 20;
             }
             .game-card:hover::after {
-                left: 150%; /* Trigger shine animation */
+                left: 150%; 
                 transition: 0.7s ease-in-out;
             }
-            .game-card:hover img { transform: scale(1.1); filter: brightness(1.15); }
+            .game-card:hover img { transform: scale(1.12); filter: brightness(1.2); }
         }
 
         .game-card img {
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            filter: brightness(1.0) saturate(1.1);
+            /* Brighter by default now */
+            filter: brightness(1.15) saturate(1.2);
         }
 
         /* --- ELEMENTS --- */
         .star-btn {
             position: absolute; top: 10px; right: 10px; z-index: 20;
             width: 32px; height: 32px; border-radius: 50%;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
             display: flex; align-items: center; justify-content: center;
-            color: #9ca3af; transition: all 0.2s; cursor: pointer;
+            color: #d1d5db; transition: all 0.2s; cursor: pointer;
         }
-        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.2); border-color: #fbbf24; box-shadow: 0 0 10px rgba(251, 191, 36, 0.3); }
+        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
 
         /* Smooth Tab Transitions */
         .tab-btn {
@@ -130,7 +209,7 @@
             z-index: 10;
             transition: color 0.3s ease;
         }
-        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
         .tab-inactive-text { color: #9ca3af; }
         .tab-inactive-text:hover { color: white; }
 
@@ -151,27 +230,30 @@
         
         /* Glass Input Fields */
         .glass-input {
-            background: rgba(0, 0, 0, 0.3) !important;
-            backdrop-filter: blur(10px);
+            background: rgba(20, 20, 25, 0.6) !important;
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.1) !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
         .glass-input:focus {
-            background: rgba(0, 0, 0, 0.5) !important;
-            border-color: rgba(129, 140, 248, 0.5) !important;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2), inset 0 2px 4px rgba(0,0,0,0.2);
+            background: rgba(30, 30, 35, 0.8) !important;
+            border-color: rgba(129, 140, 248, 0.6) !important;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
     </style>
 </head>
 <body class="antialiased">
 
     <div class="plasma-background"></div>
     <div id="gradient-canvas"></div>
+    
+    <!-- Falling Lights Container -->
+    <div class="falling-lights-container" id="falling-lights"></div>
 
     <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center">
         <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-32 h-32 rounded-2xl shadow-2xl mb-6 animate-pulse-slow">
@@ -179,8 +261,7 @@
     </div>
 
     <!-- NEW INSTALL POPUP -->
-    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-sm" aria-hidden="true">
-      <!-- Added liquid-glass class to popup content for consistency -->
+    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
       <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
 
         <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
@@ -250,7 +331,7 @@
                 <!-- Relative Container with Liquid Glass -->
                 <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
                     <!-- THE GLIDING PILL -->
-                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.5)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
+                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
 
                     <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
                     <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
@@ -287,32 +368,34 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[350px] relative overflow-hidden">
-            <div class="absolute top-[-50%] left-[-20%] w-[500px] h-[500px] bg-indigo-600/30 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
-            <div class="absolute bottom-[-50%] right-[-20%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[350px] relative">
+            <!-- Animated Background Blobs -->
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
             
             <div class="relative z-10 flex flex-col items-center">
-                <span class="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-[10px] font-bold uppercase tracking-widest mb-4 backdrop-blur-sm">
+                <span class="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.3)]">
                     ✨ v6.0 Ultra Update
                 </span>
                 
-                <h1 class="text-5xl sm:text-7xl font-black text-white mb-4 tracking-tighter drop-shadow-2xl">
-                    Kivro <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Games</span>
+                <h1 class="text-5xl sm:text-7xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl">
+                    Kivro <span class="hero-text-gradient">Games</span>
                 </h1>
                 
-                <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto mb-8 font-medium leading-relaxed drop-shadow-md">
+                <p class="text-gray-200 text-sm sm:text-lg max-w-xl mx-auto mb-10 font-medium leading-relaxed drop-shadow-md">
                     Dive into a premium collection of 75+ games. <br> Optimized for iPad, mobile, and blazing fast speeds.
                 </p>
                 
                 <div class="flex flex-wrap justify-center gap-4">
                     <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
-                            class="px-8 py-3 bg-white text-black font-bold rounded-full hover:scale-105 transition transform shadow-[0_0_20px_rgba(255,255,255,0.4)] flex items-center gap-2">
+                            class="px-8 py-3.5 bg-white text-black font-extrabold rounded-full hover:scale-105 transition-all transform shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:shadow-[0_0_40px_rgba(255,255,255,0.5)]">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         Start Playing
                     </button>
                     
                     <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                       class="liquid-glass px-8 py-3 text-white font-bold rounded-full hover:bg-white/10 transition">
+                       class="liquid-glass px-8 py-3.5 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/20">
                        Request Game
                     </a>
                 </div>
@@ -330,36 +413,19 @@
     </main>
 
     <button onclick="window.location.href='https://member.foodvillage.ie/login'" 
-            class="liquid-glass fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95 group hover:bg-red-600/50">
+            class="liquid-glass fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform hover:scale-110 active:scale-95 group hover:bg-red-600/60 border-red-500/30">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
     <script>
-        // --- SAFE INITIALIZATION ---
-        // This runs instantly to ensure UI works even if background fails
-        window.addEventListener('load', () => {
-            // Force splash removal after 1.2s max
-            setTimeout(() => {
-                const splash = document.getElementById('splash');
-                if(splash) splash.classList.add('fade-out');
-            }, 1200);
-            renderGrid();
-            
-            // Initialize pill position
-            const defaultTab = document.getElementById('tab-games');
-            if(defaultTab) movePill(defaultTab);
-        });
-
-        // --- APP DATA ---
+        // --- APP DATA & CONSTANTS ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
         
-        let favorites = [];
-        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
-        let currentTab = 'Games';
-        let searchTerm = '';
-
-        const library = [
+        // ==========================================
+        // 🎮 GAMES LIST - Add new games here
+        // ==========================================
+        const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://wowksies.github.io/kivro-Game-Library/2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/btd4/index.html" },
             { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://wowksies.github.io/kivro-Game-Library/bitlife/index.html" },
@@ -432,16 +498,31 @@
             { id: 72, title: "Bounce Masters", category: "Arcade", imgUrl: THUMB_BASE + "bouncemasters.webp", gameUrl: "https://wowksies.github.io//bouncemasters/index.html" },
             { id: 73, title: "Blumgi Ball", category: "Arcade", imgUrl: THUMB_BASE + "blumgiball.webp", gameUrl: "https://wowksies.github.io/kivro-Game-Library/blumgiball/index.html" },
             { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://wowksies.github.io/kivro-Game-Library/DrawJoustindex.html" },
-            { id: 74, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/basketball-legends-main/index.html" },
-            { id: 75, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html" },
+            { id: 78, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/basketball-legends-main/index.html" },
+            { id: 79, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://wowksies.github.io/kivro-Game-Library/football-legends/index.html" },
             { id: 76, title: "Crossy Road", category: "Arcade", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies.github.io//crossy-road/index.html" },
-            { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html" },
-            
-            // APPS
+            { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://wowksies.github.io/getaway-shootout/index.html" }
+        ];
+
+        // ==========================================
+        // 📱 APPS LIST - Add new apps here
+        // ==========================================
+        const appsList = [
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://my-flim-flam.lovable.app", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
 
-        // --- TAB PILL ANIMATION ---
+        // Combine for logic
+        const library = [...gamesList, ...appsList];
+
+        // --- STATE ---
+        let favorites = [];
+        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
+        let currentTab = 'Games';
+        let searchTerm = '';
+
+        // --- FUNCTIONS ---
+
+        // TAB PILL ANIMATION
         function movePill(targetBtn) {
             const pill = document.getElementById('tab-pill');
             if(!pill || !targetBtn) return;
@@ -454,7 +535,7 @@
             pill.style.width = targetBtn.offsetWidth + 'px';
         }
 
-        // --- GRID LOGIC ---
+        // GRID LOGIC
         function renderGrid() {
             const grid = document.getElementById('game-grid');
             if(!grid) return;
@@ -488,6 +569,9 @@
                 // Added liquid-glass class to each card for the effect
                 card.className = "game-card group cursor-pointer card-anim liquid-glass";
                 
+                // Set random animation delay for shimmer
+                card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
+                
                 // Slightly more staggered delay for "wave" effect
                 card.style.animationDelay = `${index * 50}ms`;
                 
@@ -504,8 +588,9 @@
                     </button>
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors"></div>
-                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-black/70 text-white backdrop-blur-md border border-white/10 uppercase tracking-wider">
+                        <!-- UPDATED: Replaced heavy bg-black/40 with gradient so image is brighter -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-300"></div>
+                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-white/10 text-white backdrop-blur-md border border-white/20 uppercase tracking-wider">
                             ${item.category}
                         </span>
                     </div>
@@ -539,40 +624,48 @@
         }
 
         ['search-input', 'search-input-mobile'].forEach(id => {
-            document.getElementById(id).addEventListener('input', (e) => {
-                searchTerm = e.target.value;
-                const isMobile = id.includes('mobile');
-                const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
-                if(searchTerm.length > 0) btn.classList.remove('hidden');
-                else btn.classList.add('hidden');
-                renderGrid();
-            });
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    const isMobile = id.includes('mobile');
+                    const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
+                    if(searchTerm.length > 0) btn.classList.remove('hidden');
+                    else btn.classList.add('hidden');
+                    renderGrid();
+                });
+            }
         });
 
-        document.getElementById('clear-search').onclick = () => clearSearch(false);
-        document.getElementById('clear-search-mobile').onclick = () => clearSearch(true);
+        const clearBtn = document.getElementById('clear-search');
+        if(clearBtn) clearBtn.onclick = () => clearSearch(false);
+        const clearBtnMobile = document.getElementById('clear-search-mobile');
+        if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
 
         ['tab-games','tab-apps','tab-favs'].forEach(t => {
-            document.getElementById(t).onclick = (e) => {
-                // Handle logic
-                currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                
-                // Handle Visuals
-                ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
-                    const btn = document.getElementById(btnId);
-                    if(btnId === t) {
-                        // Activate
-                        btn.classList.add('tab-active-text');
-                        btn.classList.remove('tab-inactive-text');
-                        movePill(btn); // Move the pill!
-                    } else {
-                        // Deactivate
-                        btn.classList.remove('tab-active-text');
-                        btn.classList.add('tab-inactive-text');
-                    }
-                });
-                renderGrid();
-            };
+            const tabEl = document.getElementById(t);
+            if(tabEl) {
+                tabEl.onclick = (e) => {
+                    // Handle logic
+                    currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
+                    
+                    // Handle Visuals
+                    ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
+                        const btn = document.getElementById(btnId);
+                        if(btnId === t) {
+                            // Activate
+                            btn.classList.add('tab-active-text');
+                            btn.classList.remove('tab-inactive-text');
+                            movePill(btn); 
+                        } else {
+                            // Deactivate
+                            btn.classList.remove('tab-active-text');
+                            btn.classList.add('tab-inactive-text');
+                        }
+                    });
+                    renderGrid();
+                };
+            }
         });
 
         // --- INSTALL POPUP ---
@@ -583,11 +676,8 @@
 
         if(openBtn) {
             openBtn.addEventListener('click', () => {
-                // Show the container
                 popup.classList.remove('hidden');
                 popup.style.display = 'flex';
-                
-                // Add active class for opacity transition
                 setTimeout(() => {
                     popup.classList.add('active');
                     popup.setAttribute('aria-hidden', 'false');
@@ -596,11 +686,8 @@
         }
 
         const hidePopup = () => {
-            // Remove active class to trigger fade out
             popup.classList.remove('active');
             popup.setAttribute('aria-hidden', 'true');
-            
-            // Wait for transition to finish before hiding container
             setTimeout(() => {
                 popup.classList.add('hidden');
                 popup.style.display = 'none';
@@ -609,26 +696,61 @@
 
         if(closeBtn) closeBtn.addEventListener('click', hidePopup);
         
-        // Close when clicking outside content
-        popup.addEventListener('click', (e) => { 
+        if(popup) popup.addEventListener('click', (e) => { 
             if (e.target === popup) hidePopup(); 
         });
 
-        // Close on ESC
         document.addEventListener('keydown', (e) => {
-             if (e.key === 'Escape' && !popup.classList.contains('hidden')) {
+             if (e.key === 'Escape' && popup && !popup.classList.contains('hidden')) {
                  hidePopup();
              }
         });
         
-        icons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                icons.forEach(i => i.classList.remove('border-indigo-400'));
-                icon.classList.add('border-indigo-400');
-                const link = document.querySelector("link[rel='apple-touch-icon']");
-                if (link) link.href = icon.src;
+        if(icons) {
+            icons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    icons.forEach(i => i.classList.remove('border-indigo-400'));
+                    icon.classList.add('border-indigo-400');
+                    const link = document.querySelector("link[rel='apple-touch-icon']");
+                    if (link) link.href = icon.src;
+                });
             });
+        }
+
+        // --- SAFE INITIALIZATION (Runs last) ---
+        // This ensures library is defined before usage
+        window.addEventListener('load', () => {
+            // Force splash removal after 1.2s max
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                if(splash) splash.classList.add('fade-out');
+            }, 1200);
+            
+            // Render initial grid
+            renderGrid();
+            
+            // Initialize pill position
+            const defaultTab = document.getElementById('tab-games');
+            if(defaultTab) movePill(defaultTab);
+            
+            // Initialize falling lights
+            createFallingLights();
         });
+
+        function createFallingLights() {
+            const container = document.getElementById('falling-lights');
+            if (!container) return;
+
+            for (let i = 0; i < 20; i++) {
+                const light = document.createElement('div');
+                light.className = 'falling-light';
+                light.style.left = `${Math.random() * 100}%`;
+                light.style.animationDuration = `${2 + Math.random() * 3}s`;
+                light.style.animationDelay = `${Math.random() * 5}s`;
+                light.style.opacity = `${0.3 + Math.random() * 0.5}`;
+                container.appendChild(light);
+            }
+        }
     </script>
 
     <script type="module">
