@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <title>Kivro Games</title>
     <meta name="description" content="Premium unblocked games library.">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#050505">
     
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
@@ -15,16 +20,15 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
+            background-color: #050505; /* Matches theme color to prevent white flashes */
             color: #ffffff;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            /* Prevent bounce scrolling showing white background */
+            overscroll-behavior-y: none;
         }
 
         /* --- BACKGROUND LAYERS --- */
-        /* Z-Index Hierarchy: Plasma (-3) -> WebGL (-2) -> Falling Lights (-1) -> Content (0+) */
-
-        /* 1. Deepest Layer: Plasma */
         .plasma-background {
             background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
                         radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
@@ -33,13 +37,11 @@
             min-height: 100vh; position: fixed; inset: 0; z-index: -3;
         }
 
-        /* 2. Middle Layer: WebGL Rays */
         #gradient-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; pointer-events: none; opacity: 0.6;
         }
 
-        /* 3. Top Background Layer: Falling Lights */
         .falling-lights-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none; overflow: hidden;
@@ -47,9 +49,9 @@
 
         .falling-light {
             position: absolute;
-            top: -150px; /* Start above screen */
+            top: -150px;
             width: 1px;
-            height: 150px; /* Length of the beam */
+            height: 150px;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.15) 50%, rgba(255,255,255,0));
             animation: fall-light linear infinite;
         }
@@ -72,7 +74,6 @@
             overflow: hidden;
         }
 
-        /* Shimmer Animation Keyframes */
         @keyframes glass-shimmer {
             0% { left: -100%; opacity: 0; }
             5% { opacity: 1; }
@@ -93,43 +94,35 @@
 
         /* --- UI STYLES --- */
         .glass-header {
-            background: rgba(5, 5, 8, 0.7);
+            background: rgba(5, 5, 8, 0.85); /* Slightly darker for better contrast */
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: background 0.3s ease;
+            
+            /* 3. FIXED: Adds padding to the top so content isn't hidden by the Notch/Status Bar */
+            padding-top: env(safe-area-inset-top); 
+            height: auto;
+            min-height: 80px; /* Base height + padding */
         }
         
+        .header-inner {
+            height: 80px; /* Fixed height for content inside */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         .intro-card {
             /* Deeper glass look with subtle gradient */
-            background: linear-gradient(160deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            background: linear-gradient(160deg, rgba(20, 20, 30, 0.6) 0%, rgba(5, 5, 10, 0.8) 100%);
             backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(255, 255, 255, 0.2); /* Highlight on top edge */
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 40px;
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
-        }
-
-        /* Add a noise texture overlay for premium feel */
-        .intro-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-            opacity: 0.3;
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            z-index: 1;
-        }
-
-        .hero-text-gradient {
-            background: linear-gradient(to right, #a5b4fc, #c084fc, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /* Glowing text effect */
-            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
         }
 
         /* --- BLOB ANIMATIONS --- */
@@ -143,13 +136,13 @@
         .blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(90px); /* Softer blur */
-            opacity: 0.5;
-            animation: blob-float 12s infinite ease-in-out; /* Slower, smoother */
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: blob-float 12s infinite ease-in-out;
             pointer-events: none;
         }
-        .blob-1 { background: rgba(99, 102, 241, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
-        .blob-2 { background: rgba(168, 85, 247, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
+        .blob-1 { background: rgba(79, 70, 229, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
+        .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
         .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
 
         /* --- CARD ANIMATIONS --- */
@@ -164,10 +157,10 @@
 
         /* --- GAME CARDS --- */
         .game-card {
-            border-radius: 24px; /* More rounded */
+            border-radius: 24px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform: translateZ(0); 
-            background: rgba(255, 255, 255, 0.05); /* Slight fill */
+            background: rgba(255, 255, 255, 0.05);
         }
         
         @media (hover: hover) {
@@ -188,7 +181,6 @@
 
         .game-card img {
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            /* Brighter by default now */
             filter: brightness(1.15) saturate(1.2);
         }
 
@@ -203,12 +195,7 @@
         }
         .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
 
-        /* Smooth Tab Transitions */
-        .tab-btn {
-            position: relative;
-            z-index: 10;
-            transition: color 0.3s ease;
-        }
+        .tab-btn { position: relative; z-index: 10; transition: color 0.3s ease; }
         .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
         .tab-inactive-text { color: #9ca3af; }
         .tab-inactive-text:hover { color: white; }
@@ -217,18 +204,9 @@
         .fade-out { opacity: 0 !important; pointer-events: none !important; }
         .animate-pulse-slow { animation: pulse 3s infinite; }
 
-        /* Popup Animation Styles */
-        #install-popup, #disclaimer-popup {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        #install-popup.active, #disclaimer-popup.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        #install-popup, #disclaimer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active { opacity: 1; pointer-events: auto; }
         
-        /* Glass Input Fields */
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important;
             backdrop-filter: blur(12px);
@@ -239,6 +217,11 @@
             background: rgba(30, 30, 35, 0.8) !important;
             border-color: rgba(129, 140, 248, 0.6) !important;
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* NEW ANIMATION FOR PLAY BUTTON */
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
         }
 
         /* Custom Scrollbar */
@@ -252,7 +235,6 @@
     <div class="plasma-background"></div>
     <div id="gradient-canvas"></div>
     
-    <!-- Falling Lights Container -->
     <div class="falling-lights-container" id="falling-lights"></div>
 
     <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center">
@@ -260,7 +242,6 @@
         <h1 class="text-4xl font-black text-white tracking-tight">Kivro Games</h1>
     </div>
 
-    <!-- NEW INSTALL POPUP -->
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
       <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
 
@@ -318,7 +299,6 @@
       </div>
     </div>
 
-    <!-- DISCLAIMER POPUP -->
     <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
       <div class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-md w-[90%] shadow-2xl text-center border border-indigo-500/30">
         <div class="flex justify-center mb-4">
@@ -336,18 +316,14 @@
     </div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between gap-2 sm:gap-4">
-            <!-- Logo Section -->
+        <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
             <div class="flex items-center gap-3">
                 <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
                 <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
             </div>
             
-            <!-- Tabs & Install Button -->
             <div class="flex items-center gap-2">
-                <!-- Relative Container with Liquid Glass -->
                 <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
-                    <!-- THE GLIDING PILL -->
                     <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
 
                     <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
@@ -358,7 +334,6 @@
                     </button>
                 </div>
                 
-                <!-- Install Button with Liquid Glass -->
                 <button 
                   id="install-trigger-btn" 
                   class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center"
@@ -369,7 +344,6 @@
                 </button>
             </div>
 
-            <!-- Search Section -->
             <div class="relative group w-full max-w-xs hidden sm:block">
                 <input type="text" id="search-input" placeholder="Search..." class="glass-input text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full outline-none transition-all">
                 <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -385,47 +359,56 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[350px] relative">
-            <!-- Animated Background Blobs -->
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
+        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[400px] relative group overflow-hidden">
             
+            <div class="absolute inset-0 z-0 opacity-20" 
+                 style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;">
+            </div>
+
+            <div class="blob blob-1 opacity-60 mix-blend-screen"></div>
+            <div class="blob blob-2 opacity-60 mix-blend-screen"></div>
+            <div class="blob blob-3 opacity-40 mix-blend-screen"></div>
+
+            <div class="absolute top-10 left-10 md:left-20 animate-bounce delay-700 opacity-40 hidden sm:block">
+                <svg class="w-12 h-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <div class="absolute bottom-10 right-10 md:right-20 animate-pulse delay-1000 opacity-40 hidden sm:block">
+                <svg class="w-10 h-10 text-pink-400 drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+
             <div class="relative z-10 flex flex-col items-center">
-                <span class="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_15px_rgba(99,102,241,0.3)]">
-                    ✨ v6.0 Ultra Update
-                </span>
+                <div class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    v6.0 Ultra • Systems Online
+                </div>
                 
-                <h1 class="text-5xl sm:text-7xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl">
-                    Kivro <span class="hero-text-gradient">Games</span>
+                <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
+                    Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
                 </h1>
                 
-                <p class="text-gray-200 text-sm sm:text-lg max-w-xl mx-auto mb-10 font-medium leading-relaxed drop-shadow-md">
-                    Dive into a premium collection of 75+ games. <br> Optimized for iPad, mobile, and blazing fast speeds.
+                <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto mb-10 font-medium leading-relaxed">
+                    The ultimate unblocked library. <br>
+                    <span class="text-indigo-300">75+ Premium Titles</span> • <span class="text-purple-300">Cloud Save</span> • <span class="text-pink-300">Zero Lag</span>
                 </p>
                 
-                <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex flex-wrap justify-center gap-4 w-full sm:w-auto">
                     <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
-                            class="px-8 py-3.5 bg-white text-black font-extrabold rounded-full hover:scale-105 transition-all transform shadow-[0_0_30px_rgba(255,255,255,0.3)] flex items-center gap-2 hover:shadow-[0_0_40px_rgba(255,255,255,0.5)]">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        Start Playing
+                            class="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-white text-black font-black rounded-full transition-all transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] flex items-center justify-center gap-2">
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <span>PLAY NOW</span>
                     </button>
                     
-                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                       class="liquid-glass px-8 py-3.5 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/20 flex items-center gap-2">
-                       <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                       </svg>
-                       Request Game
-                    </a>
-
-                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" target="_blank"
-                       class="liquid-glass px-8 py-3.5 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/20 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Report Bug
-                    </a>
+                    <div class="flex gap-2 w-full sm:w-auto justify-center">
+                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
+                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
+                           <span>Request</span>
+                        </a>
+                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" target="_blank"
+                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
+                            <span>Report</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -690,7 +673,6 @@
                     </button>
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
                         <img src="${item.imgUrl}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <!-- UPDATED: Replaced heavy bg-black/40 with gradient so image is brighter -->
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-300"></div>
                         <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-white/10 text-white backdrop-blur-md border border-white/20 uppercase tracking-wider">
                             ${item.category}
@@ -855,3 +837,5 @@
             }
         }
     </script>
+</body>
+</html>
