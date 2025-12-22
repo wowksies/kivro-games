@@ -20,11 +20,10 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050505; /* Matches theme color to prevent white flashes */
+            background-color: #050505;
             color: #ffffff;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            /* Prevent bounce scrolling showing white background */
             overscroll-behavior-y: none;
         }
 
@@ -63,7 +62,7 @@
             100% { transform: translateY(120vh); opacity: 0; }
         }
 
-        /* --- APPLE LIQUID GLASS EFFECT --- */
+        /* --- UI STYLES --- */
         .liquid-glass {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(24px) saturate(180%);
@@ -92,29 +91,25 @@
             animation-delay: var(--shimmer-delay, 0s);
         }
 
-        /* --- UI STYLES --- */
         .glass-header {
-            background: rgba(5, 5, 8, 0.85); /* Slightly darker for better contrast */
+            background: rgba(5, 5, 8, 0.85);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: background 0.3s ease;
-            
-            /* 3. FIXED: Adds padding to the top so content isn't hidden by the Notch/Status Bar */
             padding-top: env(safe-area-inset-top); 
             height: auto;
-            min-height: 80px; /* Base height + padding */
+            min-height: 80px;
         }
         
         .header-inner {
-            height: 80px; /* Fixed height for content inside */
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         .intro-card {
-            /* Deeper glass look with subtle gradient */
             background: linear-gradient(160deg, rgba(20, 20, 30, 0.6) 0%, rgba(5, 5, 10, 0.8) 100%);
             backdrop-filter: blur(30px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -145,15 +140,12 @@
         .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
         .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
 
-        /* --- CARD ANIMATIONS --- */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
             to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
         
-        .card-anim {
-            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-        }
+        .card-anim { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
         /* --- GAME CARDS --- */
         .game-card {
@@ -184,7 +176,6 @@
             filter: brightness(1.15) saturate(1.2);
         }
 
-        /* --- ELEMENTS --- */
         .star-btn {
             position: absolute; top: 10px; right: 10px; z-index: 20;
             width: 32px; height: 32px; border-radius: 50%;
@@ -204,8 +195,8 @@
         .fade-out { opacity: 0 !important; pointer-events: none !important; }
         .animate-pulse-slow { animation: pulse 3s infinite; }
 
-        #install-popup, #disclaimer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active { opacity: 1; pointer-events: auto; }
+        #install-popup, #disclaimer-popup, #ad-timer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active { opacity: 1; pointer-events: auto; }
         
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important;
@@ -219,12 +210,10 @@
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* NEW ANIMATION FOR PLAY BUTTON */
         @keyframes shimmer {
             100% { transform: translateX(100%); }
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
@@ -234,7 +223,6 @@
 
     <div class="plasma-background"></div>
     <div id="gradient-canvas"></div>
-    
     <div class="falling-lights-container" id="falling-lights"></div>
 
     <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center">
@@ -244,55 +232,40 @@
 
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
       <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
-
         <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
         <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
-        
         <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
-        
         <div class="flex justify-center gap-5 mb-5 flex-wrap">
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 1">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 1">
           </div>
-
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 2">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 2">
           </div>
-
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" 
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" 
-                 alt="Icon 3">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 3">
           </div>
         </div>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
           <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
             <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
             <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> icon in Safari.</p>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover">
           </div>
-
           <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
             <div class="number text-lg font-semibold mb-1 text-indigo-400">2</div>
             <p class="text-xs text-gray-300 mb-2">Scroll down in the menu.</p>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover">
           </div>
-
           <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
             <div class="number text-lg font-semibold mb-1 text-indigo-400">3</div>
             <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home Screen</strong>.</p>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover">
           </div>
         </div>
-
         <div class="flex justify-center mt-4">
           <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
         </div>
@@ -308,11 +281,29 @@
         <p class="text-gray-300 text-sm mb-6 leading-relaxed">
             BlackFlix is a partner app hosted on Kivro Games. We do not develop or maintain it directly. Please report any bugs to the BlackFlix creator, not Kivro Games.
         </p>
-        
         <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">
             Wait <span id="disclaimer-timer">10</span>s...
         </button>
       </div>
+    </div>
+
+    <div id="ad-timer-popup" class="fixed inset-0 bg-black/90 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
+        <div class="liquid-glass text-gray-100 rounded-3xl p-8 max-w-sm w-[90%] shadow-2xl text-center border border-indigo-500/50 flex flex-col items-center">
+            <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-6 animate-bounce">
+                <span class="text-3xl">⭐</span>
+            </div>
+            <h2 class="text-2xl font-black text-white mb-2">Support Kivro</h2>
+            <p class="text-gray-400 text-sm mb-8 leading-relaxed">
+                Please visit our sponsor to unlock this game. It keeps our servers running fast and free!
+            </p>
+            
+            <button id="ad-trigger-btn" class="w-full py-4 rounded-xl font-bold text-base transition-all bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.5)] transform hover:scale-105 flex items-center justify-center gap-2">
+                <span>Visit Sponsor</span>
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </button>
+            
+            <p id="ad-status-text" class="text-xs text-gray-500 mt-4 h-4"></p>
+        </div>
     </div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
@@ -325,7 +316,6 @@
             <div class="flex items-center gap-2">
                 <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
                     <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
-
                     <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
                     <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
                     <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
@@ -334,10 +324,7 @@
                     </button>
                 </div>
                 
-                <button 
-                  id="install-trigger-btn" 
-                  class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center"
-                  aria-label="Install App">
+                <button id="install-trigger-btn" class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center" aria-label="Install App">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
@@ -360,11 +347,7 @@
     <main class="max-w-7xl mx-auto px-4 py-8">
         
         <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[400px] relative group overflow-hidden">
-            
-            <div class="absolute inset-0 z-0 opacity-20" 
-                 style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;">
-            </div>
-
+            <div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
             <div class="blob blob-1 opacity-60 mix-blend-screen"></div>
             <div class="blob blob-2 opacity-60 mix-blend-screen"></div>
             <div class="blob blob-3 opacity-40 mix-blend-screen"></div>
@@ -428,14 +411,17 @@
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
+    <script>(function(s){s.dataset.zone='10362611',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
     <script>
-        // --- APP DATA & CONSTANTS ---
+        // --- 🔴 CONFIGURATION 🔴 ---
+        const AD_CHANCE = 1/6; // 1 in 6 chance (~16%)
+        const DIRECT_LINK_URL = "https://otieu.com/4/10362606"; 
+
+        // --- APP DATA ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
         
-        // ==========================================
-        // 🎮 GAMES LIST - Add new games here
-        // ==========================================
         const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://ixl-library.netlify.app//2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://ixl-library.netlify.app//btd4/index.html" },
@@ -515,53 +501,37 @@
             { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://ixl-library.netlify.app/getaway-shootout/index.html" }
         ];
 
-        // ==========================================
-        // 📱 APPS LIST - Add new apps here
-        // ==========================================
         const appsList = [
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
 
-        // Combine for logic
         const library = [...gamesList, ...appsList];
 
-        // --- STATE ---
         let favorites = [];
         try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
         let currentTab = 'Games';
         let searchTerm = '';
-
-        // --- DISCLAIMER LOGIC ---
         let disclaimerUrl = '';
         let countdownInterval;
 
+        // --- PARTNER DISCLAIMER LOGIC ---
         function openDisclaimer(url) {
             disclaimerUrl = url;
             const popup = document.getElementById('disclaimer-popup');
             const btn = document.getElementById('disclaimer-btn');
-            
             if(!popup || !btn) return;
-
-            // Reset state
             let timeLeft = 10;
             btn.disabled = true;
             btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10";
             btn.innerHTML = `Wait <span id="disclaimer-timer">${timeLeft}</span>s...`;
-            
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
-            setTimeout(() => {
-                popup.classList.add('active');
-            }, 10);
-
-            // Clear existing interval if any
+            setTimeout(() => { popup.classList.add('active'); }, 10);
             if (countdownInterval) clearInterval(countdownInterval);
-
             countdownInterval = setInterval(() => {
                 timeLeft--;
                 const span = document.getElementById('disclaimer-timer');
                 if(span) span.innerText = timeLeft;
-
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
                     btn.disabled = false;
@@ -571,54 +541,79 @@
             }, 1000);
         }
 
-        // Close Disclaimer
         function closeDisclaimer() {
             const popup = document.getElementById('disclaimer-popup');
             if (popup) {
                 popup.classList.remove('active');
-                setTimeout(() => {
-                    popup.classList.add('hidden');
-                    popup.style.display = 'none';
-                }, 300);
+                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
             }
             if (countdownInterval) clearInterval(countdownInterval);
         }
 
-        // Event listener for the disclaimer button
         const disclaimerBtn = document.getElementById('disclaimer-btn');
         if (disclaimerBtn) {
-            disclaimerBtn.onclick = () => {
-                if (disclaimerUrl) {
-                    window.open(disclaimerUrl, '_blank');
-                    closeDisclaimer();
-                }
+            disclaimerBtn.onclick = () => { if (disclaimerUrl) { window.open(disclaimerUrl, '_blank'); closeDisclaimer(); } };
+        }
+
+        const disclaimerPopup = document.getElementById('disclaimer-popup');
+        if (disclaimerPopup) {
+            disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
+        }
+
+        // --- NEW AD OVERLAY LOGIC (20s Timer) ---
+        let adInterval;
+        function showAdOverlay(targetGameUrl) {
+            const popup = document.getElementById('ad-timer-popup');
+            const btn = document.getElementById('ad-trigger-btn');
+            const status = document.getElementById('ad-status-text');
+            
+            // Reset UI
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.classList.add('active'); }, 10);
+            
+            btn.disabled = false;
+            btn.classList.remove('cursor-not-allowed', 'opacity-50');
+            btn.innerHTML = `<span>Visit Sponsor</span><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>`;
+            status.innerText = "";
+
+            // On Click
+            btn.onclick = () => {
+                // 1. Open Ad
+                window.open(DIRECT_LINK_URL, '_blank');
+                
+                // 2. Start Timer
+                let timeLeft = 20;
+                btn.disabled = true;
+                btn.classList.add('cursor-not-allowed', 'opacity-50');
+                
+                if(adInterval) clearInterval(adInterval);
+                status.innerText = "Verifying view...";
+                btn.innerHTML = `Wait ${timeLeft}s...`;
+
+                adInterval = setInterval(() => {
+                    timeLeft--;
+                    btn.innerHTML = `Wait ${timeLeft}s...`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(adInterval);
+                        // Hide popup and open game
+                        popup.classList.remove('active');
+                        setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+                        window.open(targetGameUrl, '_blank');
+                    }
+                }, 1000);
             };
         }
 
-        // Close disclaimer on outside click
-        const disclaimerPopup = document.getElementById('disclaimer-popup');
-        if (disclaimerPopup) {
-            disclaimerPopup.addEventListener('click', (e) => {
-                if (e.target === disclaimerPopup) {
-                    closeDisclaimer();
-                }
-            });
-        }
-
-        // --- TAB PILL ANIMATION ---
         function movePill(targetBtn) {
             const pill = document.getElementById('tab-pill');
             if(!pill || !targetBtn) return;
-            
-            // Set opacity to 1 on first move (if initially 0)
             pill.style.opacity = '1';
-            
-            // Calculate relative position and width
             pill.style.left = targetBtn.offsetLeft + 'px';
             pill.style.width = targetBtn.offsetWidth + 'px';
         }
 
-        // GRID LOGIC
         function renderGrid() {
             const grid = document.getElementById('game-grid');
             if(!grid) return;
@@ -643,27 +638,32 @@
                 return;
             }
 
-            // Using DocumentFragment for better performance
             const fragment = document.createDocumentFragment();
 
             items.forEach((item, index) => {
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
-                // Added liquid-glass class to each card for the effect
                 card.className = "game-card group cursor-pointer card-anim liquid-glass";
-                
-                // Set random animation delay for shimmer
                 card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
-                
-                // Slightly more staggered delay for "wave" effect
                 card.style.animationDelay = `${index * 50}ms`;
                 
-                // CLICK ACTION
+                // --- CLICK ACTION ---
                 card.onclick = () => {
-                    if (item.id === 1001) { // BlackFlix ID
-                        openDisclaimer(item.gameUrl);
+                    const targetUrl = item.gameUrl;
+
+                    // 1. Partner App (BlackFlix)
+                    if (item.id === 1001) {
+                        openDisclaimer(targetUrl);
+                        return;
+                    }
+
+                    // 2. Ad Chance Logic
+                    if (Math.random() < AD_CHANCE) {
+                        // Trigger the Overlay with the 20s timer
+                        showAdOverlay(targetUrl);
                     } else {
-                        window.open(item.gameUrl, '_blank');
+                        // Open Game Normally
+                        window.open(targetUrl, '_blank');
                     }
                 };
 
@@ -697,7 +697,6 @@
             else e.currentTarget.classList.toggle('star-active');
         };
 
-        // --- SEARCH & TABS ---
         function clearSearch(isMobile) {
             searchTerm = '';
             const input = document.getElementById(isMobile ? 'search-input-mobile' : 'search-input');
@@ -730,19 +729,14 @@
             const tabEl = document.getElementById(t);
             if(tabEl) {
                 tabEl.onclick = (e) => {
-                    // Handle logic
                     currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    
-                    // Handle Visuals
                     ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
                         const btn = document.getElementById(btnId);
                         if(btnId === t) {
-                            // Activate
                             btn.classList.add('tab-active-text');
                             btn.classList.remove('tab-inactive-text');
                             movePill(btn); 
                         } else {
-                            // Deactivate
                             btn.classList.remove('tab-active-text');
                             btn.classList.add('tab-inactive-text');
                         }
@@ -752,7 +746,6 @@
             }
         });
 
-        // --- INSTALL POPUP ---
         const popup = document.getElementById('install-popup');
         const openBtn = document.getElementById('install-trigger-btn');
         const closeBtn = document.getElementById('close-popup');
@@ -762,33 +755,21 @@
             openBtn.addEventListener('click', () => {
                 popup.classList.remove('hidden');
                 popup.style.display = 'flex';
-                setTimeout(() => {
-                    popup.classList.add('active');
-                    popup.setAttribute('aria-hidden', 'false');
-                }, 10);
+                setTimeout(() => { popup.classList.add('active'); popup.setAttribute('aria-hidden', 'false'); }, 10);
             });
         }
 
         const hidePopup = () => {
             popup.classList.remove('active');
             popup.setAttribute('aria-hidden', 'true');
-            setTimeout(() => {
-                popup.classList.add('hidden');
-                popup.style.display = 'none';
-            }, 300);
+            setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
         };
 
         if(closeBtn) closeBtn.addEventListener('click', hidePopup);
-        
-        if(popup) popup.addEventListener('click', (e) => { 
-            if (e.target === popup) hidePopup(); 
-        });
+        if(popup) popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
 
         document.addEventListener('keydown', (e) => {
-             if (e.key === 'Escape' && popup && !popup.classList.contains('hidden')) {
-                 hidePopup();
-                 closeDisclaimer();
-             }
+             if (e.key === 'Escape' && popup && !popup.classList.contains('hidden')) { hidePopup(); closeDisclaimer(); }
         });
         
         if(icons) {
@@ -802,30 +783,17 @@
             });
         }
 
-        // --- SAFE INITIALIZATION (Runs last) ---
-        // This ensures library is defined before usage
         window.addEventListener('load', () => {
-            // Force splash removal after 1.2s max
-            setTimeout(() => {
-                const splash = document.getElementById('splash');
-                if(splash) splash.classList.add('fade-out');
-            }, 1200);
-            
-            // Render initial grid
+            setTimeout(() => { const splash = document.getElementById('splash'); if(splash) splash.classList.add('fade-out'); }, 1200);
             renderGrid();
-            
-            // Initialize pill position
             const defaultTab = document.getElementById('tab-games');
             if(defaultTab) movePill(defaultTab);
-            
-            // Initialize falling lights
             createFallingLights();
         });
 
         function createFallingLights() {
             const container = document.getElementById('falling-lights');
             if (!container) return;
-
             for (let i = 0; i < 20; i++) {
                 const light = document.createElement('div');
                 light.className = 'falling-light';
