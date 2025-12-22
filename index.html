@@ -213,6 +213,16 @@
         @keyframes shimmer {
             100% { transform: translateX(100%); }
         }
+        
+        .ad-banner-container {
+            width: 100%; max-width: 728px; min-height: 90px;
+            margin: 0 auto 30px auto;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; position: relative;
+        }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
@@ -287,22 +297,25 @@
       </div>
     </div>
 
-    <div id="ad-timer-popup" class="fixed inset-0 bg-black/90 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
-        <div class="liquid-glass text-gray-100 rounded-3xl p-8 max-w-sm w-[90%] shadow-2xl text-center border border-indigo-500/50 flex flex-col items-center">
-            <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-6 animate-bounce">
-                <span class="text-3xl">⭐</span>
+    <div id="ad-timer-popup" class="fixed inset-0 bg-black/95 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
+        <div class="relative w-full max-w-lg aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col items-center justify-center group">
+            <div class="absolute inset-0 bg-[url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/Asworldc.jpg')] bg-cover bg-center opacity-30 blur-sm"></div>
+            <div class="absolute inset-0 bg-black/60"></div>
+            
+            <div class="relative z-10 text-center p-6">
+                <h2 class="text-xl font-bold text-white mb-6 drop-shadow-md">Watch Ad to Unlock Game</h2>
+                
+                <button id="ad-trigger-btn" class="group/btn relative inline-flex items-center justify-center w-20 h-20 bg-white/10 hover:bg-red-600 rounded-full backdrop-blur-sm border-2 border-white/30 transition-all duration-300 hover:scale-110">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <span class="absolute inline-flex h-full w-full rounded-full bg-white opacity-20 animate-ping group-hover/btn:hidden"></span>
+                </button>
+                
+                <p id="ad-status-text" class="text-sm font-mono text-gray-300 mt-6 min-h-[20px]">Click play to start</p>
             </div>
-            <h2 class="text-2xl font-black text-white mb-2">Support Kivro</h2>
-            <p class="text-gray-400 text-sm mb-8 leading-relaxed">
-                Please visit our sponsor to unlock this game. It keeps our servers running fast and free!
-            </p>
-            
-            <button id="ad-trigger-btn" class="w-full py-4 rounded-xl font-bold text-base transition-all bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.5)] transform hover:scale-105 flex items-center justify-center gap-2">
-                <span>Visit Sponsor</span>
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </button>
-            
-            <p id="ad-status-text" class="text-xs text-gray-500 mt-4 h-4"></p>
+
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-800">
+                <div id="ad-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-[1000ms] ease-linear"></div>
+            </div>
         </div>
     </div>
 
@@ -396,11 +409,16 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+        <div class="flex items-center justify-between mb-2">
             <h2 class="text-lg font-bold text-white flex items-center gap-2">
                 All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
             </h2>
             <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
+        </div>
+
+        <div class="ad-banner-container">
+            <span class="text-xs text-gray-500 uppercase tracking-widest absolute top-1 left-2 z-10">Advertisement</span>
+            <div class="text-gray-600 text-xs">Banner Ad Space</div>
         </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
@@ -411,11 +429,12 @@
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
+    <script>(function(s){s.dataset.zone='10362665',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     <script>(function(s){s.dataset.zone='10362611',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
+    
     <script>
         // --- 🔴 CONFIGURATION 🔴 ---
-        const AD_CHANCE = 1/6; // 1 in 6 chance (~16%)
+        const AD_CHANCE = 0.2; // 20% Chance (1 in 5)
         const DIRECT_LINK_URL = "https://otieu.com/4/10362606"; 
 
         // --- APP DATA ---
@@ -560,44 +579,54 @@
             disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
         }
 
-        // --- NEW AD OVERLAY LOGIC (20s Timer) ---
+        // --- VIDEO PLAYER AD LOGIC (The 20s Fake Player) ---
         let adInterval;
         function showAdOverlay(targetGameUrl) {
             const popup = document.getElementById('ad-timer-popup');
             const btn = document.getElementById('ad-trigger-btn');
             const status = document.getElementById('ad-status-text');
+            const progressBar = document.getElementById('ad-progress-bar');
             
             // Reset UI
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
             setTimeout(() => { popup.classList.add('active'); }, 10);
             
-            btn.disabled = false;
-            btn.classList.remove('cursor-not-allowed', 'opacity-50');
-            btn.innerHTML = `<span>Visit Sponsor</span><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>`;
-            status.innerText = "";
+            progressBar.style.width = '0%';
+            btn.style.pointerEvents = 'auto';
+            btn.style.opacity = '1';
+            status.innerText = "Click play to start video";
 
-            // On Click
+            // On Click Play
             btn.onclick = () => {
-                // 1. Open Ad
+                // 1. Open the Ad Link in new tab
                 window.open(DIRECT_LINK_URL, '_blank');
                 
-                // 2. Start Timer
+                // 2. Start Fake Video Timer
                 let timeLeft = 20;
-                btn.disabled = true;
-                btn.classList.add('cursor-not-allowed', 'opacity-50');
+                let totalTime = 20;
                 
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.5'; // Dim the play button
+                status.innerText = "Loading video...";
+
                 if(adInterval) clearInterval(adInterval);
-                status.innerText = "Verifying view...";
-                btn.innerHTML = `Wait ${timeLeft}s...`;
 
                 adInterval = setInterval(() => {
                     timeLeft--;
-                    btn.innerHTML = `Wait ${timeLeft}s...`;
+                    
+                    // Update Status Text
+                    if(timeLeft > 15) status.innerText = "Connecting to server...";
+                    else if(timeLeft > 5) status.innerText = "Playing advertisement...";
+                    else status.innerText = "Finalizing reward...";
+                    
+                    // Update Progress Bar
+                    const percentage = ((totalTime - timeLeft) / totalTime) * 100;
+                    progressBar.style.width = percentage + '%';
                     
                     if (timeLeft <= 0) {
                         clearInterval(adInterval);
-                        // Hide popup and open game
+                        // Done: Open Game
                         popup.classList.remove('active');
                         setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
                         window.open(targetGameUrl, '_blank');
@@ -659,10 +688,8 @@
 
                     // 2. Ad Chance Logic
                     if (Math.random() < AD_CHANCE) {
-                        // Trigger the Overlay with the 20s timer
                         showAdOverlay(targetUrl);
                     } else {
-                        // Open Game Normally
                         window.open(targetUrl, '_blank');
                     }
                 };
