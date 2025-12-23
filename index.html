@@ -14,10 +14,7 @@
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8524021281977248"
-     crossorigin="anonymous"></script>
-
-    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8524021281977248" crossorigin="anonymous"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -230,6 +227,19 @@
             overflow: hidden; position: relative;
         }
 
+        /* UPDATE TAB STYLING */
+        .update-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        .update-item::before {
+            content: '';
+            position: absolute; left: 0; top: 8px;
+            width: 8px; height: 8px;
+            background: #818cf8; border-radius: 50%;
+            box-shadow: 0 0 10px rgba(129,140,248,0.5);
+        }
+
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
@@ -307,18 +317,14 @@
         <div class="relative w-full max-w-lg aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col items-center justify-center group">
             <div class="absolute inset-0 bg-[url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/Asworldc.jpg')] bg-cover bg-center opacity-30 blur-sm"></div>
             <div class="absolute inset-0 bg-black/60"></div>
-            
             <div class="relative z-10 text-center p-6">
                 <h2 class="text-xl font-bold text-white mb-6 drop-shadow-md">Watch Ad to Unlock Game</h2>
-                
                 <button id="ad-trigger-btn" class="group/btn relative inline-flex items-center justify-center w-20 h-20 bg-white/10 hover:bg-red-600 rounded-full backdrop-blur-sm border-2 border-white/30 transition-all duration-300 hover:scale-110">
                     <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     <span class="absolute inline-flex h-full w-full rounded-full bg-white opacity-20 animate-ping group-hover/btn:hidden"></span>
                 </button>
-                
                 <p id="ad-status-text" class="text-sm font-mono text-gray-300 mt-6 min-h-[20px]">Click play to start</p>
             </div>
-
             <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-800">
                 <div id="ad-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-[1000ms] ease-linear"></div>
             </div>
@@ -333,17 +339,21 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
+                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md overflow-x-auto no-scrollbar">
                     <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
-                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
-                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
-                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
+                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">GAMES</button>
+                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">APPS</button>
+                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center whitespace-nowrap">
                         <span>FAVS</span>
                         <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </button>
+                    <button id="tab-updates" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap relative">
+                        UPDATES
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                    </button>
                 </div>
                 
-                <button id="install-trigger-btn" class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center" aria-label="Install App">
+                <button id="install-trigger-btn" class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center flex-shrink-0" aria-label="Install App">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                   </svg>
@@ -416,7 +426,7 @@
         </div>
 
         <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <h2 id="grid-title" class="text-lg font-bold text-white flex items-center gap-2">
                 All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
             </h2>
             <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
@@ -424,7 +434,6 @@
 
         <div class="ad-banner-container">
             <span class="text-xs text-gray-500 uppercase tracking-widest absolute top-1 left-2 z-10">Advertisement</span>
-            
             <ins class="adsbygoogle"
                  style="display:block; width:100%; height:100%;"
                  data-ad-client="ca-pub-8524021281977248"
@@ -434,9 +443,13 @@
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
-            </div>
+        </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
+        
+        <div id="updates-container" class="hidden flex flex-col gap-6 max-w-3xl mx-auto pb-20">
+            </div>
+
     </main>
 
     <button onclick="window.location.href='https://member.foodvillage.ie/login'" 
@@ -449,8 +462,36 @@
     
     <script>
         // --- 🔴 CONFIGURATION 🔴 ---
-        const AD_CHANCE = 0.2; // 20% Chance (1 in 5)
+        const AD_CHANCE = 0.2; // 20% Chance
         const DIRECT_LINK_URL = "https://otieu.com/4/10362606"; 
+
+        // --- 🆕 UPDATES LOG DATA 🆕 ---
+        // Add new updates here. Just copy a block and change the details.
+        const updatesLog = [
+            {
+                version: "v6.0",
+                date: "October 2023",
+                title: "Ultra Upgrade",
+                desc: "Major UI Overhaul and performance improvements.",
+                changes: [
+                    "New Plasma & Liquid Glass Design",
+                    "Added 75+ Premium Games",
+                    "Fixed iOS Status Bar Glitch",
+                    "Added Direct Launch Mode for faster loading"
+                ]
+            },
+            {
+                version: "v5.5",
+                date: "September 2023",
+                title: "App Support",
+                desc: "Introduced the Apps tab for partner applications.",
+                changes: [
+                    "Added BlackFlix support",
+                    "Improved search functionality",
+                    "Added Favorites system"
+                ]
+            }
+        ];
 
         // --- APP DATA ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
@@ -618,8 +659,8 @@
                 window.open(DIRECT_LINK_URL, '_blank');
                 
                 // 2. Start Fake Video Timer
-                let timeLeft = 10;
-                let totalTime = 10;
+                let timeLeft = 20;
+                let totalTime = 20;
                 
                 btn.style.pointerEvents = 'none';
                 btn.style.opacity = '0.5'; // Dim the play button
@@ -658,9 +699,54 @@
             pill.style.width = targetBtn.offsetWidth + 'px';
         }
 
+        function renderUpdates() {
+            const container = document.getElementById('updates-container');
+            container.innerHTML = '';
+            
+            updatesLog.forEach((log, index) => {
+                const card = document.createElement('div');
+                card.className = "intro-card p-6 border border-white/10 text-left relative overflow-hidden group";
+                card.style.animation = `fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards ${index * 100}ms`;
+                
+                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
+                            <h3 class="text-xl font-bold text-white">${log.title}</h3>
+                        </div>
+                        <span class="text-xs text-gray-500 font-mono">${log.date}</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
+                    <ul class="space-y-2">
+                        ${changeList}
+                    </ul>
+                `;
+                container.appendChild(card);
+            });
+        }
+
         function renderGrid() {
             const grid = document.getElementById('game-grid');
+            const updatesContainer = document.getElementById('updates-container');
+            const gridTitle = document.getElementById('grid-title');
+            
             if(!grid) return;
+            
+            // --- LOGIC: If Updates Tab is active, show updates, hide grid
+            if(currentTab === 'Updates') {
+                grid.style.display = 'none';
+                updatesContainer.classList.remove('hidden');
+                gridTitle.style.opacity = '0'; // Hide title cleanly
+                renderUpdates();
+                return;
+            } else {
+                grid.style.display = 'grid';
+                updatesContainer.classList.add('hidden');
+                gridTitle.style.opacity = '1';
+            }
+
             grid.innerHTML = '';
             
             let items = library.filter(item => {
@@ -767,12 +853,13 @@
         const clearBtnMobile = document.getElementById('clear-search-mobile');
         if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
 
-        ['tab-games','tab-apps','tab-favs'].forEach(t => {
+        // Updated Tab Logic including UPDATES
+        ['tab-games','tab-apps','tab-favs', 'tab-updates'].forEach(t => {
             const tabEl = document.getElementById(t);
             if(tabEl) {
                 tabEl.onclick = (e) => {
                     currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
+                    ['tab-games','tab-apps','tab-favs', 'tab-updates'].forEach(btnId => {
                         const btn = document.getElementById(btnId);
                         if(btnId === t) {
                             btn.classList.add('tab-active-text');
