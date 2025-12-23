@@ -197,8 +197,9 @@
         .fade-out { opacity: 0 !important; pointer-events: none !important; }
         .animate-pulse-slow { animation: pulse 3s infinite; }
 
-        #install-popup, #disclaimer-popup, #ad-timer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active { opacity: 1; pointer-events: auto; }
+        /* ALL POPUPS */
+        #install-popup, #disclaimer-popup, #ad-timer-popup, #updates-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active, #updates-popup.active { opacity: 1; pointer-events: auto; }
         
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important;
@@ -216,7 +217,6 @@
             100% { transform: translateX(100%); }
         }
         
-        /* AD BANNER STYLING */
         .ad-banner-container {
             width: 100%; max-width: 728px; min-height: 90px;
             margin: 0 auto 30px auto;
@@ -227,17 +227,17 @@
             overflow: hidden; position: relative;
         }
 
-        /* UPDATE TAB STYLING */
+        /* UPDATE ITEMS IN POPUP */
         .update-item {
             position: relative;
-            padding-left: 20px;
+            padding-left: 16px;
         }
         .update-item::before {
             content: '';
-            position: absolute; left: 0; top: 8px;
-            width: 8px; height: 8px;
+            position: absolute; left: 0; top: 7px;
+            width: 6px; height: 6px;
             background: #818cf8; border-radius: 50%;
-            box-shadow: 0 0 10px rgba(129,140,248,0.5);
+            box-shadow: 0 0 8px rgba(129,140,248,0.5);
         }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -331,6 +331,22 @@
         </div>
     </div>
 
+    <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
+        <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                    📢 What's New
+                </h2>
+                <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <div id="updates-content" class="p-6 overflow-y-auto space-y-6">
+                </div>
+        </div>
+    </div>
+
     <header class="sticky top-0 z-50 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
             <div class="flex items-center gap-3">
@@ -339,17 +355,13 @@
             </div>
             
             <div class="flex items-center gap-2">
-                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md overflow-x-auto no-scrollbar">
+                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
                     <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
-                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">GAMES</button>
-                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap">APPS</button>
-                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center whitespace-nowrap">
+                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
+                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
+                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
                         <span>FAVS</span>
                         <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </button>
-                    <button id="tab-updates" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap relative">
-                        UPDATES
-                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
                     </button>
                 </div>
                 
@@ -389,10 +401,10 @@
             </div>
 
             <div class="relative z-10 flex flex-col items-center">
-                <div class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    v6.0 Ultra • Systems Online
-                </div>
+                    v7.0 Ultra • See What's New &rarr;
+                </button>
                 
                 <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
                     Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
@@ -446,10 +458,6 @@
         </div>
 
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
-        
-        <div id="updates-container" class="hidden flex flex-col gap-6 max-w-3xl mx-auto pb-20">
-            </div>
-
     </main>
 
     <button onclick="window.location.href='https://member.foodvillage.ie/login'" 
@@ -466,8 +474,18 @@
         const DIRECT_LINK_URL = "https://otieu.com/4/10362606"; 
 
         // --- 🆕 UPDATES LOG DATA 🆕 ---
-        // Add new updates here. Just copy a block and change the details.
         const updatesLog = [
+            {
+                version: "v7.0",
+                date: "Recent",
+                title: "Monetization & UI",
+                desc: "Added support for better ad experiences and UI tweaks.",
+                changes: [
+                    "Added Updates Popup",
+                    "Integrated Ad Support",
+                    "Smoother Animations"
+                ]
+            },
             {
                 version: "v6.0",
                 date: "October 2023",
@@ -478,17 +496,6 @@
                     "Added 75+ Premium Games",
                     "Fixed iOS Status Bar Glitch",
                     "Added Direct Launch Mode for faster loading"
-                ]
-            },
-            {
-                version: "v5.5",
-                date: "September 2023",
-                title: "App Support",
-                desc: "Introduced the Apps tab for partner applications.",
-                changes: [
-                    "Added BlackFlix support",
-                    "Improved search functionality",
-                    "Added Favorites system"
                 ]
             }
         ];
@@ -635,7 +642,7 @@
             disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
         }
 
-        // --- VIDEO PLAYER AD LOGIC (The 20s Fake Player) ---
+        // --- VIDEO PLAYER AD LOGIC ---
         let adInterval;
         function showAdOverlay(targetGameUrl) {
             const popup = document.getElementById('ad-timer-popup');
@@ -643,7 +650,6 @@
             const status = document.getElementById('ad-status-text');
             const progressBar = document.getElementById('ad-progress-bar');
             
-            // Reset UI
             popup.classList.remove('hidden');
             popup.style.display = 'flex';
             setTimeout(() => { popup.classList.add('active'); }, 10);
@@ -653,42 +659,82 @@
             btn.style.opacity = '1';
             status.innerText = "Click play to start video";
 
-            // On Click Play
             btn.onclick = () => {
-                // 1. Open the Ad Link in new tab
                 window.open(DIRECT_LINK_URL, '_blank');
-                
-                // 2. Start Fake Video Timer
-                let timeLeft = 20;
-                let totalTime = 20;
-                
+                let timeLeft = 10;
+                let totalTime = 10;
                 btn.style.pointerEvents = 'none';
-                btn.style.opacity = '0.5'; // Dim the play button
+                btn.style.opacity = '0.5';
                 status.innerText = "Loading video...";
 
                 if(adInterval) clearInterval(adInterval);
 
                 adInterval = setInterval(() => {
                     timeLeft--;
-                    
-                    // Update Status Text
                     if(timeLeft > 15) status.innerText = "Connecting to server...";
                     else if(timeLeft > 5) status.innerText = "Playing advertisement...";
                     else status.innerText = "Finalizing reward...";
-                    
-                    // Update Progress Bar
                     const percentage = ((totalTime - timeLeft) / totalTime) * 100;
                     progressBar.style.width = percentage + '%';
                     
                     if (timeLeft <= 0) {
                         clearInterval(adInterval);
-                        // Done: Open Game
                         popup.classList.remove('active');
                         setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
                         window.open(targetGameUrl, '_blank');
                     }
                 }, 1000);
             };
+        }
+
+        // --- UPDATES POPUP LOGIC ---
+        function openUpdates() {
+            const popup = document.getElementById('updates-popup');
+            const content = document.getElementById('updates-content');
+            if(!popup || !content) return;
+
+            // Render updates
+            content.innerHTML = updatesLog.map((log, index) => {
+                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
+                return `
+                    <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
+                                <h3 class="text-xl font-bold text-white">${log.title}</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-mono">${log.date}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
+                        <ul class="space-y-2">
+                            ${changeList}
+                        </ul>
+                    </div>
+                `;
+            }).join('');
+
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.classList.add('active'); }, 10);
+        }
+
+        const closeUpdatesBtn = document.getElementById('close-updates');
+        if(closeUpdatesBtn) {
+            closeUpdatesBtn.onclick = () => {
+                const popup = document.getElementById('updates-popup');
+                popup.classList.remove('active');
+                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+            };
+        }
+
+        const updatesPopup = document.getElementById('updates-popup');
+        if(updatesPopup) {
+            updatesPopup.addEventListener('click', (e) => {
+                if (e.target === updatesPopup) {
+                    updatesPopup.classList.remove('active');
+                    setTimeout(() => { updatesPopup.classList.add('hidden'); updatesPopup.style.display = 'none'; }, 300);
+                }
+            });
         }
 
         function movePill(targetBtn) {
@@ -699,54 +745,9 @@
             pill.style.width = targetBtn.offsetWidth + 'px';
         }
 
-        function renderUpdates() {
-            const container = document.getElementById('updates-container');
-            container.innerHTML = '';
-            
-            updatesLog.forEach((log, index) => {
-                const card = document.createElement('div');
-                card.className = "intro-card p-6 border border-white/10 text-left relative overflow-hidden group";
-                card.style.animation = `fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards ${index * 100}ms`;
-                
-                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
-                
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
-                            <h3 class="text-xl font-bold text-white">${log.title}</h3>
-                        </div>
-                        <span class="text-xs text-gray-500 font-mono">${log.date}</span>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
-                    <ul class="space-y-2">
-                        ${changeList}
-                    </ul>
-                `;
-                container.appendChild(card);
-            });
-        }
-
         function renderGrid() {
             const grid = document.getElementById('game-grid');
-            const updatesContainer = document.getElementById('updates-container');
-            const gridTitle = document.getElementById('grid-title');
-            
             if(!grid) return;
-            
-            // --- LOGIC: If Updates Tab is active, show updates, hide grid
-            if(currentTab === 'Updates') {
-                grid.style.display = 'none';
-                updatesContainer.classList.remove('hidden');
-                gridTitle.style.opacity = '0'; // Hide title cleanly
-                renderUpdates();
-                return;
-            } else {
-                grid.style.display = 'grid';
-                updatesContainer.classList.add('hidden');
-                gridTitle.style.opacity = '1';
-            }
-
             grid.innerHTML = '';
             
             let items = library.filter(item => {
@@ -853,13 +854,12 @@
         const clearBtnMobile = document.getElementById('clear-search-mobile');
         if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
 
-        // Updated Tab Logic including UPDATES
-        ['tab-games','tab-apps','tab-favs', 'tab-updates'].forEach(t => {
+        ['tab-games','tab-apps','tab-favs'].forEach(t => {
             const tabEl = document.getElementById(t);
             if(tabEl) {
                 tabEl.onclick = (e) => {
                     currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    ['tab-games','tab-apps','tab-favs', 'tab-updates'].forEach(btnId => {
+                    ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
                         const btn = document.getElementById(btnId);
                         if(btnId === t) {
                             btn.classList.add('tab-active-text');
