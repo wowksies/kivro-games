@@ -75,7 +75,7 @@
             overflow: hidden;
         }
 
-        /* 🟢 iOS CORNER FIX: Forces rounded corners to clip content on iPad */
+        /* 🟢 iOS CORNER FIX */
         .liquid-glass, .intro-card, .game-card, .rounded-full, .rounded-xl, .rounded-2xl, .rounded-3xl {
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             mask-image: radial-gradient(white, black);
@@ -126,6 +126,76 @@
             box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
+        }
+
+        /* --- NEW CINEMATIC INTRO STYLES --- */
+        #cinematic-splash {
+            position: fixed;
+            inset: 0;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
+        }
+        
+        .splash-logo {
+            width: 100px; height: 100px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+            animation: pulse-logo 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        .splash-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            opacity: 0;
+            animation: slide-text 0.8s ease forwards 0.3s;
+        }
+
+        .splash-loader {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 99px;
+            margin-top: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-loader::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; height: 100%; width: 0%;
+            background: #6366f1;
+            box-shadow: 0 0 10px #6366f1;
+            animation: load-bar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(99, 102, 241, 0.8); }
+        }
+        @keyframes slide-text {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes load-bar {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+
+        .splash-exit {
+            transform: translateY(-100%);
+            pointer-events: none;
         }
 
         /* --- BLOB ANIMATIONS --- */
@@ -199,13 +269,9 @@
         .tab-inactive-text { color: #9ca3af; }
         .tab-inactive-text:hover { color: white; }
 
-        #splash { background-color: #050505; z-index: 9999; transition: opacity 0.5s ease; pointer-events: auto; }
-        .fade-out { opacity: 0 !important; pointer-events: none !important; }
-        .animate-pulse-slow { animation: pulse 3s infinite; }
-
         /* ALL POPUPS */
-        #install-popup, #disclaimer-popup, #ad-timer-popup, #updates-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active, #updates-popup.active { opacity: 1; pointer-events: auto; }
+        #install-popup, #disclaimer-popup, #ad-timer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active { opacity: 1; pointer-events: auto; }
         
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important;
@@ -233,7 +299,7 @@
             overflow: hidden; position: relative;
         }
 
-        /* UPDATE ITEMS IN POPUP */
+        /* UPDATE ITEMS STYLING */
         .update-item {
             position: relative;
             padding-left: 16px;
@@ -257,9 +323,10 @@
     <div id="gradient-canvas"></div>
     <div class="falling-lights-container" id="falling-lights"></div>
 
-    <div id="splash" class="fixed inset-0 flex flex-col items-center justify-center">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-32 h-32 rounded-2xl shadow-2xl mb-6 animate-pulse-slow">
-        <h1 class="text-4xl font-black text-white tracking-tight">Kivro Games</h1>
+    <div id="cinematic-splash">
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="splash-logo">
+        <h1 class="splash-text">KIVRO GAMES</h1>
+        <div class="splash-loader"></div>
     </div>
 
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
@@ -337,22 +404,6 @@
         </div>
     </div>
 
-    <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
-        <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
-            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
-                <h2 class="text-2xl font-black text-white flex items-center gap-2">
-                    📢 What's New
-                </h2>
-                <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            
-            <div id="updates-content" class="p-6 overflow-y-auto space-y-6">
-                </div>
-        </div>
-    </div>
-
     <header class="sticky top-0 z-50 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
             <div class="flex items-center gap-3">
@@ -407,10 +458,10 @@
             </div>
 
             <div class="relative z-10 flex flex-col items-center">
-                <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
+                <div class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)]">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    v7.0 Ultra • See What's New &rarr;
-                </button>
+                    v7.0 Ultra • Systems Online
+                </div>
                 
                 <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
                     Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
@@ -443,8 +494,19 @@
             </div>
         </div>
 
+        <div class="max-w-4xl mx-auto mb-10">
+            <div class="liquid-glass rounded-3xl p-6 border border-white/10 flex flex-col gap-4">
+                <div class="flex items-center gap-2 border-b border-white/10 pb-4">
+                    <span class="text-2xl">📢</span>
+                    <h2 class="text-xl font-bold text-white">System Log</h2>
+                </div>
+                <div id="on-page-updates" class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                    </div>
+            </div>
+        </div>
+
         <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <h2 id="grid-title" class="text-lg font-bold text-white flex items-center gap-2">
                 All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
             </h2>
             <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
@@ -487,9 +549,9 @@
                 title: "Ads and UI Improvements",
                 desc: "Enhanced visual experience and improved ad integrations.",
                 changes: [
-                    "Added What's New Popup",
-                    "Integrated Ad Support",
-                    "Fixed iOS UI Glitches"
+                    "Added Cinematic Startup",
+                    "Visible System Log",
+                    "Fixed iOS Corner Glitches"
                 ]
             },
             {
@@ -693,54 +755,24 @@
             };
         }
 
-        // --- UPDATES POPUP LOGIC ---
-        function openUpdates() {
-            const popup = document.getElementById('updates-popup');
-            const content = document.getElementById('updates-content');
-            if(!popup || !content) return;
-
-            // Render updates
-            content.innerHTML = updatesLog.map((log, index) => {
+        function renderUpdates() {
+            const container = document.getElementById('on-page-updates');
+            if(!container) return;
+            
+            container.innerHTML = updatesLog.map((log, index) => {
                 let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
                 return `
-                    <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
-                                <h3 class="text-xl font-bold text-white">${log.title}</h3>
-                            </div>
-                            <span class="text-xs text-gray-500 font-mono">${log.date}</span>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-sm font-bold text-white">${log.title}</h3>
+                            <span class="text-[10px] text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-500/30">${log.version}</span>
                         </div>
-                        <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
-                        <ul class="space-y-2">
+                        <ul class="space-y-1">
                             ${changeList}
                         </ul>
                     </div>
                 `;
             }).join('');
-
-            popup.classList.remove('hidden');
-            popup.style.display = 'flex';
-            setTimeout(() => { popup.classList.add('active'); }, 10);
-        }
-
-        const closeUpdatesBtn = document.getElementById('close-updates');
-        if(closeUpdatesBtn) {
-            closeUpdatesBtn.onclick = () => {
-                const popup = document.getElementById('updates-popup');
-                popup.classList.remove('active');
-                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
-            };
-        }
-
-        const updatesPopup = document.getElementById('updates-popup');
-        if(updatesPopup) {
-            updatesPopup.addEventListener('click', (e) => {
-                if (e.target === updatesPopup) {
-                    updatesPopup.classList.remove('active');
-                    setTimeout(() => { updatesPopup.classList.add('hidden'); updatesPopup.style.display = 'none'; }, 300);
-                }
-            });
         }
 
         function movePill(targetBtn) {
@@ -919,8 +951,15 @@
         }
 
         window.addEventListener('load', () => {
-            setTimeout(() => { const splash = document.getElementById('splash'); if(splash) splash.classList.add('fade-out'); }, 1200);
+            // New Intro Logic
+            setTimeout(() => {
+                const intro = document.getElementById('cinematic-splash');
+                if(intro) intro.classList.add('splash-exit');
+            }, 2500); // Intro plays for 2.5 seconds
+
             renderGrid();
+            renderUpdates(); // Render on-page updates
+            
             const defaultTab = document.getElementById('tab-games');
             if(defaultTab) movePill(defaultTab);
             createFallingLights();
