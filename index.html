@@ -75,6 +75,12 @@
             overflow: hidden;
         }
 
+        /* 🟢 iOS CORNER FIX: Forces rounded corners to clip content on iPad */
+        .liquid-glass, .intro-card, .game-card, .rounded-full, .rounded-xl, .rounded-2xl, .rounded-3xl {
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            mask-image: radial-gradient(white, black);
+        }
+
         @keyframes glass-shimmer {
             0% { left: -100%; opacity: 0; }
             5% { opacity: 1; }
@@ -438,7 +444,7 @@
         </div>
 
         <div class="flex items-center justify-between mb-2">
-            <h2 id="grid-title" class="text-lg font-bold text-white flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
                 All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
             </h2>
             <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
@@ -478,12 +484,12 @@
             {
                 version: "v7.0",
                 date: "Recent",
-                title: "Monetization & UI",
-                desc: "Added support for better ad experiences and UI tweaks.",
+                title: "Ads and UI Improvements",
+                desc: "Enhanced visual experience and improved ad integrations.",
                 changes: [
-                    "Added Updates Popup",
+                    "Added What's New Popup",
                     "Integrated Ad Support",
-                    "Smoother Animations"
+                    "Fixed iOS UI Glitches"
                 ]
             },
             {
