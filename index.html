@@ -270,8 +270,8 @@
         .tab-inactive-text:hover { color: white; }
 
         /* ALL POPUPS */
-        #install-popup, #disclaimer-popup, #ad-timer-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active { opacity: 1; pointer-events: auto; }
+        #install-popup, #disclaimer-popup, #ad-timer-popup, #updates-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active, #updates-popup.active { opacity: 1; pointer-events: auto; }
         
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important;
@@ -327,6 +327,24 @@
         <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="splash-logo">
         <h1 class="splash-text">KIVRO GAMES</h1>
         <div class="splash-loader"></div>
+    </div>
+
+    <div id="ad-notice-toast" class="fixed bottom-5 right-5 z-[8000] max-w-sm w-[90%] transform translate-y-40 opacity-0 transition-all duration-700 pointer-events-none">
+        <div class="liquid-glass p-5 rounded-2xl border border-yellow-500/30 flex flex-col gap-3 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                    <h3 class="font-bold text-yellow-100">Ad Notice</h3>
+                    <p class="text-xs text-yellow-200/70">Keep Kivro Free</p>
+                </div>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed">
+                We use ads to keep this site running. If an ad redirects you to another page, simply press <b class="text-white">Go Back</b> to return to your game.
+            </p>
+            <button id="close-ad-notice" disabled class="bg-white/5 cursor-not-allowed py-2 rounded-lg text-xs font-bold text-gray-400 transition-all duration-300 border border-white/5">
+                Wait 10s...
+            </button>
+        </div>
     </div>
 
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
@@ -404,6 +422,22 @@
         </div>
     </div>
 
+    <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
+        <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                    📢 What's New
+                </h2>
+                <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <div id="updates-content" class="p-6 overflow-y-auto space-y-6">
+                </div>
+        </div>
+    </div>
+
     <header class="sticky top-0 z-50 w-full glass-header">
         <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
             <div class="flex items-center gap-3">
@@ -458,10 +492,10 @@
             </div>
 
             <div class="relative z-10 flex flex-col items-center">
-                <div class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)]">
+                <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    v7.0 Ultra • Systems Online
-                </div>
+                    v7.0 Ultra • See What's New &rarr;
+                </button>
                 
                 <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
                     Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
@@ -549,15 +583,14 @@
                 title: "Ads and UI Improvements",
                 desc: "Enhanced visual experience and improved ad integrations.",
                 changes: [
-                    "Advertisements Have Been Added",
-                    "Added Cinematic Startup",
-                    "Visible System Log",
+                    "Added What's New Popup",
+                    "Integrated Ad Support",
                     "Fixed iOS Corner Glitches"
                 ]
             },
             {
                 version: "v6.0",
-                date: "November 2025",
+                date: "October 2023",
                 title: "Ultra Upgrade",
                 desc: "Major UI Overhaul and performance improvements.",
                 changes: [
@@ -754,6 +787,56 @@
                     }
                 }, 1000);
             };
+        }
+
+        // --- UPDATES POPUP LOGIC ---
+        function openUpdates() {
+            const popup = document.getElementById('updates-popup');
+            const content = document.getElementById('updates-content');
+            if(!popup || !content) return;
+
+            // Render updates
+            content.innerHTML = updatesLog.map((log, index) => {
+                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
+                return `
+                    <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
+                                <h3 class="text-xl font-bold text-white">${log.title}</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-mono">${log.date}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
+                        <ul class="space-y-2">
+                            ${changeList}
+                        </ul>
+                    </div>
+                `;
+            }).join('');
+
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.classList.add('active'); }, 10);
+        }
+
+        const closeUpdatesBtn = document.getElementById('close-updates');
+        if(closeUpdatesBtn) {
+            closeUpdatesBtn.onclick = () => {
+                const popup = document.getElementById('updates-popup');
+                popup.classList.remove('active');
+                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+            };
+        }
+
+        const updatesPopup = document.getElementById('updates-popup');
+        if(updatesPopup) {
+            updatesPopup.addEventListener('click', (e) => {
+                if (e.target === updatesPopup) {
+                    updatesPopup.classList.remove('active');
+                    setTimeout(() => { updatesPopup.classList.add('hidden'); updatesPopup.style.display = 'none'; }, 300);
+                }
+            });
         }
 
         function renderUpdates() {
@@ -956,10 +1039,38 @@
             setTimeout(() => {
                 const intro = document.getElementById('cinematic-splash');
                 if(intro) intro.classList.add('splash-exit');
-            }, 2500); // Intro plays for 2.5 seconds
+                
+                // Show Ad Notice (if not seen)
+                if (!localStorage.getItem('kivro_ad_notice_seen_v1')) {
+                    setTimeout(() => {
+                        const notice = document.getElementById('ad-notice-toast');
+                        const closeNotice = document.getElementById('close-ad-notice');
+                        
+                        notice.classList.remove('translate-y-40', 'opacity-0', 'pointer-events-none');
+                        
+                        let waitTime = 10;
+                        const timer = setInterval(() => {
+                            waitTime--;
+                            closeNotice.innerText = `Wait ${waitTime}s...`;
+                            if(waitTime <= 0) {
+                                clearInterval(timer);
+                                closeNotice.disabled = false;
+                                closeNotice.classList.remove('cursor-not-allowed', 'bg-white/5', 'text-gray-400');
+                                closeNotice.classList.add('bg-white', 'text-black', 'hover:bg-gray-200');
+                                closeNotice.innerText = "Understood";
+                                
+                                closeNotice.onclick = () => {
+                                    localStorage.setItem('kivro_ad_notice_seen_v1', 'true');
+                                    notice.classList.add('translate-y-40', 'opacity-0', 'pointer-events-none');
+                                };
+                            }
+                        }, 1000);
+                    }, 1000);
+                }
+            }, 2500); 
 
             renderGrid();
-            renderUpdates(); // Render on-page updates
+            renderUpdates(); 
             
             const defaultTab = document.getElementById('tab-games');
             if(defaultTab) movePill(defaultTab);
