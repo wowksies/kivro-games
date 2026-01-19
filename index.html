@@ -14,8 +14,6 @@
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8524021281977248" crossorigin="anonymous"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
@@ -35,7 +33,6 @@
                         #0f0f1a;
             background-size: 200% 200%;
             min-height: 100vh; position: fixed; inset: 0; z-index: -3;
-            /* Performance: Use simpler gradient rendering */
             will-change: transform;
         }
 
@@ -61,14 +58,10 @@
         }
 
         @keyframes fall-light {
-            0% { transform: translateY(0);
-            opacity: 0; }
-            10% { opacity: 1;
-            }
-            90% { opacity: 1;
-            }
-            100% { transform: translateY(120vh); opacity: 0;
-            }
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(120vh); opacity: 0; }
         }
 
         /* --- UI STYLES --- */
@@ -82,21 +75,16 @@
             overflow: hidden;
         }
 
-        /* 🟢 iOS CORNER FIX */
         .liquid-glass, .intro-card, .game-card, .rounded-full, .rounded-xl, .rounded-2xl, .rounded-3xl {
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             mask-image: radial-gradient(white, black);
         }
 
         @keyframes glass-shimmer {
-            0% { left: -100%;
-            opacity: 0; }
-            5% { opacity: 1;
-            }
-            40% { left: 200%; opacity: 1;
-            }
-            100% { left: 200%; opacity: 0;
-            }
+            0% { left: -100%; opacity: 0; }
+            5% { opacity: 1; }
+            40% { left: 200%; opacity: 1; }
+            100% { left: 200%; opacity: 0; }
         }
 
         .liquid-glass::after {
@@ -139,22 +127,17 @@
             overflow: hidden;
         }
 
-        /* --- NEW CINEMATIC INTRO STYLES --- */
+        /* --- SPLASH SCREEN --- */
         #cinematic-splash {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background-color: #000;
             z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
         }
 
         .splash-logo {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             border-radius: 20px;
             box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
             animation: pulse-logo 2s infinite;
@@ -162,205 +145,123 @@
         }
 
         .splash-text {
-            font-size: 2.5rem;
-            font-weight: 900;
+            font-size: 2.5rem; font-weight: 900;
             background: linear-gradient(to right, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-            opacity: 0;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1px; opacity: 0;
             animation: slide-text 0.8s ease forwards 0.3s;
         }
 
         .splash-loader {
-            width: 200px;
-            height: 4px;
+            width: 200px; height: 4px;
             background: rgba(255,255,255,0.1);
-            border-radius: 99px;
-            margin-top: 30px;
-            overflow: hidden;
-            position: relative;
+            border-radius: 99px; margin-top: 30px;
+            overflow: hidden; position: relative;
         }
 
         .splash-loader::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; height: 100%; width: 0%;
-            background: #6366f1;
-            box-shadow: 0 0 10px #6366f1;
+            content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+            background: #6366f1; box-shadow: 0 0 10px #6366f1;
             animation: load-bar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes pulse-logo {
-            0%, 100% { transform: scale(1);
-            box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-            50% { transform: scale(1.05);
-            box-shadow: 0 0 60px rgba(99, 102, 241, 0.8); }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(99, 102, 241, 0.8); }
         }
         @keyframes slide-text {
-            from { transform: translateY(20px);
-            opacity: 0; }
-            to { transform: translateY(0); opacity: 1;
-            }
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         @keyframes load-bar {
-            0% { width: 0%;
-            }
-            50% { width: 60%;
-            }
-            100% { width: 100%;
-            }
+            0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; }
         }
 
-        .splash-exit {
-            transform: translateY(-100%);
-            pointer-events: none;
-        }
+        .splash-exit { transform: translateY(-100%); pointer-events: none; }
 
         /* --- BLOB ANIMATIONS --- */
         @keyframes blob-float {
-            0% { transform: translate(0px, 0px) scale(1);
-            }
-            33% { transform: translate(30px, -50px) scale(1.1);
-            }
-            66% { transform: translate(-20px, 20px) scale(0.9);
-            }
-            100% { transform: translate(0px, 0px) scale(1);
-            }
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
         }
 
         .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.6;
-            animation: blob-float 12s infinite ease-in-out;
-            pointer-events: none;
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
+            animation: blob-float 12s infinite ease-in-out; pointer-events: none;
         }
-        /* Performance: Simplified blob setup */
-        .blob-1 { background: rgba(79, 70, 229, 0.5);
-            width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s;
-        }
-        .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px;
-            bottom: -100px; right: -50px; animation-delay: 2s; }
-        .blob-3 { background: rgba(236, 72, 153, 0.4);
-            width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s;
-        }
+        .blob-1 { background: rgba(79, 70, 229, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
+        .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
+        .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
 
         @keyframes fadeUp {
-            from { opacity: 0;
-            transform: translateY(50px) scale(0.9); filter: blur(4px); }
-            to { opacity: 1;
-            transform: translateY(0) scale(1); filter: blur(0); }
+            from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
-
-        .card-anim { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-        }
+        .card-anim { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
         /* --- GAME CARDS --- */
         .game-card {
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateZ(0);
-            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateZ(0); background: rgba(255, 255, 255, 0.05);
         }
-
         @media (hover: hover) {
             .game-card:hover {
-                transform: translateY(-10px) scale(1.03);
-                border-color: rgba(255, 255, 255, 0.4);
+                transform: translateY(-10px) scale(1.03); border-color: rgba(255, 255, 255, 0.4);
                 background: rgba(255, 255, 255, 0.1);
-                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7),
-                            0 0 0 1px rgba(255,255,255,0.1) inset;
-                z-index: 20;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset; z-index: 20;
             }
-            .game-card:hover::after {
-                left: 150%;
-                transition: 0.7s ease-in-out;
-            }
-            .game-card:hover img { transform: scale(1.12);
-            filter: brightness(1.2); }
+            .game-card:hover::after { left: 150%; transition: 0.7s ease-in-out; }
+            .game-card:hover img { transform: scale(1.12); filter: brightness(1.2); }
         }
-
-        .game-card img {
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            filter: brightness(1.15) saturate(1.2);
-        }
+        .game-card img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter: brightness(1.15) saturate(1.2); }
 
         .star-btn {
-            position: absolute;
-            top: 10px; right: 10px; z-index: 20;
+            position: absolute; top: 10px; right: 10px; z-index: 20;
             width: 32px; height: 32px; border-radius: 50%;
             background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
             border: 1px solid rgba(255,255,255,0.3);
             display: flex; align-items: center; justify-content: center;
             color: #d1d5db; transition: all 0.2s; cursor: pointer;
         }
-        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24;
-        box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
+        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
 
-        .tab-btn { position: relative;
-        z-index: 10; transition: color 0.3s ease; }
-        .tab-active-text { color: white;
-        text-shadow: 0 0 15px rgba(255,255,255,0.8); }
-        .tab-inactive-text { color: #9ca3af;
-        }
-        .tab-inactive-text:hover { color: white;
-        }
+        .tab-btn { position: relative; z-index: 10; transition: color 0.3s ease; }
+        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+        .tab-inactive-text { color: #9ca3af; }
+        .tab-inactive-text:hover { color: white; }
 
         /* ALL POPUPS */
-        #install-popup, #disclaimer-popup, #ad-timer-popup, #updates-popup, #owner-popup { opacity: 0;
-        transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #ad-timer-popup.active, #updates-popup.active, #owner-popup.active { opacity: 1;
-        pointer-events: auto; }
+        #install-popup, #disclaimer-popup, #updates-popup, #owner-popup, #password-modal { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #updates-popup.active, #owner-popup.active, #password-modal.active { opacity: 1; pointer-events: auto; }
 
         .glass-input {
-            background: rgba(20, 20, 25, 0.6) !important;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1) !important;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            background: rgba(20, 20, 25, 0.6) !important; backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
         .glass-input:focus {
-            background: rgba(30, 30, 35, 0.8) !important;
-            border-color: rgba(129, 140, 248, 0.6) !important;
+            background: rgba(30, 30, 35, 0.8) !important; border-color: rgba(129, 140, 248, 0.6) !important;
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        @keyframes shimmer {
-            100% { transform: translateX(100%);
-            }
-        }
-
-        .ad-banner-container {
-            width: 100%;
-            max-width: 728px; min-height: 90px;
-            margin: 0 auto 30px auto;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; position: relative;
-        }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
 
         /* UPDATE ITEMS STYLING */
-        .update-item {
-            position: relative;
-            padding-left: 16px;
-        }
+        .update-item { position: relative; padding-left: 16px; }
         .update-item::before {
-            content: '';
-            position: absolute; left: 0; top: 7px;
-            width: 6px; height: 6px;
-            background: #818cf8; border-radius: 50%;
+            content: ''; position: absolute; left: 0; top: 7px;
+            width: 6px; height: 6px; background: #818cf8; border-radius: 50%;
             box-shadow: 0 0 8px rgba(129,140,248,0.5);
         }
 
-        ::-webkit-scrollbar { width: 6px;
-        }
-        ::-webkit-scrollbar-track { background: #050505;
-        }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+
+        /* PASSWORD MODAL ANIMATIONS */
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
     </style>
 </head>
 <body class="antialiased">
@@ -375,41 +276,42 @@
         <div class="splash-loader"></div>
     </div>
 
-    <div id="ad-notice-toast" class="fixed bottom-5 right-5 z-[8000] max-w-sm w-[90%] transform translate-y-40 opacity-0 transition-all duration-700 pointer-events-none">
-        <div class="liquid-glass p-5 rounded-2xl border border-yellow-500/30 flex flex-col gap-3 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">⚠️</span>
-                <div>
-                    <h3 class="font-bold text-yellow-100">Ad Notice</h3>
-                    <p class="text-xs text-yellow-200/70">Keep Kivro Free</p>
+    <div id="password-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" aria-hidden="true">
+        <div class="liquid-glass w-full max-w-md p-8 rounded-3xl border border-white/10 shadow-2xl scale-95 transition-transform duration-300 transform" id="password-box">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-indigo-500/30">
+                    <svg class="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 </div>
+                <h2 class="text-2xl font-bold text-white">Encrypted Access</h2>
+                <p class="text-gray-400 text-sm mt-1">Please enter the security key to continue.</p>
             </div>
-            <p class="text-sm text-gray-300 leading-relaxed">
-                We use ads to keep this site running.
-                If an ad redirects you to another page, simply press <b class="text-white">Go Back</b> to return to your game.
-            </p>
-            <button id="close-ad-notice" disabled class="bg-white/5 cursor-not-allowed py-2 rounded-lg text-xs font-bold text-gray-400 transition-all duration-300 border border-white/5">
-                Wait 10s...
-            </button>
+
+            <input type="password" id="proxy-password-input" 
+                class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white text-center text-xl tracking-widest placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 transition-all mb-4"
+                placeholder="••••••••">
+            
+            <div id="password-error" class="text-red-400 text-xs text-center mb-4 hidden">Incorrect security key. Access Denied.</div>
+
+            <div class="flex gap-3">
+                <button onclick="closePasswordModal()" class="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 py-3 rounded-xl font-bold transition-all">Cancel</button>
+                <button onclick="checkPassword()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20">Verify</button>
+            </div>
         </div>
     </div>
 
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
-      <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" 
-        aria-labelledby="install-title">
+      <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
         <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
         <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
         <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
         <div class="flex justify-center gap-5 mb-5 flex-wrap">
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div 
-            class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
             <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 1">
           </div>
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon relative 
-            w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 2">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 2">
           </div>
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
@@ -434,59 +336,29 @@
           </div>
         </div>
         <div class="flex justify-center mt-4">
-          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold 
-            text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
+          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
         </div>
       </div>
     </div>
 
     <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
       <div class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-md w-[90%] shadow-2xl text-center border border-indigo-500/30">
-        <div class="flex justify-center mb-4">
-            <span class="text-4xl">🤝</span>
-        </div>
+        <div class="flex justify-center mb-4"><span class="text-4xl">🤝</span></div>
         <h2 class="text-xl font-bold text-indigo-300 mb-3">Partner App Notice</h2>
-        <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-            BlackFlix is a partner app hosted on Kivro Games.
-            We do not develop or maintain it directly. Please report any bugs to the BlackFlix creator, not Kivro Games.
-        </p>
-        <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">
-            Wait <span id="disclaimer-timer">10</span>s...
-        </button>
+        <p class="text-gray-300 text-sm mb-6 leading-relaxed">BlackFlix is a partner app hosted on Kivro Games. We do not develop or maintain it directly.</p>
+        <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">Wait <span id="disclaimer-timer">10</span>s...</button>
       </div>
-    </div>
-
-    <div id="ad-timer-popup" class="fixed inset-0 bg-black/95 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
-        <div class="relative w-full max-w-lg aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col items-center justify-center group">
-            <div class="absolute inset-0 bg-[url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/Asworldc.jpg')] bg-cover bg-center opacity-30 blur-sm"></div>
-            <div class="absolute inset-0 bg-black/60"></div>
-            <div class="relative z-10 text-center p-6">
-                <h2 class="text-xl font-bold text-white mb-6 drop-shadow-md">Watch Ad to Unlock Game</h2>
-                <button id="ad-trigger-btn" class="group/btn relative inline-flex items-center justify-center w-20 h-20 bg-white/10 hover:bg-red-600 rounded-full backdrop-blur-sm border-2 border-white/30 transition-all duration-300 hover:scale-110">
-                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                    <span class="absolute inline-flex h-full w-full rounded-full bg-white opacity-20 animate-ping group-hover/btn:hidden"></span>
-                </button>
-                <p id="ad-status-text" class="text-sm font-mono text-gray-300 mt-6 min-h-[20px]">Click play to start</p>
-            </div>
-            <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-800">
-                <div id="ad-progress-bar" class="h-full bg-red-600 w-0 transition-all duration-[1000ms] ease-linear"></div>
-            </div>
-        </div>
     </div>
 
     <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
         <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
             <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
-                <h2 class="text-2xl font-black text-white flex items-center gap-2">
-                    📢 What's New
-                </h2>
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">📢 What's New</h2>
                 <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-
-            <div id="updates-content" class="p-6 overflow-y-auto space-y-6">
-            </div>
+            <div id="updates-content" class="p-6 overflow-y-auto space-y-6"></div>
         </div>
     </div>
 
@@ -534,19 +406,16 @@
     <main class="max-w-7xl mx-auto px-4 py-8">
 
         <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[400px] relative group overflow-hidden">
-            <div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), 
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
             <div class="blob blob-1 opacity-60 mix-blend-screen"></div>
             <div class="blob blob-2 opacity-60 mix-blend-screen"></div>
             <div class="blob blob-3 opacity-40 mix-blend-screen"></div>
 
             <div class="absolute top-10 left-10 md:left-20 animate-bounce delay-700 opacity-40 hidden sm:block">
-                <svg class="w-12 h-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" 
-                fill="currentColor" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                <svg class="w-12 h-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
             </div>
             <div class="absolute bottom-10 right-10 md:right-20 animate-pulse delay-1000 opacity-40 hidden sm:block">
-                <svg class="w-10 h-10 text-pink-400 drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 
-                3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <svg class="w-10 h-10 text-pink-400 drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             </div>
 
             <div class="relative z-10 flex flex-col items-center">
@@ -569,8 +438,7 @@
                     <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
                             class="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-white text-black font-black rounded-full transition-all transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] flex items-center justify-center gap-2">
                         <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
-                        <svg class="w-6 h-6" fill="currentColor" 
-                        viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                         <span>PLAY NOW</span>
                     </button>
 
@@ -589,14 +457,12 @@
         </div>
 
         <div class="max-w-4xl mx-auto mb-10">
-            <div class="liquid-glass rounded-3xl 
-            p-6 border border-white/10 flex flex-col gap-4">
+            <div class="liquid-glass rounded-3xl p-6 border border-white/10 flex flex-col gap-4">
                 <div class="flex items-center gap-2 border-b border-white/10 pb-4">
                     <span class="text-2xl">📢</span>
                     <h2 class="text-xl font-bold text-white">System Log</h2>
                 </div>
-                <div id="on-page-updates" class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
-                    </div>
+                <div id="on-page-updates" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
             </div>
         </div>
 
@@ -607,19 +473,6 @@
             <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
         </div>
 
-        <div class="ad-banner-container">
-            <span class="text-xs text-gray-500 uppercase tracking-widest absolute top-1 left-2 z-10">Advertisement</span>
-            <ins class="adsbygoogle"
-                 style="display:block; width:100%; height:100%;"
-                 data-ad-client="ca-pub-8524021281977248"
-                 data-ad-slot="3696385549"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
         <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
     </main>
 
@@ -628,42 +481,29 @@
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </button>
 
-    <script>(function(s){s.dataset.zone='10362665',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script>(function(s){s.dataset.zone='10362611',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
     <script>
-        // --- 🔴 CONFIGURATION 🔴 ---
-        const AD_CHANCE = 0.2; // 20% Chance
-        const DIRECT_LINK_URL = "https://otieu.com/4/10362606";
-        // --- 🆕 UPDATES LOG DATA 🆕 ---
+        // --- CONFIGURATION ---
+        const ACCESS_PASSWORD = "KIVRO123"; // CHANGE THIS PASSWORD
+        let pendingUrl = ""; // Stores URL or Action when password needed
+
+        // --- UPDATES LOG DATA ---
         const updatesLog = [
             {
-                version: "v7.0",
-                date: "Recent",
-                title: "Ads and UI Improvements",
-                desc: "Enhanced visual experience and improved ad integrations.",
-                changes: [
-                    "Added What's New Popup",
-                    "Integrated Ad Support",
-                    "Fixed iOS Corner Glitches"
-                ]
+                version: "v7.0", date: "Recent", title: "Ads Removed & Secured",
+                desc: "Complete ad-removal and enhanced security systems.",
+                changes: ["Removed all ad scripts", "Added Proxy Password Protection", "Optimized Load Times"]
             },
             {
-                version: "v6.0",
-                date: "October 2023",
-                title: "Ultra Upgrade",
+                version: "v6.0", date: "October 2023", title: "Ultra Upgrade",
                 desc: "Major UI Overhaul and performance improvements.",
-                changes: [
-                    "New Plasma & Liquid Glass Design",
-                    "Added 75+ Premium Games",
-                    "Fixed iOS Status Bar Glitch",
-                    "Added Direct Launch Mode for faster loading"
-                ]
+                changes: ["New Plasma & Liquid Glass Design", "Added 75+ Premium Games", "Direct Launch Mode"]
             }
         ];
+
         // --- APP DATA ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
+        
         const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library.onrender.com//2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library.onrender.com//btd4/index.html" },
@@ -746,15 +586,63 @@
         const appsList = [
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
+        
         const library = [...gamesList, ...appsList];
-
         let favorites = [];
-        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || [];
-        } catch(e) {}
+        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
         let currentTab = 'Games';
         let searchTerm = '';
         let disclaimerUrl = '';
         let countdownInterval;
+
+        // --- PASSWORD MODAL LOGIC ---
+        function openPasswordModal(redirectUrl) {
+            pendingUrl = redirectUrl;
+            document.getElementById('password-modal').classList.remove('hidden');
+            document.getElementById('password-modal').style.display = 'flex';
+            setTimeout(() => document.getElementById('password-modal').classList.add('active'), 10);
+            document.getElementById('proxy-password-input').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('password-modal').classList.add('hidden');
+                document.getElementById('password-modal').style.display = 'none';
+            }, 300);
+            document.getElementById('proxy-password-input').value = "";
+            document.getElementById('password-error').classList.add('hidden');
+            pendingUrl = "";
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('proxy-password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            const modalBox = document.getElementById('password-box');
+
+            if (input === ACCESS_PASSWORD) {
+                // SUCCESS
+                errorMsg.classList.add('hidden');
+                if (pendingUrl) {
+                    window.location.href = pendingUrl;
+                } else {
+                    // Default behavior if just testing
+                    alert("Access Granted");
+                }
+                closePasswordModal();
+            } else {
+                // FAIL
+                errorMsg.classList.remove('hidden');
+                document.getElementById('proxy-password-input').value = "";
+                modalBox.classList.add('animate-shake');
+                setTimeout(() => modalBox.classList.remove('animate-shake'), 500);
+            }
+        }
+        
+        // Enter key for password
+        document.getElementById('proxy-password-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
 
         // --- PARTNER DISCLAIMER LOGIC ---
         function openDisclaimer(url) {
@@ -794,58 +682,12 @@
 
         const disclaimerBtn = document.getElementById('disclaimer-btn');
         if (disclaimerBtn) {
-            disclaimerBtn.onclick = () => { if (disclaimerUrl) { window.open(disclaimerUrl, '_blank');
-            closeDisclaimer(); } };
+            disclaimerBtn.onclick = () => { if (disclaimerUrl) { window.open(disclaimerUrl, '_blank'); closeDisclaimer(); } };
         }
 
         const disclaimerPopup = document.getElementById('disclaimer-popup');
         if (disclaimerPopup) {
             disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
-        }
-
-        // --- VIDEO PLAYER AD LOGIC ---
-        let adInterval;
-        function showAdOverlay(targetGameUrl) {
-            const popup = document.getElementById('ad-timer-popup');
-            const btn = document.getElementById('ad-trigger-btn');
-            const status = document.getElementById('ad-status-text');
-            const progressBar = document.getElementById('ad-progress-bar');
-
-            popup.classList.remove('hidden');
-            popup.style.display = 'flex';
-            setTimeout(() => { popup.classList.add('active'); }, 10);
-
-            progressBar.style.width = '0%';
-            btn.style.pointerEvents = 'auto';
-            btn.style.opacity = '1';
-            status.innerText = "Click play to start video";
-
-            btn.onclick = () => {
-                window.open(DIRECT_LINK_URL, '_blank');
-                let timeLeft = 10;
-                let totalTime = 10;
-                btn.style.pointerEvents = 'none';
-                btn.style.opacity = '0.5';
-                status.innerText = "Loading video...";
-
-                if(adInterval) clearInterval(adInterval);
-                adInterval = setInterval(() => {
-                    timeLeft--;
-                    if(timeLeft > 15) status.innerText = "Connecting to server...";
-                    else if(timeLeft > 5) status.innerText = "Playing advertisement...";
-                    else status.innerText 
-                    = "Finalizing reward...";
-                    const percentage = ((totalTime - timeLeft) / totalTime) * 100;
-                    progressBar.style.width = percentage + '%';
-
-                    if (timeLeft <= 0) {
-                        clearInterval(adInterval);
-                        popup.classList.remove('active');
-                        setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
-                        window.open(targetGameUrl, '_blank');
-                    }
-                }, 1000);
-            };
         }
 
         // --- UPDATES POPUP LOGIC ---
@@ -854,8 +696,7 @@
             const content = document.getElementById('updates-content');
             if(!popup || !content) return;
 
-            // Render updates
-            content.innerHTML = updatesLog.map((log, index) => {
+            content.innerHTML = updatesLog.map((log) => {
                 let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
                 return `
                     <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
@@ -867,9 +708,7 @@
                             <span class="text-xs text-gray-500 font-mono">${log.date}</span>
                         </div>
                         <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
-                        <ul class="space-y-2">
-                            ${changeList}
-                        </ul>
+                        <ul class="space-y-2">${changeList}</ul>
                     </div>
                 `;
             }).join('');
@@ -888,32 +727,19 @@
             };
         }
 
-        const updatesPopup = document.getElementById('updates-popup');
-        if(updatesPopup) {
-            updatesPopup.addEventListener('click', (e) => {
-                if (e.target === updatesPopup) {
-                    updatesPopup.classList.remove('active');
-                    setTimeout(() => { updatesPopup.classList.add('hidden'); updatesPopup.style.display = 'none'; }, 300);
-                }
-            });
-        }
-
         function renderUpdates() {
             const container = document.getElementById('on-page-updates');
             if(!container) return;
 
-            container.innerHTML = updatesLog.map((log, index) => {
+            container.innerHTML = updatesLog.map((log) => {
                 let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
                 return `
                     <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-left">
-                        <div 
-                        class="flex justify-between items-start mb-2">
+                        <div class="flex justify-between items-start mb-2">
                             <h3 class="text-sm font-bold text-white">${log.title}</h3>
                             <span class="text-[10px] text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-500/30">${log.version}</span>
                         </div>
-                        <ul class="space-y-1">
-                            ${changeList}
-                        </ul>
+                        <ul class="space-y-1">${changeList}</ul>
                     </div>
                `;
             }).join('');
@@ -955,31 +781,18 @@
                 const card = document.createElement('div');
                 card.className = "game-card group cursor-pointer card-anim liquid-glass";
                 card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
-                card.style.animationDelay = 
-                `${index * 50}ms`;
+                card.style.animationDelay = `${index * 50}ms`;
 
-                // --- CLICK ACTION ---
                 card.onclick = () => {
                     const targetUrl = item.gameUrl;
-
-                    // 1. Partner App (BlackFlix)
-                    if (item.id === 1001) {
-                        openDisclaimer(targetUrl);
-                        return;
-                    }
-
-                    // 2. Ad Chance Logic
-                    if (Math.random() < AD_CHANCE) {
-                        showAdOverlay(targetUrl);
-                    } else {
-                        window.open(targetUrl, '_blank');
-                    }
+                    if (item.id === 1001) { openDisclaimer(targetUrl); return; }
+                    
+                    // DIRECT LAUNCH - NO ADS
+                    window.open(targetUrl, '_blank');
                 };
 
-                // Lazy load thumbnails for speed
                 card.innerHTML = `
-                    <button class="star-btn ${isFav ?
-                    'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
+                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </button>
                     <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
@@ -1002,12 +815,11 @@
             e.stopPropagation();
             if(favorites.includes(id)) favorites = favorites.filter(fav => fav !== id);
             else favorites.push(id);
-            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites));
-            } catch(e){}
-
+            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
             if(currentTab === 'Favs') renderGrid();
             else e.currentTarget.classList.toggle('star-active');
         };
+
         function clearSearch(isMobile) {
             searchTerm = '';
             const input = document.getElementById(isMobile ? 'search-input-mobile' : 'search-input');
@@ -1035,11 +847,12 @@
         const clearBtnMobile = document.getElementById('clear-search-mobile');
         if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
 
+        // --- PASSWORD PROTECTED PROXY TAB ---
         const proxyBtn = document.getElementById('tab-proxy');
         if (proxyBtn) {
-            proxyBtn.addEventListener('click', () => {
-                movePill(proxyBtn);
-                window.location.href = "https://kivroprox1.vercel.app/";
+            proxyBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop default action
+                openPasswordModal('https://kivroprox1.vercel.app/'); // Open password modal with redirection
             });
         }
 
@@ -1047,8 +860,10 @@
             const tabEl = document.getElementById(t);
             if(tabEl) {
                 tabEl.onclick = (e) => {
+                    if (t === 'tab-proxy') return; // Handled separately
+                    
                     currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    ['tab-games','tab-apps','tab-favs'].forEach(btnId => {
+                    ['tab-games','tab-apps','tab-favs','tab-proxy'].forEach(btnId => {
                         const btn = document.getElementById(btnId);
                         if(btnId === t) {
                             btn.classList.add('tab-active-text');
@@ -1063,6 +878,7 @@
                 };
             }
         });
+
         const popup = document.getElementById('install-popup');
         const openBtn = document.getElementById('install-trigger-btn');
         const closeBtn = document.getElementById('close-popup');
@@ -1083,93 +899,17 @@
 
         if(closeBtn) closeBtn.addEventListener('click', hidePopup);
         if(popup) popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
-        // --- NEW OWNERSHIP POPUP LOGIC ---
-        const ownerPopup = document.getElementById('owner-popup');
-        const closeOwnerBtn = document.getElementById('close-owner-popup');
-
-        if(closeOwnerBtn && ownerPopup) {
-            closeOwnerBtn.addEventListener('click', () => {
-                ownerPopup.classList.remove('active');
-                setTimeout(() => { ownerPopup.classList.add('hidden'); ownerPopup.style.display = 'none'; }, 300);
-                localStorage.setItem('kivro_ownership_seen', 'true');
-            });
-        }
-
-        document.addEventListener('keydown', (e) => {
-             if (e.key === 'Escape') {
-                 hidePopup();
-                 closeDisclaimer();
-                 if(ownerPopup && ownerPopup.classList.contains('active')) {
-                     ownerPopup.classList.remove('active');
-                     setTimeout(() => { ownerPopup.classList.add('hidden'); ownerPopup.style.display = 'none'; }, 300);
-                     localStorage.setItem('kivro_ownership_seen', 'true');
-                 }
-             }
-        });
-        if(icons) {
-            icons.forEach(icon => {
-                icon.addEventListener('click', () => {
-                    icons.forEach(i => i.classList.remove('border-indigo-400'));
-                    icon.classList.add('border-indigo-400');
-                    const link = document.querySelector("link[rel='apple-touch-icon']");
-                    if (link) link.href = icon.src;
-                });
-            });
-        }
 
         window.addEventListener('load', () => {
-            // Updated Intro Logic with Timeout Failsafe (2.2s Max)
             setTimeout(() => {
                 const intro = document.getElementById('cinematic-splash');
                 if(intro) intro.classList.add('splash-exit');
-
-                // Show Ownership Popup (if not seen)
-                if (!localStorage.getItem('kivro_ownership_seen')) {
-                    setTimeout(() => {
-                        const ownerPopup = document.getElementById('owner-popup');
-                        if(ownerPopup) {
-                            ownerPopup.classList.remove('hidden');
-                            ownerPopup.style.display = 'flex';
-                            setTimeout(() => { ownerPopup.classList.add('active'); }, 10);
-                        }
-                    }, 500);
-                } else {
-                    // Show Ad Notice (if not seen)
-                    if (!localStorage.getItem('kivro_ad_notice_seen_v1')) {
-                        setTimeout(() => {
-                            const notice = document.getElementById('ad-notice-toast');
-                            const closeNotice = document.getElementById('close-ad-notice');
-
-                            notice.classList.remove('translate-y-40', 'opacity-0', 'pointer-events-none');
-
-                            let waitTime = 10;
-                            const timer = setInterval(() => {
-                                waitTime--;
-                                closeNotice.innerText = `Wait ${waitTime}s...`;
-                                if(waitTime <= 0) {
-                                    clearInterval(timer);
-                                    closeNotice.disabled = false;
-                                    closeNotice.classList.remove('cursor-not-allowed', 'bg-white/5', 'text-gray-400');
-                                    closeNotice.classList.add('bg-white', 'text-black', 'hover:bg-gray-200');
-                                    closeNotice.innerText = "Understood";
-
-                                    closeNotice.onclick = () => {
-                                        localStorage.setItem('kivro_ad_notice_seen_v1', 'true');
-                                        notice.classList.add('translate-y-40', 'opacity-0', 'pointer-events-none');
-                                    };
-                                }
-                            }, 1000);
-                        }, 1000);
-                    }
-                }
             }, 2200);
             renderGrid();
             renderUpdates();
 
             const defaultTab = document.getElementById('tab-games');
             if(defaultTab) movePill(defaultTab);
-
-            // Reduced particle count for speed
             createFallingLights(12);
         });
 
@@ -1187,11 +927,10 @@
             }
         }
     </script>
-
+    
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-
       const firebaseConfig = {
         apiKey: "AIzaSyAqizVfClbZ1S03RXFZ6HG-J8UvkYcMxhw",
         authDomain: "kivro-lib.firebaseapp.com",
