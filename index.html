@@ -390,6 +390,11 @@
                 </button>
             </div>
 
+                <button onclick="openDevModal()" class="flex items-center gap-2 bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/50 px-4 py-2 rounded-xl transition-all group">
+    <span class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
+    <span class="text-xs font-bold text-indigo-100 tracking-wider">DEVELOPER</span>
+</button>
+
             <div class="relative group w-full max-w-xs hidden sm:block">
                 <input type="text" id="search-input" placeholder="Search..." class="glass-input text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full outline-none transition-all">
                 <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -943,5 +948,45 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
+
+
+    
+    <div id="dev-modal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="liquid-glass w-full max-w-sm p-8 rounded-3xl border border-white/10 shadow-2xl text-center scale-95 transition-transform duration-300" id="dev-modal-content">
+        <div class="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl mx-auto mb-4 rotate-3 group-hover:rotate-0 transition-transform p-1 shadow-lg">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-full h-full rounded-xl object-cover bg-black">
+        </div>
+        <h2 class="text-xl font-black text-white">Kivro Owner</h2>
+        <p class="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-4">Main Developer</p>
+        
+        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+            Building the cleanest unblocked experience. More updates coming soon!
+        </p>
+
+        <div class="flex flex-col gap-2 mb-6">
+            <a href="#" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl border border-white/10 text-sm font-bold transition-all">Discord Server</a>
+            <a href="#" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl border border-white/10 text-sm font-bold transition-all">Support Me</a>
+        </div>
+
+        <button onclick="closeDevModal()" class="text-gray-500 hover:text-white text-xs font-bold transition-colors">CLOSE WINDOW</button>
+    </div>
+</div>
+<script>
+    function openDevModal() {
+    const modal = document.getElementById('dev-modal');
+    const content = document.getElementById('dev-modal-content');
+    modal.classList.remove('opacity-0', 'pointer-events-none');
+    content.classList.remove('scale-95');
+}
+
+function closeDevModal() {
+    const modal = document.getElementById('dev-modal');
+    const content = document.getElementById('dev-modal-content');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    content.classList.add('scale-95');
+}
+</script>
+
+    
 </body>
 </html>
