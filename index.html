@@ -7,11 +7,14 @@
     <title>Kivro Games</title>
     <meta name="description" content="Premium unblocked games library.">
 
+    <!-- Apple PWA Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Kivro Games">
     <meta name="theme-color" content="#050505">
 
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
+    <!-- Default Icons -->
+    <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -262,6 +265,13 @@
         /* PASSWORD MODAL ANIMATIONS */
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
         .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+
+        /* INSTALL ICON SELECT STYLES */
+        .select-icon.selected {
+            border-color: #818cf8 !important;
+            box-shadow: 0 0 20px rgba(129,140,248,0.8);
+            transform: scale(1.08);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -286,10 +296,10 @@
                 <p class="text-gray-400 text-sm mt-1">Please enter the security key to continue.</p>
             </div>
 
-            <input type="password" id="proxy-password-input" 
+            <input type="password" id="proxy-password-input"
                 class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white text-center text-xl tracking-widest placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 transition-all mb-4"
                 placeholder="••••••••">
-            
+
             <div id="password-error" class="text-red-400 text-xs text-center mb-4 hidden">Incorrect security key. Access Denied.</div>
 
             <div class="flex gap-3">
@@ -299,25 +309,49 @@
         </div>
     </div>
 
+    <!-- INSTALL POPUP -->
     <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
       <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
         <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
         <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
+
         <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
-        <div class="flex justify-center gap-5 mb-5 flex-wrap">
+        <div class="flex justify-center gap-5 mb-5 flex-wrap" id="icon-selector">
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 1">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
+                 data-name="Teams"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="Teams">
           </div>
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 2">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
+                 data-name="Kahoot"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="Kahoot">
           </div>
           <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
             <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 group-hover:border-indigo-400 group-active:scale-95 shadow-lg" alt="Icon 3">
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
+                 data-name="OneNote"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="OneNote">
           </div>
         </div>
+
+        <!-- Preview -->
+        <div class="flex justify-center mb-6">
+          <div class="flex flex-col items-center gap-2">
+            <img id="preview-icon" src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-20 h-20 rounded-2xl shadow-lg border border-white/10">
+            <span id="preview-name" class="text-sm font-bold text-white">Kivro Games</span>
+            <span class="text-xs text-gray-400">Preview</span>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
           <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
             <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
@@ -372,11 +406,11 @@
             <div class="flex items-center gap-2">
                 <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
                     <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
-                    
+
                     <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
                     <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
                     <button id="tab-proxy" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">PROXY</button>
-                    
+
                     <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
                         <span>FAVS</span>
                         <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -426,7 +460,7 @@
             <div class="relative z-10 flex flex-col items-center">
                 <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
                     <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    v7.0 Ultra • See What's New &rarr;
+                    v7.0 Ultra • See What's New →
                 </button>
 
                 <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
@@ -508,7 +542,7 @@
         // --- APP DATA ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
-        
+
         const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library.onrender.com//2048/index.html" },
             { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library.onrender.com//btd4/index.html" },
@@ -591,7 +625,7 @@
         const appsList = [
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
-        
+
         const library = [...gamesList, ...appsList];
         let favorites = [];
         try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
@@ -631,7 +665,6 @@
                 if (pendingUrl) {
                     window.location.href = pendingUrl;
                 } else {
-                    // Default behavior if just testing
                     alert("Access Granted");
                 }
                 closePasswordModal();
@@ -643,8 +676,7 @@
                 setTimeout(() => modalBox.classList.remove('animate-shake'), 500);
             }
         }
-        
-        // Enter key for password
+
         document.getElementById('proxy-password-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') checkPassword();
         });
@@ -791,8 +823,6 @@
                 card.onclick = () => {
                     const targetUrl = item.gameUrl;
                     if (item.id === 1001) { openDisclaimer(targetUrl); return; }
-                    
-                    // DIRECT LAUNCH - NO ADS
                     window.open(targetUrl, '_blank');
                 };
 
@@ -856,137 +886,109 @@
         const proxyBtn = document.getElementById('tab-proxy');
         if (proxyBtn) {
             proxyBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Stop default action
-                openPasswordModal('https://kivroprox1.vercel.app/'); // Open password modal with redirection
+                e.preventDefault();
+                openPasswordModal('https://kivroprox1.vercel.app/');
             });
         }
 
         ['tab-games','tab-apps','tab-favs'].forEach(t => {
             const tabEl = document.getElementById(t);
             if(tabEl) {
-                tabEl.onclick = (e) => {
-                    if (t === 'tab-proxy') return; // Handled separately
-                    
+                tabEl.onclick = () => {
                     currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    ['tab-games','tab-apps','tab-favs','tab-proxy'].forEach(btnId => {
-                        const btn = document.getElementById(btnId);
-                        if(btnId === t) {
-                            btn.classList.add('tab-active-text');
-                            btn.classList.remove('tab-inactive-text');
-                            movePill(btn);
-                        } else {
-                            btn.classList.remove('tab-active-text');
-                            btn.classList.add('tab-inactive-text');
-                        }
+                    document.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.classList.remove('tab-active-text');
+                        btn.classList.add('tab-inactive-text');
                     });
+                    tabEl.classList.add('tab-active-text');
+                    tabEl.classList.remove('tab-inactive-text');
+                    movePill(tabEl);
                     renderGrid();
                 };
             }
         });
 
-        const popup = document.getElementById('install-popup');
-        const openBtn = document.getElementById('install-trigger-btn');
-        const closeBtn = document.getElementById('close-popup');
-        const icons = document.querySelectorAll('.select-icon');
-        if(openBtn) {
-            openBtn.addEventListener('click', () => {
-                popup.classList.remove('hidden');
-                popup.style.display = 'flex';
-                setTimeout(() => { popup.classList.add('active'); popup.setAttribute('aria-hidden', 'false'); }, 10);
+        window.onload = () => {
+            renderUpdates();
+            renderGrid();
+            movePill(document.getElementById('tab-games'));
+
+            setTimeout(() => {
+                const splash = document.getElementById('cinematic-splash');
+                splash.classList.add('splash-exit');
+                setTimeout(() => splash.style.display = 'none', 700);
+            }, 2000);
+
+            const lightsContainer = document.getElementById('falling-lights');
+            if (lightsContainer) {
+                for (let i = 0; i < 40; i++) {
+                    const light = document.createElement('div');
+                    light.className = 'falling-light';
+                    light.style.left = Math.random() * 100 + 'vw';
+                    light.style.animationDuration = 4 + Math.random() * 6 + 's';
+                    light.style.animationDelay = Math.random() * 5 + 's';
+                    lightsContainer.appendChild(light);
+                }
+            }
+        };
+
+        // --- INSTALL POPUP LOGIC ---
+        const installPopup = document.getElementById('install-popup');
+        const installTriggerBtn = document.getElementById('install-trigger-btn');
+        const closePopupBtn = document.getElementById('close-popup');
+        const iconButtons = document.querySelectorAll('.select-icon');
+        const appleTouchIcon = document.getElementById('apple-touch-icon');
+        const previewIcon = document.getElementById('preview-icon');
+        const previewName = document.getElementById('preview-name');
+
+        if (installTriggerBtn) {
+            installTriggerBtn.addEventListener('click', () => {
+                installPopup.classList.remove('hidden');
+                installPopup.style.display = 'flex';
+                setTimeout(() => installPopup.classList.add('active'), 10);
             });
         }
 
-        const hidePopup = () => {
-            popup.classList.remove('active');
-            popup.setAttribute('aria-hidden', 'true');
-            setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
-        };
-
-        if(closeBtn) closeBtn.addEventListener('click', hidePopup);
-        if(popup) popup.addEventListener('click', (e) => { if (e.target === popup) hidePopup(); });
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const intro = document.getElementById('cinematic-splash');
-                if(intro) intro.classList.add('splash-exit');
-            }, 2200);
-            renderGrid();
-            renderUpdates();
-
-            const defaultTab = document.getElementById('tab-games');
-            if(defaultTab) movePill(defaultTab);
-            createFallingLights(12);
-        });
-
-        function createFallingLights(count = 12) {
-            const container = document.getElementById('falling-lights');
-            if (!container) return;
-            for (let i = 0; i < count; i++) {
-                const light = document.createElement('div');
-                light.className = 'falling-light';
-                light.style.left = `${Math.random() * 100}%`;
-                light.style.animationDuration = `${2 + Math.random() * 3}s`;
-                light.style.animationDelay = `${Math.random() * 5}s`;
-                light.style.opacity = `${0.3 + Math.random() * 0.5}`;
-                container.appendChild(light);
-            }
+        if (closePopupBtn) {
+            closePopupBtn.addEventListener('click', () => {
+                installPopup.classList.remove('active');
+                setTimeout(() => {
+                    installPopup.classList.add('hidden');
+                    installPopup.style.display = 'none';
+                }, 300);
+            });
         }
+
+        iconButtons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const iconUrl = icon.dataset.icon;
+                const appName = icon.dataset.name;
+
+                // Update Apple icon
+                appleTouchIcon.setAttribute('href', iconUrl);
+
+                // Update Apple web app title
+                let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+                if (!appleTitleMeta) {
+                    appleTitleMeta = document.createElement('meta');
+                    appleTitleMeta.setAttribute('name', 'apple-mobile-web-app-title');
+                    document.head.appendChild(appleTitleMeta);
+                }
+                appleTitleMeta.setAttribute('content', appName);
+
+                // Update document title
+                document.title = appName;
+
+                // Update preview
+                previewIcon.src = iconUrl;
+                previewName.textContent = appName;
+
+                // UI selected state
+                iconButtons.forEach(i => i.classList.remove('selected'));
+                icon.classList.add('selected');
+            });
+        });
     </script>
-    
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyAqizVfClbZ1S03RXFZ6HG-J8UvkYcMxhw",
-        authDomain: "kivro-lib.firebaseapp.com",
-        projectId: "kivro-lib",
-        storageBucket: "kivro-lib.firebasestorage.app",
-        messagingSenderId: "486702554442",
-        appId: "1:486702554442:web:a3760baf7f8e96e82035b3",
-        measurementId: "G-NYBRQEHXHY"
-      };
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script>
 
-
-    
-    <div id="dev-modal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="liquid-glass w-full max-w-sm p-8 rounded-3xl border border-white/10 shadow-2xl text-center scale-95 transition-transform duration-300" id="dev-modal-content">
-        <div class="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-2xl mx-auto mb-4 rotate-3 group-hover:rotate-0 transition-transform p-1 shadow-lg">
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-full h-full rounded-xl object-cover bg-black">
-        </div>
-        <h2 class="text-xl font-black text-white">KAYAZ</h2>
-        <p class="text-indigo-400 text-[10px] font-bold uppercase tracking-widest mb-4">Main Developer</p>
-        
-        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-            Building the cleanest unblocked experience. More updates coming soon!
-        </p>
-
-        <div class="flex flex-col gap-2 mb-6">
-            <a href="https://kayaz.vercel.app/" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl border border-white/10 text-sm font-bold transition-all">Main Website</a>
-            <a href="https://buymeacoffee.com/kayaz" class="bg-white/5 hover:bg-white/10 py-3 rounded-xl border border-white/10 text-sm font-bold transition-all">Support Me</a>
-        </div>
-
-        <button onclick="closeDevModal()" class="text-gray-500 hover:text-white text-xs font-bold transition-colors">CLOSE WINDOW</button>
-    </div>
-</div>
-<script>
-    function openDevModal() {
-    const modal = document.getElementById('dev-modal');
-    const content = document.getElementById('dev-modal-content');
-    modal.classList.remove('opacity-0', 'pointer-events-none');
-    content.classList.remove('scale-95');
-}
-
-function closeDevModal() {
-    const modal = document.getElementById('dev-modal');
-    const content = document.getElementById('dev-modal-content');
-    modal.classList.add('opacity-0', 'pointer-events-none');
-    content.classList.add('scale-95');
-}
-</script>
-
-    
 </body>
 </html>
