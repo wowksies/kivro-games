@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Kivro Games</title>
-    <meta name="description" content="Premium unblocked games library and study tools.">
 
+    <title>Kivro Games</title>
+    <meta name="description" content="Premium unblocked games library.">
+
+    <!-- Apple PWA Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Kivro Games">
     <meta name="theme-color" content="#050505">
 
+    <!-- Default Icons -->
     <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             background-color: #050505;
@@ -25,58 +27,35 @@
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
-            transition: background-color 0.5s ease;
         }
 
-        /* --- SCHOOL MODE STYLES --- */
-        body.school-mode {
-            background-color: #f3f4f6; /* Light gray */
-            color: #1f2937; /* Dark gray text */
-        }
-        body.school-mode .plasma-background,
-        body.school-mode .falling-lights-container,
-        body.school-mode #game-grid-section,
-        body.school-mode .intro-card-bg {
-            display: none !important;
-        }
-        body.school-mode .glass-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e5e7eb;
-            backdrop-filter: none;
-        }
-        body.school-mode .text-white { color: #1f2937 !important; }
-        body.school-mode .text-gray-300 { color: #4b5563 !important; }
-        body.school-mode .liquid-glass {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            backdrop-filter: none;
-        }
-        
-        /* --- GAME MODE BACKGROUNDS --- */
+        /* --- BACKGROUND LAYERS --- */
         .plasma-background {
-            background: radial-gradient(circle at 10% 20%, var(--theme-primary, rgba(124, 58, 237, 0.15)) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, var(--theme-secondary, rgba(79, 70, 229, 0.15)) 0%, rgba(0, 0, 0, 0) 50%),
+            background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
                         #0f0f1a;
             background-size: 200% 200%;
-            min-height: 100vh; position: fixed; inset: 0;
-            z-index: -3;
+            min-height: 100vh; position: fixed; inset: 0; z-index: -3;
             will-change: transform;
-            transition: background 1s ease;
         }
 
         #gradient-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -2; pointer-events: none; opacity: 0.6;
         }
 
         .falling-lights-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none; overflow: hidden;
         }
 
         .falling-light {
-            position: absolute; top: -150px; width: 1px; height: 150px;
+            position: absolute;
+            top: -150px;
+            width: 1px;
+            height: 150px;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.15) 50%, rgba(255,255,255,0));
             animation: fall-light linear infinite;
         }
@@ -95,695 +74,921 @@
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            position: relative; overflow: hidden;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-glass, .intro-card, .game-card, .rounded-full, .rounded-xl, .rounded-2xl, .rounded-3xl {
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            mask-image: radial-gradient(white, black);
+        }
+
+        @keyframes glass-shimmer {
+            0% { left: -100%; opacity: 0; }
+            5% { opacity: 1; }
+            40% { left: 200%; opacity: 1; }
+            100% { left: 200%; opacity: 0; }
+        }
+
+        .liquid-glass::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            pointer-events: none;
+            animation: glass-shimmer 6s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            animation-delay: var(--shimmer-delay, 0s);
         }
 
         .glass-header {
             background: rgba(5, 5, 8, 0.85);
             backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             transition: background 0.3s ease;
             padding-top: env(safe-area-inset-top);
-            height: auto; min-height: 80px;
+            height: auto;
+            min-height: 80px;
         }
 
         .header-inner {
-            height: 80px; display: flex; align-items: center; justify-content: space-between;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* --- AUTH & MODALS --- */
-        .auth-modal {
-            position: fixed; inset: 0; z-index: 9999;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        .intro-card {
+            background: linear-gradient(160deg, rgba(20, 20, 30, 0.6) 0%, rgba(5, 5, 10, 0.8) 100%);
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
         }
-        .auth-modal.active { opacity: 1; pointer-events: auto; }
 
-        .glass-input {
-            background: rgba(20, 20, 25, 0.6) !important;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1) !important;
-            color: white;
+        /* --- SPLASH SCREEN --- */
+        #cinematic-splash {
+            position: fixed; inset: 0;
+            background-color: #000;
+            z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
         }
-        body.school-mode .glass-input {
-            background: #f9fafb !important;
-            border: 1px solid #d1d5db !important;
-            color: #1f2937;
+
+        .splash-logo {
+            width: 100px; height: 100px;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+            animation: pulse-logo 2s infinite;
+            margin-bottom: 20px;
         }
+
+        .splash-text {
+            font-size: 2.5rem; font-weight: 900;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -1px; opacity: 0;
+            animation: slide-text 0.8s ease forwards 0.3s;
+        }
+
+        .splash-loader {
+            width: 200px; height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 99px; margin-top: 30px;
+            overflow: hidden; position: relative;
+        }
+
+        .splash-loader::after {
+            content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+            background: #6366f1; box-shadow: 0 0 10px #6366f1;
+            animation: load-bar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(99, 102, 241, 0.8); }
+        }
+        @keyframes slide-text {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes load-bar {
+            0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; }
+        }
+
+        .splash-exit { transform: translateY(-100%); pointer-events: none; }
+
+        /* --- BLOB ANIMATIONS --- */
+        @keyframes blob-float {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        .blob {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
+            animation: blob-float 12s infinite ease-in-out; pointer-events: none;
+        }
+        .blob-1 { background: rgba(79, 70, 229, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
+        .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
+        .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        .card-anim { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
         /* --- GAME CARDS --- */
         .game-card {
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 24px; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             transform: translateZ(0); background: rgba(255, 255, 255, 0.05);
         }
         @media (hover: hover) {
             .game-card:hover {
-                transform: translateY(-10px) scale(1.03);
-                border-color: rgba(255, 255, 255, 0.4);
+                transform: translateY(-10px) scale(1.03); border-color: rgba(255, 255, 255, 0.4);
                 background: rgba(255, 255, 255, 0.1);
-                z-index: 20;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset; z-index: 20;
             }
+            .game-card:hover::after { left: 150%; transition: 0.7s ease-in-out; }
+            .game-card:hover img { transform: scale(1.12); filter: brightness(1.2); }
         }
-        .game-card img { transition: transform 0.6s; }
-        .game-card:hover img { transform: scale(1.12); }
+        .game-card img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter: brightness(1.15) saturate(1.2); }
 
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
-        
-        /* --- UTILITIES --- */
-        .hidden { display: none !important; }
-        .splash-exit { transform: translateY(-100%); pointer-events: none; }
-        #cinematic-splash {
-            position: fixed; inset: 0; background-color: #000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-        }
-        
-        /* Flashcard Styles */
-        .flashcard {
-            perspective: 1000px;
-            height: 200px;
-            cursor: pointer;
-        }
-        .flashcard-inner {
-            position: relative; width: 100%; height: 100%;
-            text-align: center; transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-        .flashcard-front, .flashcard-back {
-            position: absolute; width: 100%; height: 100%;
-            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        .star-btn {
+            position: absolute; top: 10px; right: 10px; z-index: 20;
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
             display: flex; align-items: center; justify-content: center;
-            border-radius: 1rem; padding: 1rem;
-            font-size: 1.25rem; font-weight: bold;
+            color: #d1d5db; transition: all 0.2s; cursor: pointer;
         }
-        .flashcard-front { background-color: #ffffff; color: #000; border: 1px solid #ccc; }
-        .flashcard-back { background-color: #4f46e5; color: white; transform: rotateY(180deg); }
-        body:not(.school-mode) .flashcard-front { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
 
-        /* Avatar Selection */
-        .pfp-option { border: 2px solid transparent; transition: all 0.2s; }
-        .pfp-option:hover { transform: scale(1.1); }
-        .pfp-option.selected { border-color: #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5); }
+        .tab-btn { position: relative; z-index: 10; transition: color 0.3s ease; }
+        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
+        .tab-inactive-text { color: #9ca3af; }
+        .tab-inactive-text:hover { color: white; }
+
+        /* ALL POPUPS */
+        #install-popup, #disclaimer-popup, #updates-popup, #owner-popup, #password-modal { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #updates-popup.active, #owner-popup.active, #password-modal.active { opacity: 1; pointer-events: auto; }
+
+        .glass-input {
+            background: rgba(20, 20, 25, 0.6) !important; backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .glass-input:focus {
+            background: rgba(30, 30, 35, 0.8) !important; border-color: rgba(129, 140, 248, 0.6) !important;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+        /* UPDATE ITEMS STYLING */
+        .update-item { position: relative; padding-left: 16px; }
+        .update-item::before {
+            content: ''; position: absolute; left: 0; top: 7px;
+            width: 6px; height: 6px; background: #818cf8; border-radius: 50%;
+            box-shadow: 0 0 8px rgba(129,140,248,0.5);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+
+        /* PASSWORD MODAL ANIMATIONS */
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+
+        /* INSTALL ICON SELECT STYLES */
+        .select-icon.selected {
+            border-color: #818cf8 !important;
+            box-shadow: 0 0 20px rgba(129,140,248,0.8);
+            transform: scale(1.08);
+        }
     </style>
 </head>
 <body class="antialiased">
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, getDocs, query, orderBy, limit, increment } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBtYl6jDTWcLeigSSJorVEoBg6zO5VX7GA",
-            authDomain: "kivro-flashacrds.firebaseapp.com",
-            projectId: "kivro-flashacrds",
-            storageBucket: "kivro-flashacrds.firebasestorage.app",
-            messagingSenderId: "438500561290",
-            appId: "1:438500561290:web:136d586b62d464d0c4b873",
-            measurementId: "G-T4YDJYRP5N"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Expose to window for UI usage
-        window.fbAuth = auth;
-        window.fbDb = db;
-        
-        // --- AUTH LOGIC ---
-        window.registerUser = async (email, password, username, pfpUrl, themeColor) => {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                
-                await updateProfile(user, { displayName: username, photoURL: pfpUrl });
-                
-                // Create User Doc
-                await setDoc(doc(db, "users", user.uid), {
-                    username: username,
-                    email: email,
-                    pfp: pfpUrl,
-                    theme: themeColor,
-                    playtimeMinutes: 0,
-                    createdAt: new Date()
-                });
-
-                closeModal('auth-modal');
-                alert("Account Created!");
-            } catch (error) {
-                alert("Error: " + error.message);
-            }
-        };
-
-        window.loginUser = async (email, password) => {
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                closeModal('auth-modal');
-            } catch (error) {
-                alert("Login Failed: " + error.message);
-            }
-        };
-
-        window.logoutUser = async () => {
-            await signOut(auth);
-            window.location.reload();
-        };
-
-        // --- PLAYTIME TRACKER ---
-        let playtimeInterval;
-        onAuthStateChanged(auth, async (user) => {
-            const loginBtn = document.getElementById('login-btn-header');
-            const userMenu = document.getElementById('user-menu-header');
-            
-            if (user) {
-                loginBtn.classList.add('hidden');
-                userMenu.classList.remove('hidden');
-                document.getElementById('user-name-display').innerText = user.displayName;
-                document.getElementById('user-pfp-display').src = user.photoURL || 'https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png';
-                
-                // Load User Preferences
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-                    applyTheme(data.theme);
-                }
-
-                // Start Playtime Tracker (Updates every 60s)
-                playtimeInterval = setInterval(async () => {
-                    await updateDoc(doc(db, "users", user.uid), {
-                        playtimeMinutes: increment(1)
-                    });
-                }, 60000); 
-
-                loadFlashcardDecks(user.uid);
-
-            } else {
-                loginBtn.classList.remove('hidden');
-                userMenu.classList.add('hidden');
-                clearInterval(playtimeInterval);
-            }
-        });
-
-        // --- LEADERBOARD LOGIC ---
-        window.loadLeaderboard = async () => {
-            const list = document.getElementById('leaderboard-list');
-            list.innerHTML = '<div class="text-center text-sm p-2">Loading...</div>';
-            
-            const q = query(collection(db, "users"), orderBy("playtimeMinutes", "desc"), limit(10));
-            const querySnapshot = await getDocs(q);
-            
-            list.innerHTML = '';
-            let rank = 1;
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between p-3 bg-white/5 rounded-lg mb-2 border border-white/10";
-                item.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <span class="font-bold text-indigo-400 w-6">#${rank++}</span>
-                        <img src="${data.pfp}" class="w-8 h-8 rounded-full border border-white/20">
-                        <span class="font-semibold text-sm">${data.username}</span>
-                    </div>
-                    <span class="text-xs text-gray-400 font-mono">${data.playtimeMinutes}m</span>
-                `;
-                list.appendChild(item);
-            });
-        };
-
-        // --- FLASHCARD LOGIC ---
-        window.createDeck = async (title) => {
-            const user = auth.currentUser;
-            if(!user) return alert("Login to create flashcards");
-            
-            await addDoc(collection(db, `flashcards/${user.uid}/decks`), {
-                title: title,
-                cards: [],
-                createdAt: new Date()
-            });
-            loadFlashcardDecks(user.uid);
-            closeModal('create-deck-modal');
-        };
-
-        async function loadFlashcardDecks(uid) {
-            const container = document.getElementById('decks-container');
-            const q = query(collection(db, `flashcards/${uid}/decks`));
-            const snapshot = await getDocs(q);
-            
-            container.innerHTML = '';
-            snapshot.forEach(docSnap => {
-                const data = docSnap.data();
-                const div = document.createElement('div');
-                div.className = "liquid-glass p-6 rounded-2xl hover:scale-105 transition-transform cursor-pointer border border-white/10";
-                if(document.body.classList.contains('school-mode')) {
-                    div.className = "bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer border border-gray-200 text-gray-800";
-                }
-                
-                div.innerHTML = `
-                    <h3 class="text-xl font-bold mb-2">${data.title}</h3>
-                    <p class="text-sm opacity-70">${data.cards ? data.cards.length : 0} Cards</p>
-                `;
-                div.onclick = () => window.openDeckEditor(docSnap.id, data);
-                container.appendChild(div);
-            });
-        }
-
-        window.saveCardToDeck = async (deckId, front, back) => {
-             const user = auth.currentUser;
-             const deckRef = doc(db, `flashcards/${user.uid}/decks`, deckId);
-             const deckSnap = await getDoc(deckRef);
-             const currentCards = deckSnap.data().cards || [];
-             
-             currentCards.push({front, back});
-             await updateDoc(deckRef, { cards: currentCards });
-             window.openDeckEditor(deckId, { ...deckSnap.data(), cards: currentCards }); // Refresh UI
-        };
-
-        window.openDeckEditor = (deckId, deckData) => {
-            document.getElementById('study-dash').classList.add('hidden');
-            document.getElementById('deck-editor').classList.remove('hidden');
-            document.getElementById('current-deck-title').innerText = deckData.title;
-            document.getElementById('active-deck-id').value = deckId;
-            
-            const list = document.getElementById('card-list-display');
-            list.innerHTML = '';
-            const cards = deckData.cards || [];
-            
-            cards.forEach(c => {
-                const card = document.createElement('div');
-                card.className = "flashcard mb-4 w-full max-w-md mx-auto";
-                card.innerHTML = `
-                    <div class="flashcard-inner">
-                        <div class="flashcard-front">${c.front}</div>
-                        <div class="flashcard-back">${c.back}</div>
-                    </div>
-                `;
-                card.onclick = () => card.classList.toggle('flipped');
-                list.appendChild(card);
-            });
-        };
-    </script>
 
     <div class="plasma-background"></div>
     <div id="gradient-canvas"></div>
     <div class="falling-lights-container" id="falling-lights"></div>
 
     <div id="cinematic-splash">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-24 h-24 rounded-2xl shadow-2xl mb-4 animate-pulse">
-        <h1 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-indigo-400">KIVRO</h1>
+        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="splash-logo">
+        <h1 class="splash-text">KIVRO GAMES</h1>
+        <div class="splash-loader"></div>
+    </div>
+
+    <div id="password-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" aria-hidden="true">
+        <div class="liquid-glass w-full max-w-md p-8 rounded-3xl border border-white/10 shadow-2xl scale-95 transition-transform duration-300 transform" id="password-box">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-indigo-500/30">
+                    <svg class="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-white">Encrypted Access</h2>
+                <p class="text-gray-400 text-sm mt-1">Please enter the security key to continue.</p>
+            </div>
+
+            <input type="password" id="proxy-password-input"
+                class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white text-center text-xl tracking-widest placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 transition-all mb-4"
+                placeholder="••••••••">
+
+            <div id="password-error" class="text-red-400 text-xs text-center mb-4 hidden">Incorrect security key. Access Denied.</div>
+
+            <div class="flex gap-3">
+                <button onclick="closePasswordModal()" class="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 py-3 rounded-xl font-bold transition-all">Cancel</button>
+                <button onclick="checkPassword()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20">Verify</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- INSTALL POPUP -->
+    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
+      <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
+        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
+        <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
+
+        <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
+        <div class="flex justify-center gap-5 mb-5 flex-wrap" id="icon-selector">
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
+                 data-name="Teams"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="Teams">
+          </div>
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
+                 data-name="Kahoot!"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="Kahoot!">
+          </div>
+          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
+            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
+                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
+                 data-name="OneNote"
+                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
+                 alt="OneNote">
+          </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="flex justify-center mb-6">
+          <div class="flex flex-col items-center gap-2">
+            <img id="preview-icon" src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-20 h-20 rounded-2xl shadow-lg border border-white/10">
+            <span id="preview-name" class="text-sm font-bold text-white">Kivro Games</span>
+            <span class="text-xs text-gray-400">Preview</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> icon in Safari.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover">
+          </div>
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">2</div>
+            <p class="text-xs text-gray-300 mb-2">Scroll down in the menu.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover">
+          </div>
+          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
+            <div class="number text-lg font-semibold mb-1 text-indigo-400">3</div>
+            <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home Screen</strong>.</p>
+            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover">
+          </div>
+        </div>
+        <div class="flex justify-center mt-4">
+          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
+      <div class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-md w-[90%] shadow-2xl text-center border border-indigo-500/30">
+        <div class="flex justify-center mb-4"><span class="text-4xl">🤝</span></div>
+        <h2 class="text-xl font-bold text-indigo-300 mb-3">Partner App Notice</h2>
+        <p class="text-gray-300 text-sm mb-6 leading-relaxed">BlackFlix is a partner app hosted on Kivro Games. We do not develop or maintain it directly.</p>
+        <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">Wait <span id="disclaimer-timer">10</span>s...</button>
+      </div>
+    </div>
+
+    <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
+        <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
+                <h2 class="text-2xl font-black text-white flex items-center gap-2">📢 What's New</h2>
+                <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="updates-content" class="p-6 overflow-y-auto space-y-6"></div>
+        </div>
     </div>
 
     <header class="sticky top-0 z-50 w-full glass-header">
-        <div class="max-w-7xl mx-auto px-4 header-inner gap-4">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.reload()">
+        <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
+            <div class="flex items-center gap-3">
                 <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
-                <span id="site-title" class="text-xl font-bold text-white hidden sm:block">Kivro</span>
+                <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
             </div>
 
-            <div class="flex items-center gap-2" id="nav-tabs">
+            <div class="flex items-center gap-2">
                 <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
-                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full transition-all duration-300 opacity-0"></div>
-                    <button onclick="switchTab('Games')" id="tab-Games" class="tab-btn relative z-10 px-4 py-2 text-sm font-bold text-white">GAMES</button>
-                    <button onclick="switchTab('Apps')" id="tab-Apps" class="tab-btn relative z-10 px-4 py-2 text-sm font-bold text-gray-400 hover:text-white">APPS</button>
-                    <button onclick="switchTab('School')" id="tab-School" class="tab-btn relative z-10 px-4 py-2 text-sm font-bold text-gray-400 hover:text-white">STUDY</button>
-                </div>
-            </div>
+                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
 
-            <div class="flex items-center gap-4">
-                <button id="login-btn-header" onclick="openModal('auth-modal')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-indigo-500/20">
-                    Login
+                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
+                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
+                    <button id="tab-proxy" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">PROXY</button>
+
+                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
+                        <span>FAVS</span>
+                        <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </button>
+                </div>
+
+                <button id="install-trigger-btn" class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center flex-shrink-0" aria-label="Install App">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
                 </button>
-
-                <div id="user-menu-header" class="hidden flex items-center gap-3 relative group">
-                    <div class="text-right hidden sm:block">
-                        <div id="user-name-display" class="text-sm font-bold">User</div>
-                        <div class="text-[10px] text-green-400">Online</div>
-                    </div>
-                    <img id="user-pfp-display" src="" class="w-10 h-10 rounded-full border-2 border-indigo-500 cursor-pointer">
-                    
-                    <div class="absolute right-0 top-12 w-48 bg-gray-900 border border-white/10 rounded-xl shadow-2xl p-2 hidden group-hover:block transition-all z-50">
-                        <button onclick="openModal('profile-modal')" class="w-full text-left px-4 py-2 text-sm hover:bg-white/10 rounded-lg">Edit Profile</button>
-                        <button onclick="toggleSchoolMode()" class="w-full text-left px-4 py-2 text-sm hover:bg-white/10 rounded-lg text-yellow-400">Toggle School Mode</button>
-                        <div class="h-px bg-white/10 my-1"></div>
-                        <button onclick="logoutUser()" class="w-full text-left px-4 py-2 text-sm hover:bg-red-500/20 text-red-400 rounded-lg">Logout</button>
-                    </div>
-                </div>
             </div>
+
+                <button onclick="openDevModal()" class="flex items-center gap-2 bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/50 px-4 py-2 rounded-xl transition-all group">
+    <span class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
+    <span class="text-xs font-bold text-indigo-100 tracking-wider">DEVELOPER</span>
+</button>
+
+            <div class="relative group w-full max-w-xs hidden sm:block">
+                <input type="text" id="search-input" placeholder="Search..." class="glass-input text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full outline-none transition-all">
+                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden">✕</button>
+            </div>
+        </div>
+
+        <div class="sm:hidden px-4 pb-3 relative">
+            <input type="text" id="search-input-mobile" placeholder="Search library..." class="glass-input text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full outline-none">
+            <button id="clear-search-mobile" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden p-2">✕</button>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-8 min-h-screen">
+    <main class="max-w-7xl mx-auto px-4 py-8">
 
-        <div id="game-grid-section">
-            <div class="intro-card-bg p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
-                <h1 class="text-5xl sm:text-7xl font-black text-white mb-4 tracking-tighter">
-                    Kivro <span class="text-indigo-400">Games</span>
+        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[400px] relative group overflow-hidden">
+            <div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+            <div class="blob blob-1 opacity-60 mix-blend-screen"></div>
+            <div class="blob blob-2 opacity-60 mix-blend-screen"></div>
+            <div class="blob blob-3 opacity-40 mix-blend-screen"></div>
+
+            <div class="absolute top-10 left-10 md:left-20 animate-bounce delay-700 opacity-40 hidden sm:block">
+                <svg class="w-12 h-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <div class="absolute bottom-10 right-10 md:right-20 animate-pulse delay-1000 opacity-40 hidden sm:block">
+                <svg class="w-10 h-10 text-pink-400 drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center">
+                <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    v7.0 Ultra • See What's New →
+                </button>
+
+                <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
+                    Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
                 </h1>
-                <p class="text-gray-400 mb-6">Level up your profile. Climb the leaderboards.</p>
-                <div class="flex gap-4">
-                    <button onclick="loadLeaderboard(); openModal('leaderboard-modal')" class="px-6 py-2 bg-yellow-500/20 text-yellow-300 border border-yellow-500/50 rounded-full font-bold text-sm hover:bg-yellow-500/30 transition-all flex items-center gap-2">
-                        <span>🏆</span> Leaderboard
+
+                <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto mb-10 font-medium leading-relaxed">
+                    The ultimate unblocked library.
+                    <br>
+                    <span class="text-indigo-300">75+ Premium Titles</span> • <span class="text-purple-300">Cloud Save</span> • <span class="text-pink-300">Zero Lag</span>
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 w-full sm:w-auto">
+                    <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
+                            class="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-white text-black font-black rounded-full transition-all transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] flex items-center justify-center gap-2">
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <span>PLAY NOW</span>
                     </button>
+
+                    <div class="flex gap-2 w-full sm:w-auto justify-center">
+                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
+                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
+                           <span>Request</span>
+                        </a>
+                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" target="_blank"
+                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
+                            <span>Report</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="mb-6 relative">
-                <input type="text" id="search-input" placeholder="Search games..." class="w-full glass-input rounded-xl px-5 py-3 outline-none text-white">
-            </div>
-
-            <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
-        </div>
-
-        <div id="school-section" class="hidden">
-            <div class="flex justify-between items-center mb-8">
-                <div>
-                    <h2 class="text-3xl font-bold mb-1 title-text">My Studies</h2>
-                    <p class="text-sm text-gray-400">Review your flashcards</p>
-                </div>
-                <button onclick="openModal('create-deck-modal')" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-indigo-700 transition-all">+ New Deck</button>
-            </div>
-
-            <div id="study-dash">
-                <div id="decks-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center col-span-full py-10 opacity-50">Log in to create and save flashcards.</div>
-                </div>
-            </div>
-
-            <div id="deck-editor" class="hidden">
-                <button onclick="document.getElementById('deck-editor').classList.add('hidden'); document.getElementById('study-dash').classList.remove('hidden')" class="mb-4 text-indigo-400 hover:text-white">← Back to Decks</button>
-                <h2 id="current-deck-title" class="text-2xl font-bold mb-6">Deck Title</h2>
-                <input type="hidden" id="active-deck-id">
-
-                <div class="mb-8 p-4 bg-white/5 rounded-xl border border-white/10">
-                    <h3 class="font-bold mb-3">Add New Card</h3>
-                    <input id="new-front" placeholder="Front (Question)" class="w-full p-2 mb-2 bg-black/20 rounded border border-white/10 text-white">
-                    <input id="new-back" placeholder="Back (Answer)" class="w-full p-2 mb-2 bg-black/20 rounded border border-white/10 text-white">
-                    <button onclick="addCardToActiveDeck()" class="w-full bg-green-600 py-2 rounded font-bold hover:bg-green-500">Add Card</button>
-                </div>
-
-                <div id="card-list-display" class="space-y-4"></div>
             </div>
         </div>
 
+        <div class="max-w-4xl mx-auto mb-10">
+            <div class="liquid-glass rounded-3xl p-6 border border-white/10 flex flex-col gap-4">
+                <div class="flex items-center gap-2 border-b border-white/10 pb-4">
+                    <span class="text-2xl">📢</span>
+                    <h2 class="text-xl font-bold text-white">System Log</h2>
+                </div>
+                <div id="on-page-updates" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between mb-2">
+            <h2 id="grid-title" class="text-lg font-bold text-white flex items-center gap-2">
+                All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
+            </h2>
+            <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
+        </div>
+
+        <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
     </main>
 
-    <div id="auth-modal" class="auth-modal">
-        <div class="liquid-glass p-8 rounded-3xl max-w-sm w-full relative">
-            <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
-            
-            <h2 class="text-2xl font-bold mb-6 text-center text-white">Access Kivro</h2>
-            
-            <div class="flex mb-4 border-b border-white/10">
-                <button onclick="toggleAuthMode('login')" class="flex-1 py-2 text-indigo-400 font-bold border-b-2 border-indigo-500" id="btn-mode-login">Login</button>
-                <button onclick="toggleAuthMode('signup')" class="flex-1 py-2 text-gray-400 font-bold" id="btn-mode-signup">Sign Up</button>
-            </div>
-
-            <div id="login-form" class="space-y-4">
-                <input type="email" id="login-email" placeholder="Email" class="w-full glass-input p-3 rounded-lg">
-                <input type="password" id="login-pass" placeholder="Password" class="w-full glass-input p-3 rounded-lg">
-                <button onclick="loginUser(document.getElementById('login-email').value, document.getElementById('login-pass').value)" class="w-full bg-indigo-600 py-3 rounded-xl font-bold text-white shadow-lg hover:bg-indigo-500">Enter</button>
-            </div>
-
-            <div id="signup-form" class="space-y-4 hidden">
-                <input type="text" id="reg-user" placeholder="Username" class="w-full glass-input p-3 rounded-lg">
-                <input type="email" id="reg-email" placeholder="Email" class="w-full glass-input p-3 rounded-lg">
-                <input type="password" id="reg-pass" placeholder="Password" class="w-full glass-input p-3 rounded-lg">
-                
-                <p class="text-xs text-gray-400 mt-2">Choose Avatar:</p>
-                <div class="flex gap-2 overflow-x-auto pb-2" id="pfp-selector">
-                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-full cursor-pointer pfp-option selected" onclick="selectPfp(this)">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-10 h-10 rounded-full cursor-pointer pfp-option" onclick="selectPfp(this)">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka" class="w-10 h-10 rounded-full cursor-pointer pfp-option" onclick="selectPfp(this)">
-                </div>
-
-                <div class="flex gap-2 mt-2">
-                    <div class="w-6 h-6 rounded-full bg-indigo-500 cursor-pointer border-2 border-white" onclick="selectedTheme='#7c3aed'"></div>
-                    <div class="w-6 h-6 rounded-full bg-pink-500 cursor-pointer" onclick="selectedTheme='#ec4899'"></div>
-                    <div class="w-6 h-6 rounded-full bg-blue-500 cursor-pointer" onclick="selectedTheme='#3b82f6'"></div>
-                </div>
-
-                <button onclick="handleRegister()" class="w-full bg-purple-600 py-3 rounded-xl font-bold text-white shadow-lg hover:bg-purple-500">Create Profile</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="create-deck-modal" class="auth-modal">
-        <div class="liquid-glass p-6 rounded-2xl w-80 relative text-center">
-            <button onclick="closeModal('create-deck-modal')" class="absolute top-2 right-4 text-2xl">×</button>
-            <h3 class="text-xl font-bold mb-4">New Deck</h3>
-            <input id="deck-title-input" class="w-full glass-input p-2 rounded mb-4" placeholder="Deck Name (e.g. Science)">
-            <button onclick="createDeck(document.getElementById('deck-title-input').value)" class="bg-indigo-600 px-6 py-2 rounded-full font-bold">Create</button>
-        </div>
-    </div>
-
-    <div id="leaderboard-modal" class="auth-modal">
-        <div class="liquid-glass p-6 rounded-3xl w-full max-w-md relative max-h-[80vh] overflow-y-auto">
-            <button onclick="closeModal('leaderboard-modal')" class="absolute top-4 right-4 text-white">✕</button>
-            <div class="text-center mb-6">
-                <span class="text-4xl">👑</span>
-                <h2 class="text-2xl font-bold mt-2">Top Players</h2>
-                <p class="text-xs text-gray-400">Ranked by active playtime</p>
-            </div>
-            <div id="leaderboard-list" class="space-y-2"></div>
-        </div>
-    </div>
-
-    <div id="profile-modal" class="auth-modal">
-        <div class="liquid-glass p-6 rounded-3xl w-full max-w-sm relative text-center">
-            <button onclick="closeModal('profile-modal')" class="absolute top-4 right-4 text-white">✕</button>
-            <h2 class="text-xl font-bold mb-4">Profile Settings</h2>
-            <p class="text-sm text-gray-400 mb-2">Change Theme</p>
-            <div class="flex justify-center gap-4 mb-6">
-                <button onclick="updateTheme('#7c3aed')" class="w-10 h-10 rounded-full bg-indigo-600 border border-white/20"></button>
-                <button onclick="updateTheme('#ec4899')" class="w-10 h-10 rounded-full bg-pink-600 border border-white/20"></button>
-                <button onclick="updateTheme('#22c55e')" class="w-10 h-10 rounded-full bg-green-600 border border-white/20"></button>
-                <button onclick="updateTheme('#ef4444')" class="w-10 h-10 rounded-full bg-red-600 border border-white/20"></button>
-            </div>
-            <p class="text-xs text-gray-500">Changes save automatically</p>
-        </div>
-    </div>
+    <button onclick="window.location.href='https://member.foodvillage.ie/login'"
+            class="liquid-glass fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform hover:scale-110 active:scale-95 group hover:bg-red-600/60 border-red-500/30">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    </button>
 
     <script>
-        // --- GAME DATA ---
+        // --- CONFIGURATION ---
+        const ACCESS_PASSWORD = "kivro-lollipop"; // CHANGE THIS PASSWORD
+        let pendingUrl = ""; // Stores URL or Action when password needed
+
+        // --- UPDATES LOG DATA ---
+        const updatesLog = [
+            {
+                version: "v7.0", date: "Recent", title: "Ads Removed & Secured",
+                desc: "Complete ad-removal and enhanced security systems.",
+                changes: ["Removed all ad scripts", "Added Proxy Password Protection", "Optimized Load Times"]
+            },
+            {
+                version: "v6.0", date: "October 2023", title: "Ultra Upgrade",
+                desc: "Major UI Overhaul and performance improvements.",
+                changes: ["New Plasma & Liquid Glass Design", "Added 75+ Premium Games", "Direct Launch Mode"]
+            }
+        ];
+
+        // --- APP DATA ---
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
-        
+
         const gamesList = [
             { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library.onrender.com//2048/index.html" },
-            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg", gameUrl: "https://kivro-game-library.onrender.com//flappybird/index.html" },
-            { id: 18, title: "Subway Surfers", category: "Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html" },
-            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg", gameUrl: "https://kivro-game-library.onrender.com//drivemad/index.html" },
-            { id: 21, title: "Stickman Hook", category: "Arcade", imgUrl: THUMB_BASE + "stickman-hook.png", gameUrl: "https://kivro-game-library.onrender.com//StickmanHook/index.html" },
-            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg", gameUrl: "https://kivro-game-library.onrender.com//blockblast/index.html" },
-            { id: 14, title: "Slope", category: "Runner", imgUrl: THUMB_BASE + "slope.png", gameUrl: "https://kivro-game-library.onrender.com//Slope/index.html" },
-            { id: 1, title: "Retro Bowl", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp", gameUrl: GITHUB_BASE + "retrobowl/index.html" },
+            { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library.onrender.com//btd4/index.html" },
+            { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://kivro-game-library.onrender.com//bitlife/index.html" },
             { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg", gameUrl: GITHUB_BASE + "chess/index.html" },
-            { id: 9, title: "Cookie Clicker", category: "Idle", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg", gameUrl: GITHUB_BASE + "cookieclicker/index.html" },
+            { id: 9, title: "Cookie Clicker", category: "Idle Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg", gameUrl: GITHUB_BASE + "cookieclicker/index.html" },
+            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg", gameUrl: "https://kivro-game-library.onrender.com//drivemad/index.html" },
+            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg", gameUrl: "https://kivro-game-library.onrender.com//flappybird/index.html" },
             { id: 3, title: "Geo Dash", category: "Rhythm", imgUrl: THUMB_BASE + "Geometry-Dash.webp", gameUrl: "https://geometryite.vercel.app/" },
             { id: 15, title: "Google Snake", category: "Arcade", imgUrl: THUMB_BASE + "Google-Snake.jpg", gameUrl: "https://raw.githack.com/KAYAZzz/kivro-library/main/Snake/index.html" },
             { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg", gameUrl: "https://kivro-game-library.onrender.com//monkeymart/index.html" },
             { id: 12, title: "PacMan", category: "Arcade", imgUrl: THUMB_BASE + "Pacman.jpg", gameUrl: GITHUB_BASE + "pacman/index.html" },
-            { id: 50, title: "Wordle", category: "Puzzle", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
-            { id: 20, title: "Dino Runner", category: "Runner", imgUrl: THUMB_BASE + "Dino.jpg", gameUrl: "https://kivro-game-library.onrender.com//chromedino/index.html" },
+            { id: 1, title: "Retro Ball", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp", gameUrl: GITHUB_BASE + "retrobowl/index.html" },
+            { id: 14, title: "Slope", category: "Endless Runner", imgUrl: THUMB_BASE + "slope.png", gameUrl: "https://kivro-game-library.onrender.com//Slope/index.html" },
+            { id: 16, title: "Snow Battle", category: "Arcade", imgUrl: THUMB_BASE + "Snow-Battle.png", gameUrl: GITHUB_BASE + "snowbattle/index.html" },
+            { id: 17, title: "Stack", category: "Puzzle", imgUrl: THUMB_BASE + "Stack.webp", gameUrl: GITHUB_BASE + "stack/index.html" },
+            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg", gameUrl: "https://kivro-game-library.onrender.com//DriftBoss/index.html" },
+            { id: 18, title: "Subway Surfers", category: "Endless Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html" },
+            { id: 19, title: "Baldi's Basics", category: "Horror", imgUrl: THUMB_BASE + "BaldisBasics.webp", gameUrl: GITHUB_BASE + "baldisbasics/index.html" },
+            { id: 20, title: "Dino Runner", category: "Endless Runner", imgUrl: THUMB_BASE + "Dino.jpg", gameUrl: "https://kivro-game-library.onrender.com//chromedino/index.html" },
+            { id: 21, title: "Stickman Hook", category: "Arcade", imgUrl: THUMB_BASE + "stickman-hook.png", gameUrl: "https://kivro-game-library.onrender.com//StickmanHook/index.html" },
+            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg", gameUrl: "https://kivro-game-library.onrender.com//blockblast/index.html" },
+            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png", gameUrl: "https://kivro-game-library.onrender.com//MergeRot/index.html" },
             { id: 25, title: "Hole.io", category: "Arcade", imgUrl: THUMB_BASE + "Hole.png", gameUrl: "https://kivro-game-library.onrender.com//HoleIO/index.html" },
+            { id: 26, title: "Sausage Flip", category: "Arcade", imgUrl: THUMB_BASE + "sausage-flip.png", gameUrl: "https://kivro-game-library.onrender.com//sausage-flip/index.html" },
+            { id: 27, title: "YoHoHo.io", category: "Battle Royale", imgUrl: THUMB_BASE + "Yohoho.jpg", gameUrl: "https://kivro-game-library.onrender.com/yohohoio/index.html" },
+            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg", gameUrl: "https://kivro-game-library.onrender.com//MrBullet/index.html" },
+            { id: 29, title: "The Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html" },
             { id: 30, title: "Paper.io", category: "Strategy", imgUrl: THUMB_BASE + "paper-io.png", gameUrl: GITHUB_BASE + "paperio/index.html" },
+            { id: 31, title: "Hill Climb Racing", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png", gameUrl: "https://kivro-game-library.onrender.com//HillClimbRacing/index.html" },
+            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png", gameUrl: "https://kivro-game-library.onrender.com//BottleFlip2/index.html" },
+            { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg", gameUrl: "https://kivro-game-library.onrender.com//PenaltyKicks/index.html" },
+            { id: 36, title: "Gun Spin", category: "Arcade", imgUrl: THUMB_BASE + "gunspin.png", gameUrl: "https://kivro-game-library.onrender.com//Gunspin/index.html" },
+            { id: 37, title: "SandBoxel", category: "Simulation", imgUrl: THUMB_BASE + "Sandboxel.png", gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html" },
+            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png", gameUrl: "https://kivro-game-library.onrender.com//Ballistic/index.html" },
+            { id: 39, title: "Stacktris", category: "Arcade", imgUrl: THUMB_BASE + "stacktris.jpeg", gameUrl: "https://kivro-game-library.onrender.com//stacktris/index.html" },
+            { id: 40, title: "Tomb Of The Mask", category: "Arcade", imgUrl: THUMB_BASE + "TofM.jpg", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html" },
+            { id: 41, title: "Paper Plane", category: "Arcade", imgUrl: THUMB_BASE + "Planef.jpg", gameUrl: "https://kivro-game-library.onrender.com//PaperFlight1/index.html" },
+            { id: 42, title: "Curve Rush", category: "Arcade", imgUrl: THUMB_BASE + "curve-rush.webp", gameUrl: "https://curverush.com/curve-rush.embed" },
+            { id: 43, title: "Burrito Bison", category: "Action", imgUrl: THUMB_BASE + "Bb.png", gameUrl: "https://burrito-bison-cnm.vercel.app/" },
+            { id: 43, title: "Golf Orbit", category: "Sports", imgUrl: THUMB_BASE + "golf-orbit.png", gameUrl: "https://golf-orbit-k8ue.vercel.app/" },
+            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg", gameUrl: "https://kivro-game-library.onrender.com//Ragdoll-Archers/index.html" },
+            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp", gameUrl: "https://kivro-game-library.onrender.com//helixjump/index.html" },
+            { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp", gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html" },
+            { id: 47, title: "Gobble", category: "Arcade", imgUrl: THUMB_BASE + "Gobble.png", gameUrl: "https://kivro-game-library.onrender.com//Gobble/gobble/index.html" },
+            { id: 48, title: "Swingo", category: "Platformer", imgUrl: THUMB_BASE + "swingo.jpg", gameUrl: "https://kivro-game-library.onrender.com//Swingo/index.html" },
+            { id: 49, title: "Spiral Roll", category: "Arcade", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library.onrender.com//spralr/index.html" },
+            { id: 50, title: "Wordle", category: "Puzzle", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
+            { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
+            { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
+            { id: 53, title: "Game Inside Game", category: "Arcade", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library.onrender.com//game-inside/index.html" },
+            { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
+            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library.onrender.com//raft-war/index.html" },
+            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg", gameUrl: "https://kivro-game-library.onrender.com//a-smallwc/index.html" },
+            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io.onrender.com//bowmasters/index.html" },
+            { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html" },
+            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg", gameUrl: "https://kivro-game-library.onrender.com//DayOfMeat/index.html" },
+            { id: 60, title: "Knife Hit", category: "Arcade", imgUrl: THUMB_BASE + "Knifehit.png", gameUrl: "https://kivro-game-library.onrender.com//knifehit/index.html" },
+            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io.onrender.com//solar-smash/index.html" },
+            { id: 62, title: "Bridge race", category: "Casual", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io.onrender.com//bridge-race/index.html" },
+            { id: 63, title: "Papas Pizzaria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp", gameUrl: "https://kivro-game-library.onrender.com//papsp/index.html" },
+            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png", gameUrl: "https://kivro-game-library.onrender.com//little-alchemy/index.html" },
             { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp", gameUrl: "https://kivro-game-library.onrender.com//pool-pixijs/index.html" },
-            { id: 1001, title: "BlackFlix", category: "App", imgUrl: THUMB_BASE + "IMG_0988.jpeg", gameUrl: "https://ixlgroupjam.lovable.app/" }
+            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io.onrender.com//stealth-master/index.html" },
+            { id: 67, title: "Hide and Seek", category: "Arcade", imgUrl: THUMB_BASE + "hideandseek.webp", gameUrl: "https://kivro-game-library.onrender.com//hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html" },
+            { id: 68, title: "Slice it All", category: "Arcade", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io.onrender.com//slice-it-all/index.html" },
+            { id: 69, title: "Bus Out", category: "Simulation", imgUrl: THUMB_BASE + "busout.webp", gameUrl: "https://gamesbun.github.io/busout-school/" },
+            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgir/index.html" },
+            { id: 71, title: "Hills Of Steel", category: "Action", imgUrl: THUMB_BASE + "hills%20of%20steel.webp", gameUrl: "https://hillofsteele.vercel.app/" },
+            { id: 72, title: "Rooftop Snipers 2", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp", gameUrl: "https://kivro-game-library.onrender.com//rooftopsnipers/index.html" },
+            { id: 72, title: "Bounce Masters", category: "Arcade", imgUrl: THUMB_BASE + "bouncemasters.webp", gameUrl: "https://wowksies-github-io.onrender.com//bouncemasters/index.html" },
+            { id: 73, title: "Blumgi Ball", category: "Arcade", imgUrl: THUMB_BASE + "blumgiball.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgiball/index.html" },
+            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://kivro-game-library.onrender.com//DrawJoustindex.html" },
+            { id: 78, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://kivro-game-library.onrender.com//basketball-legends-main/index.html" },
+            { id: 79, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://kivro-game-library.onrender.com//football-legends/index.html" },
+            { id: 76, title: "Crossy Road", category: "Arcade", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io.onrender.com//crossy-road/index.html" },
+            { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://kivro-game-library.onrender.com/getaway-shootout/index.html" }
         ];
 
-        // --- LOCAL STATE ---
-        let selectedPfp = 'https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png';
-        let selectedTheme = '#7c3aed';
+        const appsList = [
+            { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
+        ];
 
-        // --- UI FUNCTIONS ---
-        function renderGames(filter = 'Games') {
-            const grid = document.getElementById('game-grid');
-            const search = document.getElementById('search-input').value.toLowerCase();
-            grid.innerHTML = '';
-            
-            const filtered = gamesList.filter(g => {
-                const matchesSearch = g.title.toLowerCase().includes(search);
-                if(filter === 'Apps') return g.category === 'App' && matchesSearch;
-                if(filter === 'Games') return g.category !== 'App' && matchesSearch;
-                return matchesSearch; // For 'School' mode we hide grid anyway
-            });
+        const library = [...gamesList, ...appsList];
+        let favorites = [];
+        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
+        let currentTab = 'Games';
+        let searchTerm = '';
+        let disclaimerUrl = '';
+        let countdownInterval;
 
-            filtered.forEach(item => {
-                const el = document.createElement('div');
-                el.className = 'game-card cursor-pointer relative overflow-hidden group';
-                el.onclick = () => window.open(item.gameUrl, '_blank');
-                el.innerHTML = `
-                    <div class="h-32 sm:h-40 relative">
-                        <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-100 group-hover:opacity-50 transition-opacity"></div>
-                        <span class="absolute bottom-2 left-2 text-[10px] bg-white/10 backdrop-blur px-2 py-0.5 rounded text-white font-bold border border-white/10">${item.category}</span>
-                    </div>
-                    <div class="p-3 bg-white/5">
-                        <h3 class="text-sm font-bold text-white truncate">${item.title}</h3>
+        // --- PASSWORD MODAL LOGIC ---
+        function openPasswordModal(redirectUrl) {
+            pendingUrl = redirectUrl;
+            document.getElementById('password-modal').classList.remove('hidden');
+            document.getElementById('password-modal').style.display = 'flex';
+            setTimeout(() => document.getElementById('password-modal').classList.add('active'), 10);
+            document.getElementById('proxy-password-input').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('password-modal').classList.add('hidden');
+                document.getElementById('password-modal').style.display = 'none';
+            }, 300);
+            document.getElementById('proxy-password-input').value = "kivro-lollipop";
+            document.getElementById('password-error').classList.add('hidden');
+            pendingUrl = "";
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('proxy-password-input').value;
+            const errorMsg = document.getElementById('password-error');
+            const modalBox = document.getElementById('password-box');
+
+            if (input === ACCESS_PASSWORD) {
+                // SUCCESS
+                errorMsg.classList.add('hidden');
+                if (pendingUrl) {
+                    window.location.href = pendingUrl;
+                } else {
+                    alert("Access Granted");
+                }
+                closePasswordModal();
+            } else {
+                // FAIL
+                errorMsg.classList.remove('hidden');
+                document.getElementById('proxy-password-input').value = "";
+                modalBox.classList.add('animate-shake');
+                setTimeout(() => modalBox.classList.remove('animate-shake'), 500);
+            }
+        }
+
+        document.getElementById('proxy-password-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // --- PARTNER DISCLAIMER LOGIC ---
+        function openDisclaimer(url) {
+            disclaimerUrl = url;
+            const popup = document.getElementById('disclaimer-popup');
+            const btn = document.getElementById('disclaimer-btn');
+            if(!popup || !btn) return;
+            let timeLeft = 10;
+            btn.disabled = true;
+            btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10";
+            btn.innerHTML = `Wait <span id="disclaimer-timer">${timeLeft}</span>s...`;
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.classList.add('active'); }, 10);
+            if (countdownInterval) clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                const span = document.getElementById('disclaimer-timer');
+                if(span) span.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    btn.disabled = false;
+                    btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg cursor-pointer";
+                    btn.innerHTML = "Continue to App";
+                }
+            }, 1000);
+        }
+
+        function closeDisclaimer() {
+            const popup = document.getElementById('disclaimer-popup');
+            if (popup) {
+                popup.classList.remove('active');
+                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+            }
+            if (countdownInterval) clearInterval(countdownInterval);
+        }
+
+        const disclaimerBtn = document.getElementById('disclaimer-btn');
+        if (disclaimerBtn) {
+            disclaimerBtn.onclick = () => { if (disclaimerUrl) { window.open(disclaimerUrl, '_blank'); closeDisclaimer(); } };
+        }
+
+        const disclaimerPopup = document.getElementById('disclaimer-popup');
+        if (disclaimerPopup) {
+            disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
+        }
+
+        // --- UPDATES POPUP LOGIC ---
+        function openUpdates() {
+            const popup = document.getElementById('updates-popup');
+            const content = document.getElementById('updates-content');
+            if(!popup || !content) return;
+
+            content.innerHTML = updatesLog.map((log) => {
+                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
+                return `
+                    <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
+                                <h3 class="text-xl font-bold text-white">${log.title}</h3>
+                            </div>
+                            <span class="text-xs text-gray-500 font-mono">${log.date}</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
+                        <ul class="space-y-2">${changeList}</ul>
                     </div>
                 `;
-                grid.appendChild(el);
-            });
+            }).join('');
+
+            popup.classList.remove('hidden');
+            popup.style.display = 'flex';
+            setTimeout(() => { popup.classList.add('active'); }, 10);
         }
 
-        // Tab Switching
-        function switchTab(tab) {
-            document.getElementById('game-grid-section').classList.remove('hidden');
-            document.getElementById('school-section').classList.add('hidden');
-            
-            // Adjust Pill
-            const btn = document.getElementById(`tab-${tab}`);
+        const closeUpdatesBtn = document.getElementById('close-updates');
+        if(closeUpdatesBtn) {
+            closeUpdatesBtn.onclick = () => {
+                const popup = document.getElementById('updates-popup');
+                popup.classList.remove('active');
+                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
+            };
+        }
+
+        function renderUpdates() {
+            const container = document.getElementById('on-page-updates');
+            if(!container) return;
+
+            container.innerHTML = updatesLog.map((log) => {
+                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
+                return `
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-sm font-bold text-white">${log.title}</h3>
+                            <span class="text-[10px] text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-500/30">${log.version}</span>
+                        </div>
+                        <ul class="space-y-1">${changeList}</ul>
+                    </div>
+               `;
+            }).join('');
+        }
+
+        function movePill(targetBtn) {
             const pill = document.getElementById('tab-pill');
-            const tabs = document.querySelectorAll('.tab-btn');
-            
+            if(!pill || !targetBtn) return;
             pill.style.opacity = '1';
-            pill.style.width = btn.offsetWidth + 'px';
-            pill.style.left = btn.offsetLeft + 'px';
-            
-            tabs.forEach(t => {
-                t.classList.remove('text-white');
-                t.classList.add('text-gray-400');
+            pill.style.left = targetBtn.offsetLeft + 'px';
+            pill.style.width = targetBtn.offsetWidth + 'px';
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('game-grid');
+            if(!grid) return;
+            grid.innerHTML = '';
+
+            let items = library.filter(item => {
+                const search = searchTerm.toLowerCase();
+                const matchesSearch = item.title.toLowerCase().includes(search);
+                if(currentTab === 'Favs') return favorites.includes(item.id) && matchesSearch;
+                if(currentTab === 'Games') return item.category !== 'App' && matchesSearch;
+                return item.category === 'App' && matchesSearch;
             });
-            btn.classList.remove('text-gray-400');
-            btn.classList.add('text-white');
-
-            if(tab === 'School') {
-                document.getElementById('game-grid-section').classList.add('hidden');
-                document.getElementById('school-section').classList.remove('hidden');
-            } else {
-                renderGames(tab);
+            if(currentTab === 'Games' && !searchTerm) {
+                items.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
             }
+
+            document.getElementById('game-count').innerText = items.length;
+            if (items.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500 animate-[fadeUp_0.5s_ease-out]">No results found.</div>`;
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            items.forEach((item, index) => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = "game-card group cursor-pointer card-anim liquid-glass";
+                card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
+                card.style.animationDelay = `${index * 50}ms`;
+
+                card.onclick = () => {
+                    const targetUrl = item.gameUrl;
+                    if (item.id === 1001) { openDisclaimer(targetUrl); return; }
+                    window.open(targetUrl, '_blank');
+                };
+
+                card.innerHTML = `
+                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </button>
+                    <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
+                        <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=Game'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-300"></div>
+                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-white/10 text-white backdrop-blur-md border border-white/20 uppercase tracking-wider">
+                            ${item.category}
+                        </span>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3>
+                    </div>
+                `;
+                fragment.appendChild(card);
+            });
+            grid.appendChild(fragment);
         }
 
-        // Toggle School Mode (Visual)
-        function toggleSchoolMode() {
-            document.body.classList.toggle('school-mode');
-            const isSchool = document.body.classList.contains('school-mode');
-            
-            if(isSchool) {
-                document.getElementById('site-title').innerText = "Kivro Study";
-                document.getElementById('tab-pill').style.display = 'none';
-                document.getElementById('nav-tabs').classList.add('hidden');
-                document.getElementById('game-grid-section').classList.add('hidden');
-                document.getElementById('school-section').classList.remove('hidden');
-            } else {
-                document.getElementById('site-title').innerText = "Kivro";
-                document.getElementById('tab-pill').style.display = 'block';
-                document.getElementById('nav-tabs').classList.remove('hidden');
-                switchTab('Games'); // Reset
-            }
+        window.toggleFav = (e, id) => {
+            e.stopPropagation();
+            if(favorites.includes(id)) favorites = favorites.filter(fav => fav !== id);
+            else favorites.push(id);
+            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
+            if(currentTab === 'Favs') renderGrid();
+            else e.currentTarget.classList.toggle('star-active');
+        };
+
+        function clearSearch(isMobile) {
+            searchTerm = '';
+            const input = document.getElementById(isMobile ? 'search-input-mobile' : 'search-input');
+            const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
+            input.value = '';
+            btn.classList.add('hidden');
+            renderGrid();
         }
 
-        // Modals
-        function openModal(id) {
+        ['search-input', 'search-input-mobile'].forEach(id => {
             const el = document.getElementById(id);
-            el.classList.remove('hidden');
-            el.style.display = 'flex';
-            setTimeout(() => el.classList.add('active'), 10);
-        }
-        function closeModal(id) {
-            const el = document.getElementById(id);
-            el.classList.remove('active');
-            setTimeout(() => {
-                el.classList.add('hidden');
-                el.style.display = 'none';
-            }, 300);
-        }
-
-        // Auth Form Toggle
-        function toggleAuthMode(mode) {
-            if(mode === 'login') {
-                document.getElementById('login-form').classList.remove('hidden');
-                document.getElementById('signup-form').classList.add('hidden');
-                document.getElementById('btn-mode-login').className = "flex-1 py-2 text-indigo-400 font-bold border-b-2 border-indigo-500";
-                document.getElementById('btn-mode-signup').className = "flex-1 py-2 text-gray-400 font-bold";
-            } else {
-                document.getElementById('login-form').classList.add('hidden');
-                document.getElementById('signup-form').classList.remove('hidden');
-                document.getElementById('btn-mode-signup').className = "flex-1 py-2 text-indigo-400 font-bold border-b-2 border-indigo-500";
-                document.getElementById('btn-mode-login').className = "flex-1 py-2 text-gray-400 font-bold";
-            }
-        }
-
-        // Registration Handling
-        function selectPfp(img) {
-            document.querySelectorAll('.pfp-option').forEach(i => i.classList.remove('selected'));
-            img.classList.add('selected');
-            selectedPfp = img.src;
-        }
-
-        function handleRegister() {
-            const u = document.getElementById('reg-user').value;
-            const e = document.getElementById('reg-email').value;
-            const p = document.getElementById('reg-pass').value;
-            if(u && e && p) {
-                window.registerUser(e, p, u, selectedPfp, selectedTheme);
-            } else {
-                alert("Please fill all fields");
-            }
-        }
-
-        // Theme Handling
-        async function updateTheme(color) {
-            applyTheme(color);
-            const user = window.fbAuth.currentUser;
-            if(user) {
-                await window.fbDb.updateDoc(window.fbDb.doc(window.fbDb.getFirestore(), "users", user.uid), {
-                    theme: color
+            if(el) {
+                el.addEventListener('input', (e) => {
+                    searchTerm = e.target.value;
+                    const isMobile = id.includes('mobile');
+                    const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
+                    if(searchTerm.length > 0) btn.classList.remove('hidden');
+                    else btn.classList.add('hidden');
+                    renderGrid();
                 });
             }
-            closeModal('profile-modal');
+        });
+        const clearBtn = document.getElementById('clear-search');
+        if(clearBtn) clearBtn.onclick = () => clearSearch(false);
+        const clearBtnMobile = document.getElementById('clear-search-mobile');
+        if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
+
+        // --- PASSWORD PROTECTED PROXY TAB ---
+        const proxyBtn = document.getElementById('tab-proxy');
+        if (proxyBtn) {
+            proxyBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openPasswordModal('https://kivroprox1.vercel.app/');
+            });
         }
 
-        function applyTheme(color) {
-            document.documentElement.style.setProperty('--theme-primary', color + '40'); // 40 is hex opacity
-            document.documentElement.style.setProperty('--theme-secondary', color + '20');
-            const btns = document.querySelectorAll('.bg-indigo-600');
-            // Note: Ideally use CSS vars for all colors, but for this structure we change the background gradient
-        }
-
-        // Card Creation Helper
-        function addCardToActiveDeck() {
-            const deckId = document.getElementById('active-deck-id').value;
-            const f = document.getElementById('new-front').value;
-            const b = document.getElementById('new-back').value;
-            if(f && b) {
-                window.saveCardToDeck(deckId, f, b);
-                document.getElementById('new-front').value = '';
-                document.getElementById('new-back').value = '';
+        ['tab-games','tab-apps','tab-favs'].forEach(t => {
+            const tabEl = document.getElementById(t);
+            if(tabEl) {
+                tabEl.onclick = () => {
+                    currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
+                    document.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.classList.remove('tab-active-text');
+                        btn.classList.add('tab-inactive-text');
+                    });
+                    tabEl.classList.add('tab-active-text');
+                    tabEl.classList.remove('tab-inactive-text');
+                    movePill(tabEl);
+                    renderGrid();
+                };
             }
-        }
+        });
 
-        // Init
         window.onload = () => {
-            renderGames();
-            document.getElementById('search-input').addEventListener('input', () => renderGames());
-            
-            // Remove Splash
-            setTimeout(() => {
-                document.getElementById('cinematic-splash').classList.add('splash-exit');
-            }, 1500);
+            renderUpdates();
+            renderGrid();
+            movePill(document.getElementById('tab-games'));
 
-            // Init Lights
-            const container = document.getElementById('falling-lights');
-            for(let i=0; i<30; i++){
-                const l = document.createElement('div');
-                l.className = 'falling-light';
-                l.style.left = Math.random()*100 + 'vw';
-                l.style.animationDuration = (3+Math.random()*5)+'s';
-                l.style.animationDelay = (Math.random()*5)+'s';
-                container.appendChild(l);
+            setTimeout(() => {
+                const splash = document.getElementById('cinematic-splash');
+                splash.classList.add('splash-exit');
+                setTimeout(() => splash.style.display = 'none', 700);
+            }, 2000);
+
+            const lightsContainer = document.getElementById('falling-lights');
+            if (lightsContainer) {
+                for (let i = 0; i < 40; i++) {
+                    const light = document.createElement('div');
+                    light.className = 'falling-light';
+                    light.style.left = Math.random() * 100 + 'vw';
+                    light.style.animationDuration = 4 + Math.random() * 6 + 's';
+                    light.style.animationDelay = Math.random() * 5 + 's';
+                    lightsContainer.appendChild(light);
+                }
             }
         };
 
+        // --- INSTALL POPUP LOGIC ---
+        const installPopup = document.getElementById('install-popup');
+        const installTriggerBtn = document.getElementById('install-trigger-btn');
+        const closePopupBtn = document.getElementById('close-popup');
+        const iconButtons = document.querySelectorAll('.select-icon');
+        const appleTouchIcon = document.getElementById('apple-touch-icon');
+        const previewIcon = document.getElementById('preview-icon');
+        const previewName = document.getElementById('preview-name');
+
+        if (installTriggerBtn) {
+            installTriggerBtn.addEventListener('click', () => {
+                installPopup.classList.remove('hidden');
+                installPopup.style.display = 'flex';
+                setTimeout(() => installPopup.classList.add('active'), 10);
+            });
+        }
+
+        if (closePopupBtn) {
+            closePopupBtn.addEventListener('click', () => {
+                installPopup.classList.remove('active');
+                setTimeout(() => {
+                    installPopup.classList.add('hidden');
+                    installPopup.style.display = 'none';
+                }, 300);
+            });
+        }
+
+        iconButtons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const iconUrl = icon.dataset.icon;
+                const appName = icon.dataset.name;
+
+                // Update Apple icon
+                appleTouchIcon.setAttribute('href', iconUrl);
+
+                // Update Apple web app title
+                let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+                if (!appleTitleMeta) {
+                    appleTitleMeta = document.createElement('meta');
+                    appleTitleMeta.setAttribute('name', 'apple-mobile-web-app-title');
+                    document.head.appendChild(appleTitleMeta);
+                }
+                appleTitleMeta.setAttribute('content', appName);
+
+                // Update document title
+                document.title = appName;
+
+                // Update preview
+                previewIcon.src = iconUrl;
+                previewName.textContent = appName;
+
+                // UI selected state
+                iconButtons.forEach(i => i.classList.remove('selected'));
+                icon.classList.add('selected');
+            });
+        });
     </script>
+
 </body>
 </html>
