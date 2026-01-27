@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-    <title>Kivro Games</title>
+    <title>Kivro Games - Archive</title>
     <meta name="description" content="Premium unblocked games library.">
 
     <!-- Apple PWA Meta -->
@@ -236,8 +236,8 @@
         .tab-inactive-text:hover { color: white; }
 
         /* ALL POPUPS */
-        #install-popup, #disclaimer-popup, #updates-popup, #owner-popup, #password-modal { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #updates-popup.active, #owner-popup.active, #password-modal.active { opacity: 1; pointer-events: auto; }
+        #install-popup, #disclaimer-popup, #updates-popup, #owner-popup, #password-modal, #discontinued-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        #install-popup.active, #disclaimer-popup.active, #updates-popup.active, #owner-popup.active, #password-modal.active, #discontinued-popup.active { opacity: 1; pointer-events: auto; }
 
         .glass-input {
             background: rgba(20, 20, 25, 0.6) !important; backdrop-filter: blur(12px);
@@ -284,6 +284,54 @@
         <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="splash-logo">
         <h1 class="splash-text">KIVRO GAMES</h1>
         <div class="splash-loader"></div>
+    </div>
+
+    <!-- DISCONTINUED POPUP -->
+    <div id="discontinued-popup" class="fixed inset-0 bg-black/90 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
+        <div class="liquid-glass text-gray-100 rounded-3xl p-8 max-w-lg w-[90%] shadow-[0_0_50px_rgba(220,38,38,0.5)] border border-red-500/30 text-center relative overflow-hidden flex flex-col items-center">
+            
+            <div class="w-20 h-20 bg-red-900/20 rounded-full flex items-center justify-center mb-6 border border-red-500/30 animate-pulse">
+                <svg class="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+
+            <h2 class="text-3xl font-black text-white mb-4 tracking-tight">Project Discontinued</h2>
+            
+            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
+                Kivro Games is no longer under active development. <br>
+                The owner is moving to a private project with more advanced features which will only be available as a paid service in the future.
+            </p>
+
+            <div class="p-4 bg-white/5 rounded-2xl border border-white/10 mb-6 w-full text-left">
+                <p class="text-indigo-300 font-bold text-xs uppercase tracking-wider mb-2">Contact Owner</p>
+                <div class="flex items-center gap-2 bg-black/40 p-3 rounded-xl border border-white/5 group">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    <code class="text-white text-sm font-mono flex-1 select-all">kayazissigma@gmail.com</code>
+                    <button onclick="navigator.clipboard.writeText('kayazissigma@gmail.com'); this.innerHTML='✓ Copied';" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white transition-all font-bold">Copy</button>
+                </div>
+            </div>
+
+            <div class="p-4 bg-white/5 rounded-2xl border border-white/10 mb-6 w-full">
+                <p class="text-gray-400 text-xs">If you want to take over development, contact me to request the full source code.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full">
+                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" 
+                   target="_blank"
+                   class="flex-1 bg-white text-black py-3.5 rounded-xl font-bold transition-all hover:bg-gray-200 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    Request Source
+                </a>
+                <button onclick="closeDiscontinuedPopup()" class="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-xl font-bold transition-all border border-white/10">
+                    Browse Archive
+                </button>
+            </div>
+            
+            <div class="mt-6 text-[10px] text-gray-500 font-mono">
+                System Status: Archived • Read Only
+            </div>
+        </div>
     </div>
 
     <div id="password-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" aria-hidden="true">
@@ -681,6 +729,27 @@
             if (e.key === 'Enter') checkPassword();
         });
 
+        // --- DISCONTINUED POPUP LOGIC ---
+        function openDiscontinuedPopup() {
+            const popup = document.getElementById('discontinued-popup');
+            if(popup) {
+                popup.classList.remove('hidden');
+                popup.style.display = 'flex';
+                setTimeout(() => popup.classList.add('active'), 10);
+            }
+        }
+
+        function closeDiscontinuedPopup() {
+            const popup = document.getElementById('discontinued-popup');
+            if(popup) {
+                popup.classList.remove('active');
+                setTimeout(() => {
+                    popup.classList.add('hidden');
+                    popup.style.display = 'none';
+                }, 300);
+            }
+        }
+
         // --- PARTNER DISCLAIMER LOGIC ---
         function openDisclaimer(url) {
             disclaimerUrl = url;
@@ -820,10 +889,15 @@
                 card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
                 card.style.animationDelay = `${index * 50}ms`;
 
+                // --- MODIFIED CLICK HANDLER TO DISABLE PLAY AND SHOW POPUP ---
                 card.onclick = () => {
-                    const targetUrl = item.gameUrl;
-                    if (item.id === 1001) { openDisclaimer(targetUrl); return; }
-                    window.open(targetUrl, '_blank');
+                    // PREVIOUS LOGIC DISABLED
+                    // const targetUrl = item.gameUrl;
+                    // if (item.id === 1001) { openDisclaimer(targetUrl); return; }
+                    // window.open(targetUrl, '_blank');
+                    
+                    // NEW LOGIC: SHOW DISCONTINUED POPUP
+                    openDiscontinuedPopup();
                 };
 
                 card.innerHTML = `
@@ -887,7 +961,9 @@
         if (proxyBtn) {
             proxyBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                openPasswordModal('https://kivroprox1.vercel.app/');
+                // DISABLED PASSWORD MODAL -> OPEN DISCONTINUED POPUP
+                // openPasswordModal('https://kivroprox1.vercel.app/');
+                openDiscontinuedPopup();
             });
         }
 
@@ -916,7 +992,11 @@
             setTimeout(() => {
                 const splash = document.getElementById('cinematic-splash');
                 splash.classList.add('splash-exit');
-                setTimeout(() => splash.style.display = 'none', 700);
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    // OPEN DISCONTINUED POPUP AFTER SPLASH
+                    setTimeout(() => openDiscontinuedPopup(), 500); 
+                }, 700);
             }, 2000);
 
             const lightsContainer = document.getElementById('falling-lights');
