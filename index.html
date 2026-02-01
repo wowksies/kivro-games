@@ -1,1074 +1,1370 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Kivro • Elite</title>
+    <meta name="description" content="Exclusive unblocked library.">
 
-    <title>Kivro Games - Archive</title>
-    <meta name="description" content="Premium unblocked games library.">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIktpdnJvIEVsaXRlIiwKICAic2hvcnRfbmFtZSI6ICJLaXZybyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0tBWUFaenovQ05NLUdhbWVzL21haW4vTG9nb2FjdHVhbC5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
 
-    <!-- Apple PWA Meta -->
+    <!-- PWA Meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Kivro Games">
-    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-title" content="Kivro Elite">
+    <meta name="theme-color" content="#000000">
 
-    <!-- Default Icons -->
+    <!-- Icons -->
     <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
-    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
+    <link id="dynamic-favicon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        void: '#050505',
+                        panel: '#0f0f0f',
+                        gold: '#fbbf24',
+                        accent: {
+                            DEFAULT: '#8b5cf6',
+                            glow: '#a78bfa',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'blob': 'blob 10s infinite',
+                        'fade-up': 'fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'shimmer': 'shimmer 2.5s linear infinite',
+                        'pulse-gold': 'pulseGold 2s infinite',
+                        'entrance': 'entrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'scan': 'scan 3s ease-in-out infinite',
+                        'shine': 'shine 1.5s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '200% 0' },
+                            '100%': { backgroundPosition: '-200% 0' }
+                        },
+                        pulseGold: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 10px rgba(251, 191, 36, 0)' }
+                        },
+                        entrance: {
+                            '0%': { opacity: 0, transform: 'scale(0.95)' },
+                            '100%': { opacity: 1, transform: 'scale(1)' }
+                        },
+                        scan: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' }
+                        },
+                        shine: {
+                            '100%': { left: '125%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
         body {
-            font-family: 'Inter', sans-serif;
             background-color: #050505;
-            color: #ffffff;
-            overflow-x: hidden;
+            color: #e4e4e7;
             -webkit-tap-highlight-color: transparent;
             overscroll-behavior-y: none;
+            overflow-x: hidden;
         }
 
-        /* --- BACKGROUND LAYERS --- */
-        .plasma-background {
-            background: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        #0f0f1a;
-            background-size: 200% 200%;
-            min-height: 100vh; position: fixed; inset: 0; z-index: -3;
-            will-change: transform;
+        .liquid-bg {
+            position: fixed; inset: 0; z-index: -2;
+            background: #000;
+            overflow: hidden;
         }
-
-        #gradient-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; pointer-events: none; opacity: 0.6;
-        }
-
-        .falling-lights-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; overflow: hidden;
-        }
-
-        .falling-light {
+        
+        .blob-1, .blob-2, .blob-3 {
             position: absolute;
-            top: -150px;
-            width: 1px;
-            height: 150px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.15) 50%, rgba(255,255,255,0));
-            animation: fall-light linear infinite;
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: blob 20s infinite alternate;
+        }
+        
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4c1d95; }
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #312e81; animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; }
+
+        .smooth-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
 
-        @keyframes fall-light {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(120vh); opacity: 0; }
+        .smooth-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(251, 191, 36, 0.3); /* Gold tint on hover */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.1);
         }
 
-        /* --- UI STYLES --- */
-        .liquid-glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        .img-wrapper {
+            border-radius: 24px;
+            overflow: hidden;
+            mask-image: -webkit-radial-gradient(white, black);
+        }
+
+        .nav-pill {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border-radius: 99px;
+            padding: 5px;
+            display: flex;
+            gap: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn {
+            padding: 10px 24px;
+            border-radius: 99px;
+            color: #a1a1aa;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.02em;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        /* COMPACT MODE FOR IPAD/TABLETS */
+        @media (max-width: 1150px) {
+            .nav-btn {
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+            .nav-pill {
+                padding: 3px;
+                gap: 2px;
+            }
+        }
+
+        .nav-btn.active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+        }
+
+        .vip-badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .shine-effect {
             position: relative;
             overflow: hidden;
         }
-
-        .liquid-glass, .intro-card, .game-card, .rounded-full, .rounded-xl, .rounded-2xl, .rounded-3xl {
-            -webkit-mask-image: -webkit-radial-gradient(white, black);
-            mask-image: radial-gradient(white, black);
-        }
-
-        @keyframes glass-shimmer {
-            0% { left: -100%; opacity: 0; }
-            5% { opacity: 1; }
-            40% { left: 200%; opacity: 1; }
-            100% { left: 200%; opacity: 0; }
-        }
-
-        .liquid-glass::after {
+        .shine-effect::before {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
             transform: skewX(-25deg);
-            pointer-events: none;
-            animation: glass-shimmer 6s infinite cubic-bezier(0.4, 0, 0.2, 1);
-            animation-delay: var(--shimmer-delay, 0s);
+            transition: 0.5s;
+        }
+        .shine-effect:hover::before {
+            animation: shine 0.75s;
         }
 
-        .glass-header {
-            background: rgba(5, 5, 8, 0.85);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: background 0.3s ease;
-            padding-top: env(safe-area-inset-top);
-            height: auto;
-            min-height: 80px;
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* Notification Toast */
+        #toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 28px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 99999;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 10px;
         }
+        #toast.show { transform: translateX(-50%) translateY(0); }
 
-        .header-inner {
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* Install/Cloak Popup Styles */
+        .select-icon {
+            transition: all 0.3s ease;
         }
-
-        .intro-card {
-            background: linear-gradient(160deg, rgba(20, 20, 30, 0.6) 0%, rgba(5, 5, 10, 0.8) 100%);
-            backdrop-filter: blur(30px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 40px;
-            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* --- SPLASH SCREEN --- */
-        #cinematic-splash {
-            position: fixed; inset: 0;
-            background-color: #000;
-            z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
-        }
-
-        .splash-logo {
-            width: 100px; height: 100px;
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
-            animation: pulse-logo 2s infinite;
-            margin-bottom: 20px;
-        }
-
-        .splash-text {
-            font-size: 2.5rem; font-weight: 900;
-            background: linear-gradient(to right, #fff, #a5b4fc);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -1px; opacity: 0;
-            animation: slide-text 0.8s ease forwards 0.3s;
-        }
-
-        .splash-loader {
-            width: 200px; height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 99px; margin-top: 30px;
-            overflow: hidden; position: relative;
-        }
-
-        .splash-loader::after {
-            content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 0%;
-            background: #6366f1; box-shadow: 0 0 10px #6366f1;
-            animation: load-bar 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes pulse-logo {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(99, 102, 241, 0.8); }
-        }
-        @keyframes slide-text {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes load-bar {
-            0% { width: 0%; } 50% { width: 60%; } 100% { width: 100%; }
-        }
-
-        .splash-exit { transform: translateY(-100%); pointer-events: none; }
-
-        /* --- BLOB ANIMATIONS --- */
-        @keyframes blob-float {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-        }
-
-        .blob {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
-            animation: blob-float 12s infinite ease-in-out; pointer-events: none;
-        }
-        .blob-1 { background: rgba(79, 70, 229, 0.5); width: 450px; height: 450px; top: -150px; left: -100px; animation-delay: 0s; }
-        .blob-2 { background: rgba(147, 51, 234, 0.5); width: 400px; height: 400px; bottom: -100px; right: -50px; animation-delay: 2s; }
-        .blob-3 { background: rgba(236, 72, 153, 0.4); width: 350px; height: 350px; bottom: 50px; left: 30%; animation-delay: 4s; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); filter: blur(4px); }
-            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-        .card-anim { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
-
-        /* --- GAME CARDS --- */
-        .game-card {
-            border-radius: 24px; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateZ(0); background: rgba(255, 255, 255, 0.05);
-        }
-        @media (hover: hover) {
-            .game-card:hover {
-                transform: translateY(-10px) scale(1.03); border-color: rgba(255, 255, 255, 0.4);
-                background: rgba(255, 255, 255, 0.1);
-                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset; z-index: 20;
-            }
-            .game-card:hover::after { left: 150%; transition: 0.7s ease-in-out; }
-            .game-card:hover img { transform: scale(1.12); filter: brightness(1.2); }
-        }
-        .game-card img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); filter: brightness(1.15) saturate(1.2); }
-
-        .star-btn {
-            position: absolute; top: 10px; right: 10px; z-index: 20;
-            width: 32px; height: 32px; border-radius: 50%;
-            background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.3);
-            display: flex; align-items: center; justify-content: center;
-            color: #d1d5db; transition: all 0.2s; cursor: pointer;
-        }
-        .star-active { color: #fbbf24 !important; background: rgba(255,255,255,0.25); border-color: #fbbf24; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-
-        .tab-btn { position: relative; z-index: 10; transition: color 0.3s ease; }
-        .tab-active-text { color: white; text-shadow: 0 0 15px rgba(255,255,255,0.8); }
-        .tab-inactive-text { color: #9ca3af; }
-        .tab-inactive-text:hover { color: white; }
-
-        /* ALL POPUPS */
-        #install-popup, #disclaimer-popup, #updates-popup, #owner-popup, #password-modal, #discontinued-popup { opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        #install-popup.active, #disclaimer-popup.active, #updates-popup.active, #owner-popup.active, #password-modal.active, #discontinued-popup.active { opacity: 1; pointer-events: auto; }
-
-        .glass-input {
-            background: rgba(20, 20, 25, 0.6) !important; backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .glass-input:focus {
-            background: rgba(30, 30, 35, 0.8) !important; border-color: rgba(129, 140, 248, 0.6) !important;
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.25), inset 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
-
-        /* UPDATE ITEMS STYLING */
-        .update-item { position: relative; padding-left: 16px; }
-        .update-item::before {
-            content: ''; position: absolute; left: 0; top: 7px;
-            width: 6px; height: 6px; background: #818cf8; border-radius: 50%;
-            box-shadow: 0 0 8px rgba(129,140,248,0.5);
-        }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
-
-        /* PASSWORD MODAL ANIMATIONS */
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
-        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
-
-        /* INSTALL ICON SELECT STYLES */
         .select-icon.selected {
-            border-color: #818cf8 !important;
-            box-shadow: 0 0 20px rgba(129,140,248,0.8);
-            transform: scale(1.08);
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            transform: scale(1.1);
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-gold/30 selection:text-white overflow-hidden" id="main-body">
 
-    <div class="plasma-background"></div>
-    <div id="gradient-canvas"></div>
-    <div class="falling-lights-container" id="falling-lights"></div>
-
-    <div id="cinematic-splash">
-        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="splash-logo">
-        <h1 class="splash-text">KIVRO GAMES</h1>
-        <div class="splash-loader"></div>
+    <div class="liquid-bg">
+        <div class="blob-1"></div>
+        <div class="blob-2"></div>
+        <div class="blob-3"></div>
     </div>
 
-    <!-- DISCONTINUED POPUP -->
-    <div id="discontinued-popup" class="fixed inset-0 bg-black/90 flex items-center justify-center z-[6000] hidden backdrop-blur-xl" aria-hidden="true">
-        <div class="liquid-glass text-gray-100 rounded-3xl p-8 max-w-lg w-[90%] shadow-[0_0_50px_rgba(220,38,38,0.5)] border border-red-500/30 text-center relative overflow-hidden flex flex-col items-center">
-            
-            <div class="w-20 h-20 bg-red-900/20 rounded-full flex items-center justify-center mb-6 border border-red-500/30 animate-pulse">
-                <svg class="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-            </div>
-
-            <h2 class="text-3xl font-black text-white mb-4 tracking-tight">Project Discontinued</h2>
-            
-            <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                Kivro Games is no longer under active development. <br>
-                The owner is moving to a private project with more advanced features which will only be available as a paid service in the future.
-            </p>
-
-            <div class="p-4 bg-white/5 rounded-2xl border border-white/10 mb-6 w-full text-left">
-                <p class="text-indigo-300 font-bold text-xs uppercase tracking-wider mb-2">Contact Owner</p>
-                <div class="flex items-center gap-2 bg-black/40 p-3 rounded-xl border border-white/5 group">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    <code class="text-white text-sm font-mono flex-1 select-all">kayazissigma@gmail.com</code>
-                    <button onclick="navigator.clipboard.writeText('kayazissigma@gmail.com'); this.innerHTML='✓ Copied';" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-lg text-white transition-all font-bold">Copy</button>
+    <!-- VIP WELCOME OVERLAY -->
+    <div id="vip-welcome" class="fixed inset-0 z-[11000] bg-black flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-1000">
+        <div class="text-center transform scale-95 transition-transform duration-1000" id="vip-welcome-content">
+            <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 p-[2px] animate-pulse-gold">
+                <div class="w-full h-full rounded-full bg-black flex items-center justify-center">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12">
                 </div>
             </div>
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">ACCESS GRANTED</h1>
+            <p id="welcome-subtitle" class="text-amber-400 font-bold tracking-widest uppercase text-sm">Welcome to Elite Membership</p>
+        </div>
+    </div>
 
-            <div class="p-4 bg-white/5 rounded-2xl border border-white/10 mb-6 w-full">
-                <p class="text-gray-400 text-xs">If you want to take over development, contact me to request the full source code.</p>
-            </div>
+    <!-- SITE LOCK -->
+    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/30 rounded-full blur-[120px] animate-blob"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/20 rounded-full blur-[120px] animate-blob" style="animation-delay: -2s;"></div>
+        </div>
 
-            <div class="flex flex-col sm:flex-row gap-3 w-full">
-                <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" 
-                   target="_blank"
-                   class="flex-1 bg-white text-black py-3.5 rounded-xl font-bold transition-all hover:bg-gray-200 flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    Request Source
-                </a>
-                <button onclick="closeDiscontinuedPopup()" class="flex-1 bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-xl font-bold transition-all border border-white/10">
-                    Browse Archive
-                </button>
-            </div>
+        <div class="relative z-10 w-full max-w-4xl p-4 md:p-8 flex flex-col md:flex-row gap-8 items-stretch animate-fade-up">
             
-            <div class="mt-6 text-[10px] text-gray-500 font-mono">
-                System Status: Archived • Read Only
-            </div>
-        </div>
-    </div>
-
-    <div id="password-modal" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" aria-hidden="true">
-        <div class="liquid-glass w-full max-w-md p-8 rounded-3xl border border-white/10 shadow-2xl scale-95 transition-transform duration-300 transform" id="password-box">
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-indigo-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-indigo-500/30">
-                    <svg class="w-8 h-8 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <!-- LEFT COLUMN: Sales Pitch (Persuasion) -->
+            <div class="flex-1 bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/30 transition-colors">
+                <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 animate-pulse">
+                    HIGH DEMAND
                 </div>
-                <h2 class="text-2xl font-bold text-white">Encrypted Access</h2>
-                <p class="text-gray-400 text-sm mt-1">Please enter the security key to continue.</p>
+                
+                <div class="flex items-center gap-4 mb-6">
+                     <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 shadow-lg">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-8 h-8 opacity-90">
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-black text-white tracking-tight">KIVRO <span class="text-amber-400">ELITE</span></h1>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Servers Operational</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 mb-8 flex-1">
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Unrestricted Library</h3>
+                            <p class="text-xs text-zinc-500">Premium access to all games and apps.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">Stealth Proxy V2</h3>
+                            <p class="text-xs text-zinc-500">Undetectable browsing technology.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white">VIP Tools Menu</h3>
+                            <p class="text-xs text-zinc-500">Exclusive cheats and utilities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Ticker (UPDATED) -->
+                <div class="bg-black/40 rounded-xl p-3 border border-white/5 flex items-center gap-3 mb-6 backdrop-blur-md relative overflow-hidden group hover:border-white/10 transition-colors">
+                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="flex -space-x-2 relative z-10">
+                         <!-- Believable Avatars -->
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">JD</div>
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">MK</div>
+                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">AL</div>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-[10px] text-zinc-400 leading-tight">
+                            <span class="text-white font-bold">8 users</span> upgraded today.
+                        </p>
+                         <p class="text-[8px] text-amber-500 font-bold flex items-center gap-1 mt-0.5 opacity-80">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Verified Purchase
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Purchase Info -->
+                 <div class="pt-4 border-t border-white/10">
+                     <p class="text-[10px] text-zinc-500 uppercase font-bold mb-3 tracking-wider">Purchase Key</p>
+                     <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                            <p class="text-[10px] text-zinc-400 mb-1">Method</p>
+                            <p class="text-xs font-bold text-white">Cash (In-Person)</p>
+                        </div>
+                        <a href="mailto:kayazissigma@gmail.com" class="bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 hover:bg-amber-500/20 transition-colors group/link cursor-pointer block">
+                            <p class="text-[10px] text-amber-300 mb-1">Contact for Key</p>
+                            <div class="flex items-center gap-1 text-xs font-bold text-amber-400">
+                                <span>Email Me</span>
+                                <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </div>
+                        </a>
+                     </div>
+                 </div>
             </div>
 
-            <input type="password" id="proxy-password-input"
-                class="w-full bg-white/5 border border-white/10 rounded-xl py-4 px-6 text-white text-center text-xl tracking-widest placeholder-gray-600 focus:outline-none focus:border-indigo-500/50 transition-all mb-4"
-                placeholder="••••••••">
+            <!-- RIGHT COLUMN: Pricing & Login -->
+            <div class="w-full md:w-80 flex flex-col gap-4">
+                
+                <!-- Pricing Stack -->
+                <div class="bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
+                    <div class="space-y-1">
+                        <!-- 1 Day -->
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default">
+                            <div>
+                                <div class="text-xs font-bold text-zinc-400">1 Day Pass</div>
+                                <div class="text-[9px] text-zinc-600">Trial</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-zinc-300">3€</div>
+                            </div>
+                        </div>
+                         <!-- 7 Days -->
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors cursor-default border border-transparent hover:border-white/5">
+                            <div>
+                                <div class="text-xs font-bold text-zinc-300">7 Day Pass</div>
+                                <div class="text-[9px] text-zinc-500">Standard</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm font-bold text-white">7€</div>
+                            </div>
+                        </div>
 
-            <div id="password-error" class="text-red-400 text-xs text-center mb-4 hidden">Incorrect security key. Access Denied.</div>
+                         <!-- THE HERO: 2 WEEKS -->
+                        <div class="relative overflow-hidden rounded-xl border border-amber-500/40 p-3 group cursor-pointer transition-all hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(245,158,11,0.2)] mt-1">
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-yellow-500/20 to-amber-500/10 animate-shimmer bg-[length:200%_100%]"></div>
+                            
+                            <!-- Badge -->
+                            <div class="absolute top-0 right-0 bg-amber-500 text-black text-[8px] font-extrabold px-2 py-0.5 rounded-bl-lg shadow-lg z-10 tracking-wide">VIP CHOICE</div>
+                            
+                            <div class="flex items-center justify-between relative z-10">
+                                <div class="flex items-center gap-3">
+                                     <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-orange-600 flex items-center justify-center shadow-lg text-white">
+                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-white">2 Weeks Elite</div>
+                                        <div class="text-[9px] text-amber-200/80 font-medium">Full Priority Access</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-extrabold text-white text-shadow-sm">12€</div>
+                                </div>
+                            </div>
+                            <!-- Features specifically for this plan -->
+                            <div class="relative z-10 mt-2 pt-2 border-t border-amber-500/20 grid grid-cols-2 gap-1">
+                                <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1"><span class="w-1 h-1 bg-green-400 rounded-full"></span> 100% Uptime</span>
+                                <span class="text-[8px] text-amber-100/70 font-bold flex items-center gap-1 justify-end"><span class="w-1 h-1 bg-blue-400 rounded-full"></span> Priority Support</span>
+                            </div>
+                        </div>
 
-            <div class="flex gap-3">
-                <button onclick="closePasswordModal()" class="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 py-3 rounded-xl font-bold transition-all">Cancel</button>
-                <button onclick="checkPassword()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg shadow-indigo-500/20">Verify</button>
-            </div>
-        </div>
-    </div>
+                        <!-- REFUND POLICY DISCLAIMER -->
+                         <div class="mt-3 text-center">
+                            <p class="text-[9px] text-red-400/80 font-bold uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity">⚠️ Non-Refundable Digital Keys</p>
+                         </div>
+                    </div>
+                </div>
 
-    <!-- INSTALL POPUP -->
-    <div id="install-popup" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[4000] hidden backdrop-blur-md" aria-hidden="true">
-      <div id="install-content" class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-2xl w-[92%] shadow-2xl overflow-y-auto max-h-[90vh]" role="dialog" aria-modal="true" aria-labelledby="install-title">
-        <h2 id="install-title" class="text-2xl font-bold text-purple-300 mb-2 text-center">📱 Add Kivro Games to Your Home Screen</h2>
-        <p class="text-gray-300 mb-4 text-center text-sm">For the best experience, follow these quick steps:</p>
+                <!-- Auth Box (UPDATED ANIMATIONS) -->
+                <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 flex flex-col gap-3 shadow-2xl h-full justify-center relative overflow-hidden">
+                    <div class="text-center mb-1 relative z-10">
+                        <div class="text-xs font-bold text-white uppercase tracking-widest flex items-center justify-center gap-2">
+                             <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                            Secure Access
+                        </div>
+                    </div>
+                    
+                    <div class="relative group z-10">
+                        <!-- Laser Scan Effect on Input -->
+                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-[scan_2s_linear_infinite]"></div>
+                        
+                        <input type="password" id="site-key-input" 
+                            class="w-full bg-black/40 border-2 border-white/10 rounded-xl py-3 px-4 text-center text-white text-lg font-mono tracking-[0.3em] placeholder-zinc-700 focus:outline-none focus:border-amber-500 focus:bg-white/5 focus:shadow-[0_0_20px_rgba(245,158,11,0.2)] focus:ring-2 focus:ring-amber-500/20 transition-all relative z-10"
+                            placeholder="XXX-XXX">
+                    </div>
 
-        <h2 class="text-xl font-bold text-purple-300 mb-2 text-center">🎨 Customize Your Icon</h2>
-        <div class="flex justify-center gap-5 mb-5 flex-wrap" id="icon-selector">
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-indigo-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
-                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png"
-                 data-name="Teams"
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
-                 alt="Teams">
-          </div>
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-purple-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
-                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png"
-                 data-name="Kahoot!"
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
-                 alt="Kahoot!">
-          </div>
-          <div class="relative group select-icon-wrap cursor-pointer transition-transform transform hover:scale-105 active:scale-95">
-            <div class="absolute inset-0 rounded-2xl bg-pink-500/20 blur-xl opacity-60 group-hover:opacity-90 transition-all duration-300"></div>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
-                 data-icon="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png"
-                 data-name="OneNote"
-                 class="select-icon relative w-16 h-16 rounded-xl border-2 border-transparent transition-all duration-300 shadow-lg"
-                 alt="OneNote">
-          </div>
-        </div>
-
-        <!-- Preview -->
-        <div class="flex justify-center mb-6">
-          <div class="flex flex-col items-center gap-2">
-            <img id="preview-icon" src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-20 h-20 rounded-2xl shadow-lg border border-white/10">
-            <span id="preview-name" class="text-sm font-bold text-white">Kivro Games</span>
-            <span class="text-xs text-gray-400">Preview</span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-center">
-          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">1</div>
-            <p class="text-xs text-gray-300 mb-2">Tap <strong>Share</strong> icon in Safari.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut1.jpg" alt="Step 1" class="rounded-lg shadow-md w-full object-cover">
-          </div>
-          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">2</div>
-            <p class="text-xs text-gray-300 mb-2">Scroll down in the menu.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut2.jpeg" alt="Step 2" class="rounded-lg shadow-md w-full object-cover">
-          </div>
-          <div class="install-step bg-white/5 p-3 rounded-xl border border-white/5">
-            <div class="number text-lg font-semibold mb-1 text-indigo-400">3</div>
-            <p class="text-xs text-gray-300 mb-2">Tap <strong>Add to Home Screen</strong>.</p>
-            <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Tut3.jpeg" alt="Step 3" class="rounded-lg shadow-md w-full object-cover">
-          </div>
-        </div>
-        <div class="flex justify-center mt-4">
-          <button id="close-popup" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-full text-sm font-bold text-white shadow-lg transition-transform transform hover:scale-105">Got it — Finish</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="disclaimer-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
-      <div class="liquid-glass text-gray-100 rounded-2xl p-6 max-w-md w-[90%] shadow-2xl text-center border border-indigo-500/30">
-        <div class="flex justify-center mb-4"><span class="text-4xl">🤝</span></div>
-        <h2 class="text-xl font-bold text-indigo-300 mb-3">Partner App Notice</h2>
-        <p class="text-gray-300 text-sm mb-6 leading-relaxed">BlackFlix is a partner app hosted on Kivro Games. We do not develop or maintain it directly.</p>
-        <button id="disclaimer-btn" disabled class="w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10">Wait <span id="disclaimer-timer">10</span>s...</button>
-      </div>
-    </div>
-
-    <div id="updates-popup" class="fixed inset-0 bg-black/80 flex items-center justify-center z-[5000] hidden backdrop-blur-md" aria-hidden="true">
-        <div class="liquid-glass text-gray-100 rounded-3xl p-0 max-w-lg w-[92%] shadow-2xl flex flex-col max-h-[80vh]">
-            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
-                <h2 class="text-2xl font-black text-white flex items-center gap-2">📢 What's New</h2>
-                <button id="close-updates" class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div id="updates-content" class="p-6 overflow-y-auto space-y-6"></div>
-        </div>
-    </div>
-
-    <header class="sticky top-0 z-50 w-full glass-header">
-        <div class="max-w-7xl mx-auto px-4 header-inner gap-2 sm:gap-4">
-            <div class="flex items-center gap-3">
-                <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-xl shadow-lg border border-white/10">
-                <span class="text-xl font-bold text-white hidden sm:block">Kivro</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <div class="liquid-glass relative flex p-1 rounded-full backdrop-blur-md">
-                    <div id="tab-pill" class="absolute top-1 bottom-1 bg-indigo-600 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]" style="left: 4px; width: 0; opacity: 0;"></div>
-
-                    <button id="tab-games" class="tab-btn tab-active-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">GAMES</button>
-                    <button id="tab-apps" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">APPS</button>
-                    <button id="tab-proxy" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold">PROXY</button>
-
-                    <button id="tab-favs" class="tab-btn tab-inactive-text px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold flex gap-1 items-center">
-                        <span>FAVS</span>
-                        <svg class="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <div id="site-key-error" class="text-center text-red-500 text-[10px] font-bold h-4 opacity-0 transition-opacity uppercase tracking-widest z-10">Invalid Key</div>
+                    
+                    <button onclick="unlockSite()" class="shine-effect w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 group z-10">
+                        <span>UNLOCK SYSTEM</span>
+                        <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </button>
+                    
+                    <button onclick="startVisualPreview()" class="w-full py-2 rounded-xl text-zinc-500 font-bold text-[10px] hover:text-white transition-colors z-10">
+                        Just Browsing? <span class="underline decoration-zinc-700 underline-offset-2 hover:decoration-white">View Preview</span>
                     </button>
                 </div>
 
-                <button id="install-trigger-btn" class="liquid-glass hover:bg-white/10 text-white p-2.5 rounded-full transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center flex-shrink-0" aria-label="Install App">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                </button>
-            </div>
-
-                <button onclick="openDevModal()" class="flex items-center gap-2 bg-indigo-600/20 hover:bg-indigo-600/40 border border-indigo-500/50 px-4 py-2 rounded-xl transition-all group">
-    <span class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
-    <span class="text-xs font-bold text-indigo-100 tracking-wider">DEVELOPER</span>
-</button>
-
-            <div class="relative group w-full max-w-xs hidden sm:block">
-                <input type="text" id="search-input" placeholder="Search..." class="glass-input text-sm text-gray-200 rounded-full pl-10 pr-10 py-2.5 w-full outline-none transition-all">
-                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <button id="clear-search" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden">✕</button>
             </div>
         </div>
+    </div>
 
-        <div class="sm:hidden px-4 pb-3 relative">
-            <input type="text" id="search-input-mobile" placeholder="Search library..." class="glass-input text-sm text-gray-200 rounded-xl pl-4 pr-10 py-2.5 w-full outline-none">
-            <button id="clear-search-mobile" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white hidden p-2">✕</button>
-        </div>
-    </header>
+    <!-- MAIN APP CONTENT -->
+    <div id="app-content" class="opacity-0 scale-95 transition-all duration-700 blur-sm h-screen overflow-y-auto">
+        <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg">
+                </div>
 
-    <main class="max-w-7xl mx-auto px-4 py-8">
+                <!-- NAVIGATION (Center - Tablet Optimized) -->
+                <!-- Removed absolute positioning on very small screens if needed, but flex + transform works if width is managed -->
+                <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
+                    <button class="nav-btn active" data-tab="Games">Library</button>
+                    <button class="nav-btn" data-tab="Apps">Apps</button>
+                    <button class="nav-btn" id="menu-tab-btn" data-tab="Menu">Menu</button>
+                    <button class="nav-btn" id="proxy-tab-btn" data-tab="Proxy">Proxy</button>
+                    <button class="nav-btn" data-tab="Favs">Saved</button>
+                </div>
 
-        <div class="intro-card p-8 md:p-12 mb-10 text-center flex flex-col items-center justify-center min-h-[400px] relative group overflow-hidden">
-            <div class="absolute inset-0 z-0 opacity-20" style="background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
-            <div class="blob blob-1 opacity-60 mix-blend-screen"></div>
-            <div class="blob blob-2 opacity-60 mix-blend-screen"></div>
-            <div class="blob blob-3 opacity-40 mix-blend-screen"></div>
+                <!-- RIGHT CONTROLS -->
+                <div class="flex items-center gap-3">
+                    
+                    <!-- VIP Badge (Resizes on Tablet, does not hide) -->
+                    <div id="vip-status-badge" class="flex items-center gap-2 mr-2">
+                        <span class="text-[10px] md:text-[8px] font-black vip-badge tracking-widest uppercase truncate max-w-[80px] md:max-w-none">VIP MEMBER</span>
+                    </div>
 
-            <div class="absolute top-10 left-10 md:left-20 animate-bounce delay-700 opacity-40 hidden sm:block">
-                <svg class="w-12 h-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(129,140,248,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-            </div>
-            <div class="absolute bottom-10 right-10 md:right-20 animate-pulse delay-1000 opacity-40 hidden sm:block">
-                <svg class="w-10 h-10 text-pink-400 drop-shadow-[0_0_15px_rgba(236,72,153,0.5)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            </div>
+                    <!-- Timer (Resizes on Tablet, does not hide) -->
+                    <div class="hidden md:flex items-center gap-2 px-4 md:px-2 py-2 md:py-1 rounded-full bg-white/5 border border-white/5">
+                        <div id="timer-dot" class="status-dot"></div>
+                        <span id="header-timer" class="text-[10px] md:text-[9px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
+                    </div>
 
-            <div class="relative z-10 flex flex-col items-center">
-                <button onclick="openUpdates()" class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(99,102,241,0.2)] hover:bg-white/10 transition-all cursor-pointer group">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    v7.0 Ultra • See What's New →
-                </button>
-
-                <h1 class="text-6xl sm:text-8xl font-black text-white mb-6 tracking-tighter drop-shadow-2xl scale-100 transition-transform duration-500 hover:scale-105 cursor-default">
-                    Kivro <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 filter drop-shadow-[0_0_25px_rgba(168,85,247,0.5)]">Games</span>
-                </h1>
-
-                <p class="text-gray-300 text-sm sm:text-lg max-w-xl mx-auto mb-10 font-medium leading-relaxed">
-                    The ultimate unblocked library.
-                    <br>
-                    <span class="text-indigo-300">75+ Premium Titles</span> • <span class="text-purple-300">Cloud Save</span> • <span class="text-pink-300">Zero Lag</span>
-                </p>
-
-                <div class="flex flex-wrap justify-center gap-4 w-full sm:w-auto">
-                    <button onclick="document.getElementById('game-grid').scrollIntoView({behavior: 'smooth'})"
-                            class="relative overflow-hidden group w-full sm:w-auto px-8 py-4 bg-white text-black font-black rounded-full transition-all transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] flex items-center justify-center gap-2">
-                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        <span>PLAY NOW</span>
+                    <!-- MASK / CLOAK BUTTON -->
+                    <button onclick="openCloakModal()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                     </button>
-
-                    <div class="flex gap-2 w-full sm:w-auto justify-center">
-                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUNkFLWEg2QzdFOE5EVVRKU0xaTk5aUlNIUi4u" target="_blank"
-                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
-                           <span>Request</span>
-                        </a>
-                        <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__TF_CsRUMk1TVUNXSVNXMjRYSFZONFBJWktISlIwWC4u" target="_blank"
-                           class="flex-1 sm:flex-none liquid-glass px-6 py-4 text-white font-bold rounded-full hover:bg-white/10 transition-all shadow-lg border border-white/10 flex items-center justify-center gap-2 hover:-translate-y-1">
-                            <span>Report</span>
-                        </a>
+                    
+                    <button id="search-toggle" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </button>
+                    
+                    <div class="sm:hidden">
+                        <button class="bg-white/10 backdrop-blur-md text-white px-5 py-3 rounded-full text-sm font-bold" id="mobile-menu-trigger">Menu</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="max-w-4xl mx-auto mb-10">
-            <div class="liquid-glass rounded-3xl p-6 border border-white/10 flex flex-col gap-4">
-                <div class="flex items-center gap-2 border-b border-white/10 pb-4">
-                    <span class="text-2xl">📢</span>
-                    <h2 class="text-xl font-bold text-white">System Log</h2>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden sm:hidden bg-black/90 backdrop-blur-2xl border-b border-white/5 p-4 absolute w-full left-0 top-24">
+                <div class="flex flex-col gap-2">
+                    <button class="nav-btn text-center w-full py-4" data-tab="Games">Library</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Apps">Apps</button>
+                    <button class="nav-btn text-center w-full py-4" id="mobile-menu-tab-btn" data-tab="Menu">Kivro Menu</button>
+                    <button class="nav-btn text-center w-full py-4" id="mobile-proxy-tab-btn" data-tab="Proxy">Proxy</button>
+                    <button class="nav-btn text-center w-full py-4" data-tab="Favs">Saved</button>
                 </div>
-                <div id="on-page-updates" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
+            </div>
+
+            <div id="search-bar" class="hidden absolute top-24 left-0 right-0 bg-black/80 backdrop-blur-2xl border-b border-white/5 p-6">
+                <div class="max-w-3xl mx-auto">
+                    <input type="text" id="global-search" placeholder="Search..." class="liquid-input w-full py-5 px-8 text-white text-lg">
+                </div>
+            </div>
+        </nav>
+
+        <main class="pt-36 pb-12 px-4 max-w-7xl mx-auto min-h-screen">
+            <!-- DASHBOARD HEADER -->
+            <div id="dashboard-header" class="text-center mb-16 fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-zinc-400 text-[10px] font-bold mb-6">
+                    <div id="system-status-dot" class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span id="system-status-text">Status: System Secure</span>
+                </div>
+                <h1 id="page-title" class="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">Premium Library</h1>
+                <p class="text-zinc-400 font-medium text-lg">Accessing <span id="item-count" class="text-white font-bold">0</span> applications.</p>
+                
+                <!-- NEW PURCHASE CARD -->
+                <div id="free-mode-cta" class="hidden mt-10 max-w-md mx-auto animate-fade-up">
+                    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-600/20 to-black border border-amber-500/30 p-8 backdrop-blur-md shadow-2xl">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/30 blur-3xl rounded-full"></div>
+                        
+                        <div class="relative z-10 text-left">
+                            <h3 class="text-2xl font-extrabold text-white mb-2 text-center">Get Premium Access</h3>
+                            <p class="text-sm text-zinc-400 mb-6 text-center">Unlock Proxy • Menu • All Games</p>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                    <div class="w-10 h-10 flex-shrink-0 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-xs font-bold text-zinc-500 uppercase">Payment Method</p>
+                                        <p class="text-white font-bold">Cash Only (In Person)</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5">
+                                     <div class="w-10 h-10 flex-shrink-0 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                    <div class="text-left overflow-hidden">
+                                        <p class="text-xs font-bold text-zinc-500 uppercase">Contact</p>
+                                        <p class="text-white font-bold select-all truncate">kayazissigma@gmail.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="mt-6 text-xs text-center text-zinc-500">Find me IRL or email to purchase a key.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRID -->
+            <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 sm:gap-8"></div>
+
+            <!-- DEDICATED MENU PAGE -->
+            <div id="menu-view" class="hidden max-w-2xl mx-auto animate-fade-up">
+                <div class="text-center mb-12">
+                    <div class="w-24 h-24 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(251,191,36,0.1)] border border-white/10">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 opacity-80">
+                    </div>
+                    <h2 class="text-4xl font-extrabold text-white mb-4">Kivro Menu V2</h2>
+                    <p class="text-zinc-400">The ultimate utility belt for your browser sessions.</p>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8 mb-8 backdrop-blur-sm relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10 text-center">
+                        <h3 class="text-lg font-bold text-white mb-2">Installation Script</h3>
+                        <p class="text-xs text-zinc-500 mb-6 uppercase tracking-widest">Universal Bookmarklet</p>
+                        
+                        <button onclick="copyBookmarklet()" class="w-full py-4 rounded-xl bg-white text-black font-bold hover:bg-amber-50 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            Tap to Copy Code
+                        </button>
+                        <p class="mt-4 text-[10px] text-zinc-600">Auto-updating script • No installation required</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-zinc-500 uppercase tracking-widest pl-2">iPad / iPhone Setup</h3>
+                    
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">1</span>
+                        <p class="text-sm text-zinc-400">Tap <b class="text-white">Copy Code</b> above.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">2</span>
+                        <p class="text-sm text-zinc-400">Tap <b class="text-white">Share</b> (Square Arrow) → <b class="text-white">Add to Favorites</b>.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">3</span>
+                        <p class="text-sm text-zinc-400">Open Bookmarks → Edit → Select the new favorite.</p>
+                    </div>
+                    <div class="bg-black/20 border border-white/5 rounded-2xl p-4 flex gap-4 items-center">
+                        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 text-white flex items-center justify-center font-bold text-sm">4</span>
+                        <p class="text-sm text-zinc-400">Delete the URL and <b class="text-white">Paste</b> the code.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="toast">
+        <svg class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="toast-msg">Action Completed</span>
+    </div>
+
+    <!-- CLOAK / INSTALL POPUP -->
+    <div id="cloak-modal" class="fixed inset-0 z-[12000] bg-black/80 backdrop-blur-md flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-[#141414]/90 border border-white/10 rounded-2xl p-6 shadow-2xl max-w-lg w-[92%] relative overflow-hidden transform scale-95 transition-transform duration-300">
+            <!-- Close Button -->
+            <button onclick="closeCloakModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">App Disguise</h2>
+                <p class="text-zinc-400 text-sm">Choose an icon to cloak the app on your home screen.</p>
+            </div>
+
+            <!-- Icon Selector -->
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                 <!-- Teams -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png', 'Teams')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/teamsfake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-indigo-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Teams</span>
+                 </div>
+                 <!-- Kahoot -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png', 'Kahoot!')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Kahoot%20fake.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-purple-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">Kahoot!</span>
+                 </div>
+                 <!-- OneNote (Default) -->
+                 <div class="flex flex-col items-center gap-3 cursor-pointer group" onclick="setCloak('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png', 'OneNote')">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png" class="w-16 h-16 rounded-xl shadow-lg border-2 border-transparent hover:border-pink-500 hover:scale-105 transition-all select-icon">
+                    <span class="text-xs font-bold text-zinc-500 group-hover:text-white">OneNote</span>
+                 </div>
+            </div>
+
+            <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-center">
+                <p class="text-xs text-zinc-400 mb-2 font-bold uppercase tracking-wide">Installation Steps</p>
+                <div class="flex items-center justify-center gap-2 text-sm text-zinc-300">
+                    <span>1. Pick Icon</span> <span class="text-zinc-600">→</span> <span>2. Tap Share <svg class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></span> <span class="text-zinc-600">→</span> <span>3. Add to Home</span>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="flex items-center justify-between mb-2">
-            <h2 id="grid-title" class="text-lg font-bold text-white flex items-center gap-2">
-                All Games <span id="game-count" class="bg-indigo-500/20 text-indigo-300 text-xs px-2 py-0.5 rounded">0</span>
-            </h2>
-            <div class="text-xs text-gray-500 font-mono">Direct Launch Mode</div>
+    <!-- AUTO INSTALL PROMPT (Visible on both pages via Z-Index) -->
+    <div id="install-modal" class="fixed bottom-0 left-0 right-0 z-[12000] p-4 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
+        <div class="bg-[#141414]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl max-w-md mx-auto relative overflow-hidden">
+            <!-- Close Button -->
+            <button onclick="dismissInstall()" class="absolute top-3 right-3 text-zinc-500 hover:text-white">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div class="flex gap-4">
+                 <img id="install-icon-preview" src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-14 h-14 rounded-xl shadow-lg">
+                 <div class="flex-1">
+                     <h3 class="text-white font-bold text-lg leading-tight mb-1">Install App</h3>
+                     <p id="install-text" class="text-zinc-400 text-xs leading-relaxed">
+                        Install Kivro Elite for fullscreen & better performance.
+                     </p>
+                     <!-- iOS Instructions -->
+                     <div id="ios-instructions" class="hidden mt-3 text-xs text-amber-400 font-bold flex items-center gap-2">
+                         <span>Tap <svg class="w-4 h-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg> then "Add to Home Screen" <svg class="w-4 h-4 inline bg-white/20 rounded ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
+                     </div>
+                     <!-- Android/Desktop Button -->
+                     <button id="install-btn" class="hidden mt-3 w-full py-2 bg-white text-black font-bold rounded-lg text-xs hover:bg-zinc-200 transition-colors" onclick="triggerInstall()">Add to Home Screen</button>
+                     <!-- Manual Instructions Fallback -->
+                     <div id="manual-install" class="hidden mt-3 text-xs text-zinc-500 font-medium">
+                        Open browser menu and select "Add to Home Screen" or "Install App".
+                     </div>
+                 </div>
+            </div>
         </div>
-
-        <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 pb-20"></div>
-    </main>
-
-    <button onclick="window.location.href='https://member.foodvillage.ie/login'"
-            class="liquid-glass fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-[0_0_20px_rgba(220,38,38,0.5)] transition-transform hover:scale-110 active:scale-95 group hover:bg-red-600/60 border-red-500/30">
-        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-    </button>
+    </div>
 
     <script>
-        // --- CONFIGURATION ---
-        const ACCESS_PASSWORD = "kivro-lollipop"; // CHANGE THIS PASSWORD
-        let pendingUrl = ""; // Stores URL or Action when password needed
-
-        // --- UPDATES LOG DATA ---
-        const updatesLog = [
-            {
-                version: "v7.0", date: "Recent", title: "Ads Removed & Secured",
-                desc: "Complete ad-removal and enhanced security systems.",
-                changes: ["Removed all ad scripts", "Added Proxy Password Protection", "Optimized Load Times"]
-            },
-            {
-                version: "v6.0", date: "October 2023", title: "Ultra Upgrade",
-                desc: "Major UI Overhaul and performance improvements.",
-                changes: ["New Plasma & Liquid Glass Design", "Added 75+ Premium Games", "Direct Launch Mode"]
-            }
-        ];
-
-        // --- APP DATA ---
+        const API_URL = "https://script.google.com/macros/s/AKfycbxEgIRNKug7X2GY6dl6G8l0eYvDWrheyTOm3b5vPHYwNyVnhGbMuvNnEO20Kz57NMjA/exec";
         const THUMB_BASE = "https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Thumbnails/";
         const GITHUB_BASE = "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/";
+        
+        let favorites = JSON.parse(localStorage.getItem('kivro_favs') || '[]');
+        let currentTab = 'Games';
+        let countdownInterval = null;
+        let isPreviewMode = false;
+        let sessionCheckInterval = null; // POLLING CHECK
+
+        // --- CLOAKING LOGIC ---
+        function openCloakModal() {
+            const modal = document.getElementById('cloak-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCloakModal() {
+            const modal = document.getElementById('cloak-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function setCloak(iconUrl, appName) {
+            // 1. Update Apple Touch Icon
+            const appleIcon = document.getElementById('apple-touch-icon');
+            if(appleIcon) appleIcon.href = iconUrl;
+
+            // 2. Update Favicon (for desktop tabs)
+            const favIcon = document.getElementById('dynamic-favicon');
+            if(favIcon) favIcon.href = iconUrl;
+
+            // 3. Update Document Title
+            document.title = appName;
+
+            // 4. Update Apple Web App Title (Meta)
+            let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+            if (!appleTitleMeta) {
+                appleTitleMeta = document.createElement('meta');
+                appleTitleMeta.setAttribute('name', 'apple-mobile-web-app-title');
+                document.head.appendChild(appleTitleMeta);
+            }
+            appleTitleMeta.setAttribute('content', appName);
+
+            // 5. Update Preview in Install Modal (if visible)
+            document.getElementById('install-icon-preview').src = iconUrl;
+
+            // 6. UI Feedback
+            showToast(`Disguised as ${appName}`);
+            closeCloakModal();
+        }
+
+        // --- INSTALL POPUP LOGIC ---
+        let deferredPrompt;
+        const installModal = document.getElementById('install-modal');
+        const iosText = document.getElementById('ios-instructions');
+        const installBtn = document.getElementById('install-btn');
+        const manualText = document.getElementById('manual-install');
+
+        // Check install status on load
+        window.addEventListener('load', () => {
+             // 1. Session Resume Logic
+             localStorage.removeItem('kivro_preview_session');
+             const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
+             if (session) {
+                 if (!session.isUnlimited && session.expiresAt < Date.now()) {
+                     localStorage.removeItem('kivro_premium_session');
+                 } else {
+                     showVipWelcome(session);
+                 }
+             }
+
+             // 2. Install Logic
+             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+             
+             if (!isStandalone && !localStorage.getItem('kivro_install_dismissed')) {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                
+                setTimeout(() => {
+                    installModal.classList.remove('translate-y-full');
+                    
+                    if (isIOS) {
+                        iosText.classList.remove('hidden');
+                    } else if (deferredPrompt) {
+                        installBtn.classList.remove('hidden');
+                    } else {
+                        manualText.classList.remove('hidden');
+                    }
+                }, 2000); 
+             }
+        });
+
+        // Listen for install prompt (Android/Desktop)
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!installModal.classList.contains('translate-y-full')) {
+                manualText.classList.add('hidden');
+                installBtn.classList.remove('hidden');
+            }
+        });
+
+        function dismissInstall() {
+            installModal.classList.add('translate-y-full');
+            localStorage.setItem('kivro_install_dismissed', 'true');
+        }
+
+        function triggerInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        dismissInstall();
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // UPDATED BOOKMARKLET: Uses raw.githack.com to prevent MIME type blocking
+        const BOOKMARKLET_CODE = "javascript:(function(){if(document.getElementById('kivro-menu-v2'))return;const MENU_ITEMS=[{name:\"🦄 Blooket Cheats (GUI)\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/wowksies/Bookletkiv/main/gui.js';document.body.appendChild(s);alert('Blooket GUI Injecting...');}},{name:\"👆 iPad Autoclicker (Target)\",action:function(){if(window.kivroAC){clearInterval(window.kivroAC);window.kivroAC=null;var t=document.getElementById('kivro-ac-target');if(t)t.remove();alert('Autoclicker: OFF');}else{var t=document.createElement('div');t.id='kivro-ac-target';t.style.cssText='position:fixed;top:50%;left:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:4px solid rgba(255,0,60,0.6);border-radius:50%;z-index:9999999999;box-shadow:0 0 15px rgba(255,0,60,0.4);pointer-events:none;transition:transform 0.1s;';var h=document.createElement('div');h.style.cssText='position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:30px;height:30px;background:rgba(255,0,60,0.9);border-radius:50%;cursor:move;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;color:white;font-size:16px;font-weight:bold;';h.innerText='✢';t.appendChild(h);var c=document.createElement('div');c.style.cssText='position:absolute;top:50%;left:50%;width:4px;height:4px;background:red;transform:translate(-50%,-50%);border-radius:50%;';t.appendChild(c);document.body.appendChild(t);let d=false;const mv=(e)=>{if(!d)return;e.preventDefault();const cx=e.touches?e.touches[0].clientX:e.clientX;const cy=e.touches?e.touches[0].clientY:e.clientY;t.style.left=cx+'px';t.style.top=cy+'px';};const dn=(e)=>{d=true;e.preventDefault();t.style.transform='scale(1.1)';};const up=()=>{d=false;t.style.transform='scale(1)';};h.addEventListener('mousedown',dn);h.addEventListener('touchstart',dn);document.addEventListener('mousemove',mv);document.addEventListener('touchmove',mv);document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp);alert('Autoclicker: ON. Drag the red knob to move.');window.kivroAC=setInterval(function(){var r=t.getBoundingClientRect();var el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);if(el&&el!==t&&el!==h&&el!==c){el.click();el.dispatchEvent(new MouseEvent('mousedown'));el.dispatchEvent(new MouseEvent('mouseup'));}},50);}}},{name:\"🌊 History Flooder\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/HistoryFlooder.js';document.body.appendChild(s);alert('History Flooder Loading...');}},{name:\"📺 Fullscreen Anywhere\",action:function(){var s=document.createElement('script');s.src='https://raw.githack.com/DevBubba/Bookmarklets/main/Tools/InstantFullscreen.js';document.body.appendChild(s);alert('Enabling Fullscreen...');}}];const css=`#kivro-menu-v2{position:fixed;top:100px;left:100px;width:260px;display:flex;flex-direction:column;background:rgba(20,20,30,0.65);backdrop-filter:blur(25px) saturate(180%);-webkit-backdrop-filter:blur(25px) saturate(180%);border:1px solid rgba(255,255,255,0.15);border-top:1px solid rgba(255,255,255,0.3);border-left:1px solid rgba(255,255,255,0.3);border-radius:24px;box-shadow:0 20px 50px rgba(0,0,0,0.5),inset 0 0 20px rgba(255,255,255,0.05);font-family:system-ui,-apple-system,sans-serif;color:white;z-index:2147483647;transition:width 0.3s,height 0.3s,border-radius 0.3s,background 0.3s;overflow:hidden;user-select:none}#kivro-menu-v2.minimized{width:60px;height:60px;border-radius:50%;background:url('https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png');background-size:cover;background-position:center;box-shadow:0 0 20px rgba(139,92,246,0.6);border:2px solid rgba(255,255,255,0.5);cursor:pointer}#kivro-menu-v2.minimized>*{display:none !important}.kv-header{padding:16px;background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}#kivro-menu-v2.minimized .kv-header{display:none}.kv-title{font-weight:800;font-size:12px;letter-spacing:1.5px;color:#a78bfa;text-transform:uppercase}.kv-controls{display:flex;gap:8px}.kv-btn-ctrl{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;font-family:monospace}.kv-body{padding:12px;max-height:400px;overflow-y:auto}.kv-btn{width:100%;padding:14px;margin-bottom:8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#e4e4e7;font-size:13px;font-weight:600;text-align:left;cursor:pointer;transition:all 0.2s ease}.kv-btn:active{transform:scale(0.98);background:rgba(139,92,246,0.2)}`;const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);const ui=document.createElement('div');ui.id='kivro-menu-v2';ui.innerHTML='<div class=\"kv-header\"><span class=\"kv-title\">KIVRO PREMIUM</span><div class=\"kv-controls\"><div id=\"kv-min\" class=\"kv-btn-ctrl\">_</div><div id=\"kv-close\" class=\"kv-btn-ctrl\">X</div></div></div><div class=\"kv-body\"></div>';document.body.appendChild(ui);const body=ui.querySelector('.kv-body');MENU_ITEMS.forEach(item=>{const btn=document.createElement('button');btn.className='kv-btn';btn.innerText=item.name;const run=(e)=>{e.stopPropagation();try{item.action()}catch(e){alert(e)}};btn.onclick=run;btn.ontouchend=run;body.appendChild(btn)});let isMin=false;let isDragging=false;let hasMoved=false;let startX,startY,initX,initY;const minBtn=ui.querySelector('#kv-min');const closeBtn=ui.querySelector('#kv-close');const header=ui.querySelector('.kv-header');const doMin=(e)=>{e.stopPropagation();e.preventDefault();isMin=true;ui.classList.add('minimized')};const doClose=(e)=>{e.stopPropagation();e.preventDefault();ui.remove();style.remove()};minBtn.ontouchend=doMin;minBtn.onclick=doMin;closeBtn.ontouchend=doClose;closeBtn.onclick=doClose;const stopProp=(e)=>{e.stopPropagation()};minBtn.ontouchstart=stopProp;minBtn.onmousedown=stopProp;closeBtn.ontouchstart=stopProp;closeBtn.onmousedown=stopProp;const onDown=(e)=>{if(e.target.closest('.kv-controls'))return;isDragging=true;hasMoved=false;const t=e.touches?e.touches[0]:e;startX=t.clientX;startY=t.clientY;initX=ui.offsetLeft;initY=ui.offsetTop;ui.style.transition='none'};const onMove=(e)=>{if(!isDragging)return;const t=e.touches?e.touches[0]:e;const dx=t.clientX-startX;const dy=t.clientY-startY;if(Math.abs(dx)>5||Math.abs(dy)>5)hasMoved=true;ui.style.left=(initX+dx)+'px';ui.style.top=(initY+dy)+'px';if(e.cancelable)e.preventDefault()};const onUp=(e)=>{if(!isDragging)return;isDragging=false;ui.style.transition='width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s';if(isMin&&!hasMoved){isMin=false;ui.classList.remove('minimized')}};ui.addEventListener('mousedown',onDown);ui.addEventListener('touchstart',onDown,{passive:false});document.addEventListener('mousemove',onMove);document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('mouseup',onUp);document.addEventListener('touchend',onUp)})();void(0);";
+
+        function getDeviceId() {
+            let id = localStorage.getItem('kivro_device_token');
+            if (!id) {
+                id = 'KIV-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now().toString(36);
+                localStorage.setItem('kivro_device_token', id);
+            }
+            return id;
+        }
+
+        async function unlockSite() {
+            const input = document.getElementById('site-key-input');
+            const error = document.getElementById('site-key-error');
+            const btn = document.querySelector('.bg-black\\/60 button'); 
+            const key = input.value.trim();
+            const deviceId = getDeviceId();
+
+            if (!key) {
+                showError("Enter Key");
+                return;
+            }
+
+            // Simple loading state
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<span>VERIFYING...</span>";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}&action=login`);
+                const data = await response.json();
+
+                if (data.valid) {
+                    const session = {
+                        key: key,
+                        expiresAt: data.expiresAt,
+                        isUnlimited: data.isUnlimited === true, // STRICT BOOLEAN CHECK
+                        timestamp: Date.now(),
+                        type: 'premium',
+                        isAdmin: data.isAdmin
+                    };
+                    localStorage.setItem('kivro_premium_session', JSON.stringify(session));
+                    
+                    showVipWelcome(session);
+
+                } else {
+                    showError(data.message || "Invalid Access");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                showError("Server Error");
+                console.error(err);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+
+            function showError(msg) {
+                error.innerText = msg;
+                error.classList.remove('opacity-0');
+                setTimeout(() => error.classList.add('opacity-0'), 3000);
+            }
+        }
+        
+        // --- NEW: VIP WELCOME ANIMATION ---
+        function showVipWelcome(session) {
+            const welcome = document.getElementById('vip-welcome');
+            const content = document.getElementById('vip-welcome-content');
+            
+            // Check for Admin status to customize message
+            if (session.isAdmin) {
+                document.querySelector('#vip-welcome-content h1').innerText = "SYSTEM OVERRIDE";
+                document.getElementById('welcome-subtitle').innerText = "Welcome, Administrator";
+                document.getElementById('welcome-subtitle').classList.replace('text-amber-400', 'text-red-500');
+            } else {
+                 // Reset to default in case previous session was admin
+                document.querySelector('#vip-welcome-content h1').innerText = "ACCESS GRANTED";
+                document.getElementById('welcome-subtitle').innerText = "Welcome to Elite Membership";
+                document.getElementById('welcome-subtitle').classList.replace('text-red-500', 'text-amber-400');
+            }
+
+            // 1. Fade in the black overlay
+            welcome.classList.remove('pointer-events-none', 'opacity-0');
+            
+            // 2. Animate content entrance
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('animate-entrance');
+            }, 100);
+
+            // 3. After 2.5 seconds, enter system and fade out overlay
+            setTimeout(() => {
+                enterSystem(session);
+                
+                // Fade out welcome screen
+                welcome.classList.add('opacity-0', 'pointer-events-none');
+                
+                // Show a nice toast once inside
+                setTimeout(() => showToast(session.isAdmin ? "Root Access Granted" : "Welcome back, Elite Member"), 800);
+            }, 2500);
+        }
+
+        // --- PREVIEW MODE LOGIC ---
+        function startVisualPreview() {
+            const session = {
+                type: 'preview',
+                expiresAt: Date.now() + 3600000 
+            };
+            enterSystem(session);
+        }
+
+        function enterSystem(session) {
+            document.getElementById('site-lock').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('site-lock').style.display = 'none';
+                document.getElementById('app-content').classList.remove('opacity-0', 'scale-95', 'blur-sm');
+                document.getElementById('main-body').classList.remove('overflow-hidden');
+                
+                isPreviewMode = (session.type === 'preview');
+                
+                // Update UI based on mode
+                if (isPreviewMode) {
+                    document.getElementById('page-title').innerText = "Library Preview";
+                    document.getElementById('system-status-text').innerText = "Status: Read-Only Mode";
+                    document.getElementById('system-status-dot').classList.remove('bg-green-500');
+                    document.getElementById('system-status-dot').classList.add('bg-yellow-500');
+                    
+                    // Show Buy Card
+                    document.getElementById('free-mode-cta').classList.remove('hidden');
+                    
+                    // Hide Premium Badges
+                    document.getElementById('vip-status-badge').classList.add('hidden');
+                } else {
+                    // Full access
+                    startSessionCheck(session.key);
+                    
+                    // Check for Admin Theme Override
+                    if (session.isAdmin) {
+                        applyAdminTheme();
+                    } else {
+                        // Standard Premium UI
+                        document.getElementById('system-status-text').innerText = "Status: VIP Access Active";
+                        document.getElementById('system-status-text').classList.add('text-amber-400');
+                        document.getElementById('system-status-dot').classList.remove('bg-green-500');
+                        document.getElementById('system-status-dot').classList.add('bg-amber-500');
+                    }
+                    
+                    // Show Badge
+                    document.getElementById('vip-status-badge').classList.remove('hidden');
+                }
+
+                startGlobalTimer(session.expiresAt, session.isUnlimited);
+                init();
+            }, 500);
+        }
+        
+        function applyAdminTheme() {
+            // Change Badge
+            const badge = document.querySelector('.vip-badge');
+            if(badge) {
+                badge.innerText = "SYSTEM ADMIN";
+                badge.style.background = "linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)";
+                badge.style.webkitBackgroundClip = "text";
+                badge.style.textShadow = "0 0 20px rgba(239, 68, 68, 0.5)";
+            }
+
+            // Change Status Dot
+            const dot = document.getElementById('system-status-dot');
+            if(dot) {
+                dot.classList.remove('bg-amber-500', 'bg-green-500');
+                dot.classList.add('bg-red-600');
+            }
+            const statusText = document.getElementById('system-status-text');
+            if(statusText) {
+                statusText.innerText = "Status: Root Access Granted";
+                statusText.classList.remove('text-amber-400');
+                statusText.classList.add('text-red-500');
+            }
+
+            // Change Header Timer Dot
+            const timerDot = document.getElementById('timer-dot');
+            if(timerDot) {
+                timerDot.classList.remove('bg-amber-500');
+                timerDot.classList.add('bg-red-500');
+            }
+        }
+
+        function startGlobalTimer(expiresAt, isUnlimited) {
+            const timerEl = document.getElementById('header-timer');
+            const dot = document.getElementById('timer-dot');
+            
+            // STRICTER CHECK: Ensure isUnlimited is explicitly true
+            if (isUnlimited === true && !isPreviewMode) {
+                timerEl.innerText = "LIFETIME ∞";
+                if (!document.querySelector('.vip-badge').innerText.includes("ADMIN")) {
+                     dot.classList.add('bg-violet-400');
+                }
+                return;
+            }
+
+            if(isPreviewMode) {
+                 timerEl.innerText = "PREVIEW";
+                 dot.classList.add('bg-yellow-500');
+                 return;
+            }
+
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            updateTimer(); 
+
+            countdownInterval = setInterval(updateTimer, 1000);
+
+            function updateTimer() {
+                const now = Date.now();
+                // Safety check: if expiresAt is NaN or missing, force expire
+                if (!expiresAt || isNaN(expiresAt)) {
+                    clearInterval(countdownInterval);
+                    timerEl.innerText = "ERROR";
+                    return;
+                }
+
+                const diff = expiresAt - now;
+
+                if (diff <= 0) {
+                    clearInterval(countdownInterval);
+                    timerEl.innerText = "EXPIRED";
+                    localStorage.removeItem('kivro_premium_session');
+                    setTimeout(() => window.location.reload(), 1000);
+                    return;
+                }
+
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+
+                timerEl.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                
+                if (diff < 3600000) dot.style.backgroundColor = '#f87171';
+            }
+        }
+        
+        // --- NEW: SESSION VERIFICATION POLLING ---
+        function startSessionCheck(key) {
+            if (sessionCheckInterval) clearInterval(sessionCheckInterval);
+            
+            // Check every 30 seconds
+            sessionCheckInterval = setInterval(async () => {
+                if(isPreviewMode) return;
+                
+                const deviceId = getDeviceId();
+                try {
+                    const response = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&deviceId=${encodeURIComponent(deviceId)}&action=verify`);
+                    const data = await response.json();
+                    
+                    // Handle explicit "valid: false"
+                    if (data.valid === false) {
+                        console.warn("Session invalid:", data.message);
+                        localStorage.removeItem('kivro_premium_session');
+                        alert(data.message || "Key expired or session terminated");
+                        window.location.reload();
+                    }
+                } catch (e) {
+                    console.error("Session check skipped due to network", e);
+                }
+            }, 30000); 
+        }
 
         const gamesList = [
-            { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library.onrender.com//2048/index.html" },
-            { id: 7, title: "BTD4", category: "Tower Defense", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library.onrender.com//btd4/index.html" },
-            { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://kivro-game-library.onrender.com//bitlife/index.html" },
+            { id: 5, title: "2048", category: "Puzzle", imgUrl: THUMB_BASE + "2048.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//2048/index.html" },
+            { id: 7, title: "BTD4", category: "Strategy", imgUrl: THUMB_BASE + "BTD4.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//btd4/index.html" },
+            { id: 6, title: "Bitlife", category: "Simulation", imgUrl: THUMB_BASE + "Bitlife.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//bitlife/index.html" },
             { id: 8, title: "Chess", category: "Strategy", imgUrl: THUMB_BASE + "chess.jpg", gameUrl: GITHUB_BASE + "chess/index.html" },
-            { id: 9, title: "Cookie Clicker", category: "Idle Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg", gameUrl: GITHUB_BASE + "cookieclicker/index.html" },
-            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg", gameUrl: "https://kivro-game-library.onrender.com//drivemad/index.html" },
-            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg", gameUrl: "https://kivro-game-library.onrender.com//flappybird/index.html" },
+            { id: 9, title: "Cookie Clicker", category: "Clicker", imgUrl: THUMB_BASE + "Cookie-Clicker.jpg", gameUrl: GITHUB_BASE + "cookieclicker/index.html" },
+            { id: 10, title: "Drive Mad", category: "Racing", imgUrl: THUMB_BASE + "Drive-Mad.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//drivemad/index.html" },
+            { id: 2, title: "Flappy Bird", category: "Arcade", imgUrl: THUMB_BASE + "Flappy-Bird.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//flappybird/index.html" },
             { id: 3, title: "Geo Dash", category: "Rhythm", imgUrl: THUMB_BASE + "Geometry-Dash.webp", gameUrl: "https://geometryite.vercel.app/" },
             { id: 15, title: "Google Snake", category: "Arcade", imgUrl: THUMB_BASE + "Google-Snake.jpg", gameUrl: "https://raw.githack.com/KAYAZzz/kivro-library/main/Snake/index.html" },
-            { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg", gameUrl: "https://kivro-game-library.onrender.com//monkeymart/index.html" },
+            { id: 11, title: "Monkey Mart", category: "Simulation", imgUrl: THUMB_BASE + "Monkey-Mart.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//monkeymart/index.html" },
             { id: 12, title: "PacMan", category: "Arcade", imgUrl: THUMB_BASE + "Pacman.jpg", gameUrl: GITHUB_BASE + "pacman/index.html" },
-            { id: 1, title: "Retro Ball", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp", gameUrl: GITHUB_BASE + "retrobowl/index.html" },
-            { id: 14, title: "Slope", category: "Endless Runner", imgUrl: THUMB_BASE + "slope.png", gameUrl: "https://kivro-game-library.onrender.com//Slope/index.html" },
-            { id: 16, title: "Snow Battle", category: "Arcade", imgUrl: THUMB_BASE + "Snow-Battle.png", gameUrl: GITHUB_BASE + "snowbattle/index.html" },
+            { id: 1, title: "Retro Bowl", category: "Sports", imgUrl: THUMB_BASE + "Retro-Ball.webp", gameUrl: GITHUB_BASE + "retrobowl/index.html" },
+            { id: 14, title: "Slope", category: "Runner", imgUrl: THUMB_BASE + "slope.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Slope/index.html" },
+            { id: 16, title: "Snow Battle", category: "Action", imgUrl: THUMB_BASE + "Snow-Battle.png", gameUrl: GITHUB_BASE + "snowbattle/index.html" },
             { id: 17, title: "Stack", category: "Puzzle", imgUrl: THUMB_BASE + "Stack.webp", gameUrl: GITHUB_BASE + "stack/index.html" },
-            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg", gameUrl: "https://kivro-game-library.onrender.com//DriftBoss/index.html" },
-            { id: 18, title: "Subway Surfers", category: "Endless Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html" },
+            { id: 4, title: "Drift Boss", category: "Racing", imgUrl: THUMB_BASE + "Drift1.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//DriftBoss/index.html" },
+            { id: 18, title: "Subway Surfers", category: "Runner", imgUrl: THUMB_BASE + "Subway-Surfers.jpg", gameUrl: "https://raw.githack.com/testingherokuapp/subwaysurfer/main/index.html" },
             { id: 19, title: "Baldi's Basics", category: "Horror", imgUrl: THUMB_BASE + "BaldisBasics.webp", gameUrl: GITHUB_BASE + "baldisbasics/index.html" },
-            { id: 20, title: "Dino Runner", category: "Endless Runner", imgUrl: THUMB_BASE + "Dino.jpg", gameUrl: "https://kivro-game-library.onrender.com//chromedino/index.html" },
-            { id: 21, title: "Stickman Hook", category: "Arcade", imgUrl: THUMB_BASE + "stickman-hook.png", gameUrl: "https://kivro-game-library.onrender.com//StickmanHook/index.html" },
-            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg", gameUrl: "https://kivro-game-library.onrender.com//blockblast/index.html" },
-            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png", gameUrl: "https://kivro-game-library.onrender.com//MergeRot/index.html" },
-            { id: 25, title: "Hole.io", category: "Arcade", imgUrl: THUMB_BASE + "Hole.png", gameUrl: "https://kivro-game-library.onrender.com//HoleIO/index.html" },
-            { id: 26, title: "Sausage Flip", category: "Arcade", imgUrl: THUMB_BASE + "sausage-flip.png", gameUrl: "https://kivro-game-library.onrender.com//sausage-flip/index.html" },
-            { id: 27, title: "YoHoHo.io", category: "Battle Royale", imgUrl: THUMB_BASE + "Yohoho.jpg", gameUrl: "https://kivro-game-library.onrender.com/yohohoio/index.html" },
-            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg", gameUrl: "https://kivro-game-library.onrender.com//MrBullet/index.html" },
-            { id: 29, title: "The Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html" },
-            { id: 30, title: "Paper.io", category: "Strategy", imgUrl: THUMB_BASE + "paper-io.png", gameUrl: GITHUB_BASE + "paperio/index.html" },
-            { id: 31, title: "Hill Climb Racing", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png", gameUrl: "https://kivro-game-library.onrender.com//HillClimbRacing/index.html" },
-            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png", gameUrl: "https://kivro-game-library.onrender.com//BottleFlip2/index.html" },
-            { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg", gameUrl: "https://kivro-game-library.onrender.com//PenaltyKicks/index.html" },
-            { id: 36, title: "Gun Spin", category: "Arcade", imgUrl: THUMB_BASE + "gunspin.png", gameUrl: "https://kivro-game-library.onrender.com//Gunspin/index.html" },
+            { id: 20, title: "Dino Runner", category: "Arcade", imgUrl: THUMB_BASE + "Dino.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//chromedino/index.html" },
+            { id: 21, title: "Stickman Hook", category: "Action", imgUrl: THUMB_BASE + "stickman-hook.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//StickmanHook/index.html" },
+            { id: 23, title: "Block Blast", category: "Puzzle", imgUrl: THUMB_BASE + "block-blast.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//blockblast/index.html" },
+            { id: 24, title: "Merge Rot", category: "Puzzle", imgUrl: THUMB_BASE + "merge-rot.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//MergeRot/index.html" },
+            { id: 25, title: "Hole.io", category: "Action", imgUrl: THUMB_BASE + "Hole.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//HoleIO/index.html" },
+            { id: 26, title: "Sausage Flip", category: "Fun", imgUrl: THUMB_BASE + "sausage-flip.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//sausage-flip/index.html" },
+            { id: 27, title: "YoHoHo.io", category: "IO", imgUrl: THUMB_BASE + "Yohoho.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io/yohohoio/index.html" },
+            { id: 28, title: "Mr.Bullet", category: "Puzzle", imgUrl: THUMB_BASE + "Bullet.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//MrBullet/index.html" },
+            { id: 29, title: "Impossible Quiz", category: "Puzzle", imgUrl: THUMB_BASE + "Impossible.png", gameUrl: "https://raw.githack.com/selenite-cc/selenite-old/main/theimpossiblequiz/index.html" },
+            { id: 30, title: "Paper.io", category: "IO", imgUrl: THUMB_BASE + "paper-io.png", gameUrl: GITHUB_BASE + "paperio/index.html" },
+            { id: 31, title: "Hill Climb", category: "Racing", imgUrl: THUMB_BASE + "HillClimb.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//HillClimbRacing/index.html" },
+            { id: 34, title: "Bottle Flip", category: "Skill", imgUrl: THUMB_BASE + "bottleflip.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//BottleFlip2/index.html" },
+            { id: 35, title: "Penalty Kicks", category: "Sports", imgUrl: THUMB_BASE + "penalty.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//PenaltyKicks/index.html" },
+            { id: 36, title: "Gun Spin", category: "Action", imgUrl: THUMB_BASE + "gunspin.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Gunspin/index.html" },
             { id: 37, title: "SandBoxel", category: "Simulation", imgUrl: THUMB_BASE + "Sandboxel.png", gameUrl: "https://raw.githack.com/R74nCom/sandboxels/main/index.html" },
-            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png", gameUrl: "https://kivro-game-library.onrender.com//Ballistic/index.html" },
-            { id: 39, title: "Stacktris", category: "Arcade", imgUrl: THUMB_BASE + "stacktris.jpeg", gameUrl: "https://kivro-game-library.onrender.com//stacktris/index.html" },
-            { id: 40, title: "Tomb Of The Mask", category: "Arcade", imgUrl: THUMB_BASE + "TofM.jpg", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html" },
-            { id: 41, title: "Paper Plane", category: "Arcade", imgUrl: THUMB_BASE + "Planef.jpg", gameUrl: "https://kivro-game-library.onrender.com//PaperFlight1/index.html" },
-            { id: 42, title: "Curve Rush", category: "Arcade", imgUrl: THUMB_BASE + "curve-rush.webp", gameUrl: "https://curverush.com/curve-rush.embed" },
+            { id: 38, title: "Ballistic", category: "Puzzle", imgUrl: THUMB_BASE + "ballistic.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Ballistic/index.html" },
+            { id: 39, title: "Stacktris", category: "Puzzle", imgUrl: THUMB_BASE + "stacktris.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//stacktris/index.html" },
+            { id: 40, title: "Tomb of Mask", category: "Action", imgUrl: THUMB_BASE + "TofM.jpg", gameUrl: "https://raw.githack.com/HTML5GameArchive/gfiles/master/games/tombofthemask/index.html" },
+            { id: 41, title: "Paper Plane", category: "Fun", imgUrl: THUMB_BASE + "Planef.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//PaperFlight1/index.html" },
+            { id: 42, title: "Curve Rush", category: "Action", imgUrl: THUMB_BASE + "curve-rush.webp", gameUrl: "https://curverush.com/curve-rush.embed" },
             { id: 43, title: "Burrito Bison", category: "Action", imgUrl: THUMB_BASE + "Bb.png", gameUrl: "https://burrito-bison-cnm.vercel.app/" },
             { id: 43, title: "Golf Orbit", category: "Sports", imgUrl: THUMB_BASE + "golf-orbit.png", gameUrl: "https://golf-orbit-k8ue.vercel.app/" },
-            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg", gameUrl: "https://kivro-game-library.onrender.com//Ragdoll-Archers/index.html" },
-            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp", gameUrl: "https://kivro-game-library.onrender.com//helixjump/index.html" },
+            { id: 44, title: "Ragdoll Archers", category: "Action", imgUrl: THUMB_BASE + "ragdoll-archers.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Ragdoll-Archers/index.html" },
+            { id: 45, title: "Helix Jump", category: "Arcade", imgUrl: THUMB_BASE + "HelixJ.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//helixjump/index.html" },
             { id: 46, title: "PolyTrack", category: "Racing", imgUrl: THUMB_BASE + "Polyt.webp", gameUrl: "https://raw.githack.com/AnonymousBirb5100/polytrack/main/index.html" },
-            { id: 47, title: "Gobble", category: "Arcade", imgUrl: THUMB_BASE + "Gobble.png", gameUrl: "https://kivro-game-library.onrender.com//Gobble/gobble/index.html" },
-            { id: 48, title: "Swingo", category: "Platformer", imgUrl: THUMB_BASE + "swingo.jpg", gameUrl: "https://kivro-game-library.onrender.com//Swingo/index.html" },
-            { id: 49, title: "Spiral Roll", category: "Arcade", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library.onrender.com//spralr/index.html" },
-            { id: 50, title: "Wordle", category: "Puzzle", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
+            { id: 47, title: "Gobble", category: "Fun", imgUrl: THUMB_BASE + "Gobble.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Gobble/gobble/index.html" },
+            { id: 48, title: "Swingo", category: "Fun", imgUrl: THUMB_BASE + "swingo.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//Swingo/index.html" },
+            { id: 49, title: "Spiral Roll", category: "Fun", imgUrl: THUMB_BASE + "Spiralr.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//spralr/index.html" },
+            { id: 50, title: "Wordle", category: "Word", imgUrl: THUMB_BASE + "IMG_0829.jpeg", gameUrl: "https://wordle-actual.vercel.app" },
             { id: 51, title: "Unicycle Heroes", category: "Physics", imgUrl: THUMB_BASE + "IMG_0832.jpeg", gameUrl: "https://unicycleh.vercel.app" },
             { id: 52, title: "Sheep Sheep", category: "Puzzle", imgUrl: THUMB_BASE + "Sheep.jpeg", gameUrl: "https://ubgfun.github.io/puzzle/hell-tile/" },
-            { id: 53, title: "Game Inside Game", category: "Arcade", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library.onrender.com//game-inside/index.html" },
+            { id: 53, title: "Game In Game", category: "Meta", imgUrl: THUMB_BASE + "GameInsideGame.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//game-inside/index.html" },
             { id: 54, title: "Black Jack", category: "Card", imgUrl: THUMB_BASE + "Blackjack.png", gameUrl: "https://blackjack-self.vercel.app/" },
-            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library.onrender.com//raft-war/index.html" },
-            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg", gameUrl: "https://kivro-game-library.onrender.com//a-smallwc/index.html" },
-            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io.onrender.com//bowmasters/index.html" },
+            { id: 55, title: "Raft Wars", category: "Action", imgUrl: THUMB_BASE + "Raftwars.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//raft-war/index.html" },
+            { id: 56, title: "Small World Cup", category: "Sports", imgUrl: THUMB_BASE + "Asworldc.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//a-smallwc/index.html" },
+            { id: 57, title: "BowMasters", category: "Action", imgUrl: THUMB_BASE + "IMG_0856.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///bowmasters/index.html" },
             { id: 58, title: "State.io", category: "Strategy", imgUrl: THUMB_BASE + "IMG_0862.png", gameUrl: "https://stateactual.vercel.app/rvvASMiM/1701b2232f8c4f7689394f229bda07d7/index.html" },
-            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg", gameUrl: "https://kivro-game-library.onrender.com//DayOfMeat/index.html" },
-            { id: 60, title: "Knife Hit", category: "Arcade", imgUrl: THUMB_BASE + "Knifehit.png", gameUrl: "https://kivro-game-library.onrender.com//knifehit/index.html" },
-            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io.onrender.com//solar-smash/index.html" },
-            { id: 62, title: "Bridge race", category: "Casual", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io.onrender.com//bridge-race/index.html" },
-            { id: 63, title: "Papas Pizzaria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp", gameUrl: "https://kivro-game-library.onrender.com//papsp/index.html" },
-            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png", gameUrl: "https://kivro-game-library.onrender.com//little-alchemy/index.html" },
-            { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp", gameUrl: "https://kivro-game-library.onrender.com//pool-pixijs/index.html" },
-            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io.onrender.com//stealth-master/index.html" },
-            { id: 67, title: "Hide and Seek", category: "Arcade", imgUrl: THUMB_BASE + "hideandseek.webp", gameUrl: "https://kivro-game-library.onrender.com//hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html" },
-            { id: 68, title: "Slice it All", category: "Arcade", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io.onrender.com//slice-it-all/index.html" },
-            { id: 69, title: "Bus Out", category: "Simulation", imgUrl: THUMB_BASE + "busout.webp", gameUrl: "https://gamesbun.github.io/busout-school/" },
-            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgir/index.html" },
+            { id: 59, title: "Day of Meat", category: "Defense", imgUrl: THUMB_BASE + "Deathofmeat.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//DayOfMeat/index.html" },
+            { id: 60, title: "Knife Hit", category: "Skill", imgUrl: THUMB_BASE + "Knifehit.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//knifehit/index.html" },
+            { id: 61, title: "Solar Smash", category: "Simulation", imgUrl: THUMB_BASE + "IMG_0868.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///solar-smash/index.html" },
+            { id: 62, title: "Bridge Race", category: "Fun", imgUrl: THUMB_BASE + "IMG_0870.jpeg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///bridge-race/index.html" },
+            { id: 63, title: "Papa's Pizzeria", category: "Cooking", imgUrl: THUMB_BASE + "papaspiz.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//papsp/index.html" },
+            { id: 64, title: "Little Alchemy", category: "Puzzle", imgUrl: THUMB_BASE + "littleA.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//little-alchemy/index.html" },
+            { id: 65, title: "8 Ball Pool", category: "Sports", imgUrl: THUMB_BASE + "8ballpool.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//pool-pixijs/index.html" },
+            { id: 66, title: "Stealth Master", category: "Action", imgUrl: THUMB_BASE + "stealthmaster.jpg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///stealth-master/index.html" },
+            { id: 67, title: "Hide and Seek", category: "Fun", imgUrl: THUMB_BASE + "hideandseek.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//hideandseek/8328750458724478102.playables.usercontent.goog/v/assets/index.html" },
+            { id: 68, title: "Slice it All", category: "Fun", imgUrl: THUMB_BASE + "sliceitall.png", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///slice-it-all/index.html" },
+            { id: 69, title: "Bus Out", category: "Puzzle", imgUrl: THUMB_BASE + "busout.webp", gameUrl: "https://gamesbun.github.io/busout-school/" },
+            { id: 70, title: "Blumgi Racers", category: "Racing", imgUrl: THUMB_BASE + "br.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//blumgir/index.html" },
             { id: 71, title: "Hills Of Steel", category: "Action", imgUrl: THUMB_BASE + "hills%20of%20steel.webp", gameUrl: "https://hillofsteele.vercel.app/" },
-            { id: 72, title: "Rooftop Snipers 2", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp", gameUrl: "https://kivro-game-library.onrender.com//rooftopsnipers/index.html" },
-            { id: 72, title: "Bounce Masters", category: "Arcade", imgUrl: THUMB_BASE + "bouncemasters.webp", gameUrl: "https://wowksies-github-io.onrender.com//bouncemasters/index.html" },
-            { id: 73, title: "Blumgi Ball", category: "Arcade", imgUrl: THUMB_BASE + "blumgiball.webp", gameUrl: "https://kivro-game-library.onrender.com//blumgiball/index.html" },
-            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://kivro-game-library.onrender.com//DrawJoustindex.html" },
-            { id: 78, title: "Basketball Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://kivro-game-library.onrender.com//basketball-legends-main/index.html" },
-            { id: 79, title: "Football Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://kivro-game-library.onrender.com//football-legends/index.html" },
-            { id: 76, title: "Crossy Road", category: "Arcade", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io.onrender.com//crossy-road/index.html" },
-            { id: 77, title: "GetAway Shootout", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://kivro-game-library.onrender.com/getaway-shootout/index.html" }
+            { id: 72, title: "Rooftop Snipers", category: "Action", imgUrl: THUMB_BASE + "rooftop-snipers.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//rooftopsnipers/index.html" },
+            { id: 73, title: "Blumgi Ball", category: "Sports", imgUrl: THUMB_BASE + "blumgiball.webp", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//blumgiball/index.html" },
+            { id: 74, title: "Draw Joust", category: "Action", imgUrl: THUMB_BASE + "IMG_0959.png", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//DrawJoustindex.html" },
+            { id: 78, title: "Basket Legends", category: "Sports", imgUrl: THUMB_BASE + "IMG_0963.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//basketball-legends-main/index.html" },
+            { id: 79, title: "Soccer Legends", category: "Sports", imgUrl: THUMB_BASE + "Football-Legends.jpg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io//football-legends/index.html" },
+            { id: 76, title: "Crossy Road", category: "Fun", imgUrl: THUMB_BASE + "CrossyR.jpg", gameUrl: "https://wowksies-github-io-6e3122.gitlab.io///crossy-road/index.html" },
+            { id: 77, title: "Getaway Shoot", category: "Action", imgUrl: THUMB_BASE + "IMG_0980.jpeg", gameUrl: "https://kivro-game-library-9d7913.gitlab.io/getaway-shootout/index.html" }
         ];
 
         const appsList = [
             { id: 1001, title: "BlackFlix", category: "App", gameUrl: "https://ixlgroupjam.lovable.app/", imgUrl: THUMB_BASE + "IMG_0988.jpeg" }
         ];
 
-        const library = [...gamesList, ...appsList];
-        let favorites = [];
-        try { favorites = JSON.parse(localStorage.getItem('kivro_favs')) || []; } catch(e) {}
-        let currentTab = 'Games';
-        let searchTerm = '';
-        let disclaimerUrl = '';
-        let countdownInterval;
+        let activeGamesList = gamesList;
 
-        // --- PASSWORD MODAL LOGIC ---
-        function openPasswordModal(redirectUrl) {
-            pendingUrl = redirectUrl;
-            document.getElementById('password-modal').classList.remove('hidden');
-            document.getElementById('password-modal').style.display = 'flex';
-            setTimeout(() => document.getElementById('password-modal').classList.add('active'), 10);
-            document.getElementById('proxy-password-input').focus();
+        // --- APP LOGIC ---
+        function init() {
+            renderGrid(activeGamesList); // Use active list
+            updateCount(activeGamesList.length);
+            setupTabs();
+            setupSearch();
+            setupMobileMenu();
         }
 
-        function closePasswordModal() {
-            document.getElementById('password-modal').classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('password-modal').classList.add('hidden');
-                document.getElementById('password-modal').style.display = 'none';
-            }, 300);
-            document.getElementById('proxy-password-input').value = "kivro-lollipop";
-            document.getElementById('password-error').classList.add('hidden');
-            pendingUrl = "";
-        }
-
-        function checkPassword() {
-            const input = document.getElementById('proxy-password-input').value;
-            const errorMsg = document.getElementById('password-error');
-            const modalBox = document.getElementById('password-box');
-
-            if (input === ACCESS_PASSWORD) {
-                // SUCCESS
-                errorMsg.classList.add('hidden');
-                if (pendingUrl) {
-                    window.location.href = pendingUrl;
-                } else {
-                    alert("Access Granted");
-                }
-                closePasswordModal();
-            } else {
-                // FAIL
-                errorMsg.classList.remove('hidden');
-                document.getElementById('proxy-password-input').value = "";
-                modalBox.classList.add('animate-shake');
-                setTimeout(() => modalBox.classList.remove('animate-shake'), 500);
-            }
-        }
-
-        document.getElementById('proxy-password-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkPassword();
-        });
-
-        // --- DISCONTINUED POPUP LOGIC ---
-        function openDiscontinuedPopup() {
-            const popup = document.getElementById('discontinued-popup');
-            if(popup) {
-                popup.classList.remove('hidden');
-                popup.style.display = 'flex';
-                setTimeout(() => popup.classList.add('active'), 10);
-            }
-        }
-
-        function closeDiscontinuedPopup() {
-            const popup = document.getElementById('discontinued-popup');
-            if(popup) {
-                popup.classList.remove('active');
-                setTimeout(() => {
-                    popup.classList.add('hidden');
-                    popup.style.display = 'none';
-                }, 300);
-            }
-        }
-
-        // --- PARTNER DISCLAIMER LOGIC ---
-        function openDisclaimer(url) {
-            disclaimerUrl = url;
-            const popup = document.getElementById('disclaimer-popup');
-            const btn = document.getElementById('disclaimer-btn');
-            if(!popup || !btn) return;
-            let timeLeft = 10;
-            btn.disabled = true;
-            btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-white/5 text-gray-500 cursor-not-allowed border border-white/10";
-            btn.innerHTML = `Wait <span id="disclaimer-timer">${timeLeft}</span>s...`;
-            popup.classList.remove('hidden');
-            popup.style.display = 'flex';
-            setTimeout(() => { popup.classList.add('active'); }, 10);
-            if (countdownInterval) clearInterval(countdownInterval);
-            countdownInterval = setInterval(() => {
-                timeLeft--;
-                const span = document.getElementById('disclaimer-timer');
-                if(span) span.innerText = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    btn.disabled = false;
-                    btn.className = "w-full py-3 rounded-full font-bold text-sm transition-all bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg cursor-pointer";
-                    btn.innerHTML = "Continue to App";
-                }
-            }, 1000);
-        }
-
-        function closeDisclaimer() {
-            const popup = document.getElementById('disclaimer-popup');
-            if (popup) {
-                popup.classList.remove('active');
-                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
-            }
-            if (countdownInterval) clearInterval(countdownInterval);
-        }
-
-        const disclaimerBtn = document.getElementById('disclaimer-btn');
-        if (disclaimerBtn) {
-            disclaimerBtn.onclick = () => { if (disclaimerUrl) { window.open(disclaimerUrl, '_blank'); closeDisclaimer(); } };
-        }
-
-        const disclaimerPopup = document.getElementById('disclaimer-popup');
-        if (disclaimerPopup) {
-            disclaimerPopup.addEventListener('click', (e) => { if (e.target === disclaimerPopup) closeDisclaimer(); });
-        }
-
-        // --- UPDATES POPUP LOGIC ---
-        function openUpdates() {
-            const popup = document.getElementById('updates-popup');
-            const content = document.getElementById('updates-content');
-            if(!popup || !content) return;
-
-            content.innerHTML = updatesLog.map((log) => {
-                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
-                return `
-                    <div class="intro-card p-6 border border-white/10 text-left relative overflow-hidden group">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30 mb-2">${log.version}</span>
-                                <h3 class="text-xl font-bold text-white">${log.title}</h3>
-                            </div>
-                            <span class="text-xs text-gray-500 font-mono">${log.date}</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-4">${log.desc}</p>
-                        <ul class="space-y-2">${changeList}</ul>
-                    </div>
-                `;
-            }).join('');
-
-            popup.classList.remove('hidden');
-            popup.style.display = 'flex';
-            setTimeout(() => { popup.classList.add('active'); }, 10);
-        }
-
-        const closeUpdatesBtn = document.getElementById('close-updates');
-        if(closeUpdatesBtn) {
-            closeUpdatesBtn.onclick = () => {
-                const popup = document.getElementById('updates-popup');
-                popup.classList.remove('active');
-                setTimeout(() => { popup.classList.add('hidden'); popup.style.display = 'none'; }, 300);
-            };
-        }
-
-        function renderUpdates() {
-            const container = document.getElementById('on-page-updates');
-            if(!container) return;
-
-            container.innerHTML = updatesLog.map((log) => {
-                let changeList = log.changes.map(c => `<li class="update-item text-gray-300 text-sm mb-1">${c}</li>`).join('');
-                return `
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 text-left">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-sm font-bold text-white">${log.title}</h3>
-                            <span class="text-[10px] text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-500/30">${log.version}</span>
-                        </div>
-                        <ul class="space-y-1">${changeList}</ul>
-                    </div>
-               `;
-            }).join('');
-        }
-
-        function movePill(targetBtn) {
-            const pill = document.getElementById('tab-pill');
-            if(!pill || !targetBtn) return;
-            pill.style.opacity = '1';
-            pill.style.left = targetBtn.offsetLeft + 'px';
-            pill.style.width = targetBtn.offsetWidth + 'px';
-        }
-
-        function renderGrid() {
+        function renderGrid(items) {
             const grid = document.getElementById('game-grid');
-            if(!grid) return;
             grid.innerHTML = '';
-
-            let items = library.filter(item => {
-                const search = searchTerm.toLowerCase();
-                const matchesSearch = item.title.toLowerCase().includes(search);
-                if(currentTab === 'Favs') return favorites.includes(item.id) && matchesSearch;
-                if(currentTab === 'Games') return item.category !== 'App' && matchesSearch;
-                return item.category === 'App' && matchesSearch;
-            });
-            if(currentTab === 'Games' && !searchTerm) {
-                items.sort((a,b) => (favorites.includes(b.id) ? 1 : 0) - (favorites.includes(a.id) ? 1 : 0));
-            }
-
-            document.getElementById('game-count').innerText = items.length;
-            if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-500 animate-[fadeUp_0.5s_ease-out]">No results found.</div>`;
-                return;
-            }
-
-            const fragment = document.createDocumentFragment();
+            
             items.forEach((item, index) => {
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
-                card.className = "game-card group cursor-pointer card-anim liquid-glass";
-                card.style.setProperty('--shimmer-delay', `${Math.random() * 5}s`);
-                card.style.animationDelay = `${index * 50}ms`;
+                card.className = "smooth-card group cursor-pointer animate-fade-up";
+                card.style.animationDelay = `${index * 30}ms`;
 
-                // --- MODIFIED CLICK HANDLER TO DISABLE PLAY AND SHOW POPUP ---
+                // GUARDED ONCLICK
                 card.onclick = () => {
-                    // PREVIOUS LOGIC DISABLED
-                    // const targetUrl = item.gameUrl;
-                    // if (item.id === 1001) { openDisclaimer(targetUrl); return; }
-                    // window.open(targetUrl, '_blank');
-                    
-                    // NEW LOGIC: SHOW DISCONTINUED POPUP
-                    openDiscontinuedPopup();
+                    if (isPreviewMode) {
+                        showToast("🔒 Premium Required to Play");
+                        document.getElementById('free-mode-cta').scrollIntoView({behavior: 'smooth', block: 'center'});
+                        return;
+                    }
+                    window.open(item.gameUrl, '_blank');
                 };
 
                 card.innerHTML = `
-                    <button class="star-btn ${isFav ? 'star-active' : ''}" onclick="window.toggleFav(event, ${item.id})">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                    </button>
-                    <div class="h-32 sm:h-40 overflow-hidden relative border-b border-white/5">
-                        <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400?text=Game'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-300"></div>
-                        <span class="absolute bottom-2 left-2 text-[9px] font-bold px-2 py-0.5 rounded bg-white/10 text-white backdrop-blur-md border border-white/20 uppercase tracking-wider">
-                            ${item.category}
-                        </span>
+                    <div class="h-36 sm:h-40 relative img-wrapper bg-black/50 m-2">
+                        <img src="${item.imgUrl}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.src='https://placehold.co/400x250/111/444?text=NULL'">
+                        
+                        <div class="absolute bottom-2 left-2 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/5">
+                            <div class="status-dot"></div>
+                            <span class="text-[10px] font-bold text-white/90 uppercase tracking-widest">Stable</span>
+                        </div>
                     </div>
-                    <div class="p-3">
-                        <h3 class="text-xs sm:text-sm font-bold text-white truncate">${item.title}</h3>
+                    <div class="px-5 pb-5 pt-2 flex justify-between items-start">
+                        <div>
+                            <h3 class="text-sm font-bold text-zinc-100 truncate max-w-[120px]">${item.title}</h3>
+                            <p class="text-[10px] text-zinc-500 font-bold uppercase tracking-wide mt-0.5">${item.category}</p>
+                        </div>
+                        <button onclick="toggleFav(event, ${item.id})" class="text-zinc-600 hover:text-amber-400 transition-colors ${isFav ? 'text-amber-400' : ''}">
+                            <svg class="w-5 h-5" fill="${isFav ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                        </button>
                     </div>
                 `;
-                fragment.appendChild(card);
+                grid.appendChild(card);
             });
-            grid.appendChild(fragment);
+        }
+
+        function copyBookmarklet() {
+            if (isPreviewMode) {
+                showToast("🔒 Premium Required to Copy");
+                return;
+            }
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(BOOKMARKLET_CODE).then(() => {
+                    showToast("Bookmarklet Copied!");
+                }).catch(() => {
+                    fallbackCopy();
+                });
+            } else {
+                fallbackCopy();
+            }
+        }
+
+        function fallbackCopy() {
+            if (isPreviewMode) return;
+            const el = document.createElement('textarea');
+            el.value = BOOKMARKLET_CODE;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast("Bookmarklet Copied!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const txt = document.getElementById('toast-msg');
+            txt.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function setupTabs() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.onclick = () => {
+                    // Check for Preview Mode restriction on Proxy and Menu
+                    const target = btn.dataset.tab;
+                    if (isPreviewMode && (target === 'Menu' || target === 'Proxy')) {
+                        showToast("🔒 Premium Required");
+                        const cta = document.getElementById('free-mode-cta');
+                        if (cta) cta.scrollIntoView({behavior: 'smooth', block: 'center'});
+                        return;
+                    }
+
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentTab = target;
+                    
+                    if (currentTab === 'Proxy') {
+                        window.open('https://kivroprox1.vercel.app', '_blank');
+                        return;
+                    }
+
+                    // Handle View Switching
+                    const grid = document.getElementById('game-grid');
+                    const menuView = document.getElementById('menu-view');
+                    const header = document.getElementById('dashboard-header');
+                    const searchBar = document.getElementById('search-toggle');
+
+                    if (currentTab === 'Menu') {
+                        grid.classList.add('hidden');
+                        header.classList.add('hidden');
+                        menuView.classList.remove('hidden');
+                        searchBar.classList.add('opacity-0', 'pointer-events-none');
+                    } else {
+                        grid.classList.remove('hidden');
+                        header.classList.remove('hidden');
+                        menuView.classList.add('hidden');
+                        searchBar.classList.remove('opacity-0', 'pointer-events-none');
+                        
+                        // IMPORTANT: Pass current active list to filterGrid
+                        filterGrid();
+                    }
+                    
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        }
+
+        function setupMobileMenu() {
+            const trigger = document.getElementById('mobile-menu-trigger');
+            const menu = document.getElementById('mobile-menu');
+            if(trigger) {
+                trigger.onclick = () => menu.classList.toggle('hidden');
+            }
+        }
+
+        function setupSearch() {
+            const toggle = document.getElementById('search-toggle');
+            const bar = document.getElementById('search-bar');
+            const input = document.getElementById('global-search');
+
+            toggle.onclick = () => {
+                bar.classList.toggle('hidden');
+                if(!bar.classList.contains('hidden')) input.focus();
+            };
+            input.oninput = (e) => filterGrid(e.target.value);
+        }
+
+        function filterGrid(term = '') {
+            const s = term.toLowerCase();
+            
+            // Use activeGamesList instead of raw lists to respect Free Mode limits
+            const all = isPreviewMode ? activeGamesList : [...gamesList, ...appsList];
+            
+            const filtered = all.filter(item => {
+                if(!item.title.toLowerCase().includes(s)) return false;
+                if(currentTab === 'Favs') return favorites.includes(item.id);
+                if(currentTab === 'Apps') return item.category === 'App';
+                if(currentTab === 'Menu') return false; // Handled by view switching
+                return item.category !== 'App'; // Default to Games
+            });
+            renderGrid(filtered);
+            updateCount(filtered.length);
+        }
+
+        function updateCount(n) {
+            document.getElementById('item-count').innerText = n || activeGamesList.length;
         }
 
         window.toggleFav = (e, id) => {
             e.stopPropagation();
-            if(favorites.includes(id)) favorites = favorites.filter(fav => fav !== id);
+            if(favorites.includes(id)) favorites = favorites.filter(x => x !== id);
             else favorites.push(id);
-            try { localStorage.setItem('kivro_favs', JSON.stringify(favorites)); } catch(e){}
-            if(currentTab === 'Favs') renderGrid();
-            else e.currentTarget.classList.toggle('star-active');
+            localStorage.setItem('kivro_favs', JSON.stringify(favorites));
+            filterGrid(); // Re-render to show correct fav status
         };
 
-        function clearSearch(isMobile) {
-            searchTerm = '';
-            const input = document.getElementById(isMobile ? 'search-input-mobile' : 'search-input');
-            const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
-            input.value = '';
-            btn.classList.add('hidden');
-            renderGrid();
-        }
-
-        ['search-input', 'search-input-mobile'].forEach(id => {
-            const el = document.getElementById(id);
-            if(el) {
-                el.addEventListener('input', (e) => {
-                    searchTerm = e.target.value;
-                    const isMobile = id.includes('mobile');
-                    const btn = document.getElementById(isMobile ? 'clear-search-mobile' : 'clear-search');
-                    if(searchTerm.length > 0) btn.classList.remove('hidden');
-                    else btn.classList.add('hidden');
-                    renderGrid();
-                });
-            }
-        });
-        const clearBtn = document.getElementById('clear-search');
-        if(clearBtn) clearBtn.onclick = () => clearSearch(false);
-        const clearBtnMobile = document.getElementById('clear-search-mobile');
-        if(clearBtnMobile) clearBtnMobile.onclick = () => clearSearch(true);
-
-        // --- PASSWORD PROTECTED PROXY TAB ---
-        const proxyBtn = document.getElementById('tab-proxy');
-        if (proxyBtn) {
-            proxyBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                // DISABLED PASSWORD MODAL -> OPEN DISCONTINUED POPUP
-                // openPasswordModal('https://kivroprox1.vercel.app/');
-                openDiscontinuedPopup();
-            });
-        }
-
-        ['tab-games','tab-apps','tab-favs'].forEach(t => {
-            const tabEl = document.getElementById(t);
-            if(tabEl) {
-                tabEl.onclick = () => {
-                    currentTab = t.replace('tab-','').charAt(0).toUpperCase() + t.slice(5);
-                    document.querySelectorAll('.tab-btn').forEach(btn => {
-                        btn.classList.remove('tab-active-text');
-                        btn.classList.add('tab-inactive-text');
-                    });
-                    tabEl.classList.add('tab-active-text');
-                    tabEl.classList.remove('tab-inactive-text');
-                    movePill(tabEl);
-                    renderGrid();
-                };
-            }
-        });
-
+        // --- SESSION RESUME ---
         window.onload = () => {
-            renderUpdates();
-            renderGrid();
-            movePill(document.getElementById('tab-games'));
+            // REMOVE EXISTING PREVIEW SESSION IF ANY
+            localStorage.removeItem('kivro_preview_session');
 
-            setTimeout(() => {
-                const splash = document.getElementById('cinematic-splash');
-                splash.classList.add('splash-exit');
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    // OPEN DISCONTINUED POPUP AFTER SPLASH
-                    setTimeout(() => openDiscontinuedPopup(), 500); 
-                }, 700);
-            }, 2000);
-
-            const lightsContainer = document.getElementById('falling-lights');
-            if (lightsContainer) {
-                for (let i = 0; i < 40; i++) {
-                    const light = document.createElement('div');
-                    light.className = 'falling-light';
-                    light.style.left = Math.random() * 100 + 'vw';
-                    light.style.animationDuration = 4 + Math.random() * 6 + 's';
-                    light.style.animationDelay = Math.random() * 5 + 's';
-                    lightsContainer.appendChild(light);
+            // Check for Premium session
+            const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
+            if (session) {
+                if (!session.isUnlimited && session.expiresAt < Date.now()) {
+                    localStorage.removeItem('kivro_premium_session');
+                } else {
+                    // CHANGED: Call showVipWelcome instead of enterSystem directly
+                    showVipWelcome(session);
                 }
             }
         };
 
-        // --- INSTALL POPUP LOGIC ---
-        const installPopup = document.getElementById('install-popup');
-        const installTriggerBtn = document.getElementById('install-trigger-btn');
-        const closePopupBtn = document.getElementById('close-popup');
-        const iconButtons = document.querySelectorAll('.select-icon');
-        const appleTouchIcon = document.getElementById('apple-touch-icon');
-        const previewIcon = document.getElementById('preview-icon');
-        const previewName = document.getElementById('preview-name');
-
-        if (installTriggerBtn) {
-            installTriggerBtn.addEventListener('click', () => {
-                installPopup.classList.remove('hidden');
-                installPopup.style.display = 'flex';
-                setTimeout(() => installPopup.classList.add('active'), 10);
-            });
-        }
-
-        if (closePopupBtn) {
-            closePopupBtn.addEventListener('click', () => {
-                installPopup.classList.remove('active');
-                setTimeout(() => {
-                    installPopup.classList.add('hidden');
-                    installPopup.style.display = 'none';
-                }, 300);
-            });
-        }
-
-        iconButtons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                const iconUrl = icon.dataset.icon;
-                const appName = icon.dataset.name;
-
-                // Update Apple icon
-                appleTouchIcon.setAttribute('href', iconUrl);
-
-                // Update Apple web app title
-                let appleTitleMeta = document.querySelector('meta[name="apple-mobile-web-app-title"]');
-                if (!appleTitleMeta) {
-                    appleTitleMeta = document.createElement('meta');
-                    appleTitleMeta.setAttribute('name', 'apple-mobile-web-app-title');
-                    document.head.appendChild(appleTitleMeta);
-                }
-                appleTitleMeta.setAttribute('content', appName);
-
-                // Update document title
-                document.title = appName;
-
-                // Update preview
-                previewIcon.src = iconUrl;
-                previewName.textContent = appName;
-
-                // UI selected state
-                iconButtons.forEach(i => i.classList.remove('selected'));
-                icon.classList.add('selected');
-            });
+        document.getElementById('site-key-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlockSite();
         });
     </script>
-
 </body>
 </html>
