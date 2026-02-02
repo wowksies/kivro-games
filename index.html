@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-title" content="Kivro Elite">
     <meta name="theme-color" content="#000000">
 
-    <!-- Icons - FIXED: Defaults to Kivro Logo, not OneNote -->
+    <!-- Icons - Defaults to Kivro Logo -->
     <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
     <link id="dynamic-favicon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
@@ -48,6 +48,7 @@
                         'scan': 'scan 3s ease-in-out infinite',
                         'shine': 'shine 1.5s infinite',
                         'pop-in': 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'crt-on': 'turnOn 0.4s ease-out forwards',
                     },
                     keyframes: {
                         float: {
@@ -86,6 +87,11 @@
                         },
                         shine: {
                             '100%': { left: '125%' }
+                        },
+                        turnOn: {
+                            '0%': { transform: 'scale(1, 0.01) translate3d(0, 0, 0)', filter: 'brightness(0)', opacity: 0 },
+                            '60%': { transform: 'scale(1, 0.01) translate3d(0, 0, 0)', filter: 'brightness(2)', opacity: 1 },
+                            '100%': { transform: 'scale(1, 1) translate3d(0, 0, 0)', filter: 'brightness(1)', opacity: 1 }
                         }
                     }
                 }
@@ -189,6 +195,11 @@
             text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
+        /* High Tech Timer */
+        .digital-timer {
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
         .shine-effect {
             position: relative;
             overflow: hidden;
@@ -231,6 +242,16 @@
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
             transform: scale(1.1);
         }
+        
+        /* Typing Effect for Intro */
+        .typing-effect {
+            border-right: 2px solid #fbbf24;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #fbbf24; } }
     </style>
 </head>
 <body class="antialiased selection:bg-gold/30 selection:text-white overflow-hidden" id="main-body">
@@ -254,8 +275,8 @@
         </div>
     </div>
 
-    <!-- SITE LOCK -->
-    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700">
+    <!-- SITE LOCK (With Sneaky CRT Intro Animation) -->
+    <div id="site-lock" class="fixed inset-0 z-[10000] bg-black flex items-center justify-center overflow-y-auto overflow-x-hidden transition-all duration-700 opacity-0 animate-crt-on">
         <!-- Background Effects -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
@@ -266,84 +287,65 @@
 
         <div class="relative z-10 w-full max-w-4xl p-4 md:p-8 flex flex-col md:flex-row gap-8 items-stretch animate-fade-up">
             
-            <!-- LEFT COLUMN: Sales Pitch -->
+            <!-- LEFT COLUMN: Better Introduction / System Stats -->
             <div class="flex-1 bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/30 transition-colors">
-                <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 animate-pulse">
-                    HIGH DEMAND
+                <!-- Glitchy System Status -->
+                <div class="absolute top-0 right-0 bg-white/5 text-zinc-500 text-[9px] font-mono font-bold px-3 py-1 rounded-bl-xl z-20 border-l border-b border-white/5">
+                    SYS.V.2.4 • SECURE
                 </div>
                 
-                <div class="flex items-center gap-4 mb-6">
-                     <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 shadow-lg">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-8 h-8 opacity-90 animate-float">
+                <div class="flex items-center gap-4 mb-8">
+                     <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 shadow-lg">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-9 h-9 opacity-100 animate-float">
                     </div>
                     <div>
-                        <h1 class="text-2xl font-black text-white tracking-tight">KIVRO <span class="text-amber-400">ELITE</span></h1>
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                            <span class="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Servers Operational</span>
+                        <h1 class="text-3xl font-black text-white tracking-tight">KIVRO <span class="text-amber-400">ELITE</span></h1>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[10px] text-zinc-400 font-bold uppercase tracking-[0.2em] typing-effect w-fit">Gateway Connected...</span>
                         </div>
                     </div>
                 </div>
 
+                <!-- High Tech Feature List -->
                 <div class="space-y-4 mb-8 flex-1">
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-                        <div>
-                            <h3 class="text-sm font-bold text-white">Unrestricted Library</h3>
-                            <p class="text-xs text-zinc-500">Premium access to all games and apps.</p>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 relative overflow-hidden group/item hover:bg-white/10 transition-colors">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/50"></div>
+                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">Protocol 01</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-bold text-white">Unrestricted Library</span>
+                            <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded">Unlocked</span>
                         </div>
                     </div>
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-                        <div>
-                            <h3 class="text-sm font-bold text-white">Stealth Proxy V2</h3>
-                            <p class="text-xs text-zinc-500">Undetectable browsing technology.</p>
+                    
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 relative overflow-hidden group/item hover:bg-white/10 transition-colors">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-purple-500/50"></div>
+                        <h3 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-1">Protocol 02</h3>
+                         <div class="flex justify-between items-center">
+                            <span class="text-sm font-bold text-white">Stealth Proxy V2</span>
+                            <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">Active</span>
                         </div>
                     </div>
-                    <div class="flex items-start gap-3">
-                        <div class="mt-1 p-1 rounded-full bg-amber-500/10 text-amber-400"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-                        <div>
-                            <h3 class="text-sm font-bold text-white">VIP Tools Menu</h3>
-                            <p class="text-xs text-zinc-500">Exclusive cheats and utilities.</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Live Ticker -->
-                <div class="bg-black/40 rounded-xl p-3 border border-white/5 flex items-center gap-3 mb-6 backdrop-blur-md relative overflow-hidden group hover:border-white/10 transition-colors">
-                    <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="flex -space-x-2 relative z-10">
-                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">JD</div>
-                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">MK</div>
-                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">AL</div>
-                    </div>
-                    <div class="relative z-10">
-                        <p class="text-[10px] text-zinc-400 leading-tight">
-                            <span class="text-white font-bold">8 users</span> upgraded today.
-                        </p>
-                         <p class="text-[8px] text-amber-500 font-bold flex items-center gap-1 mt-0.5 opacity-80">
-                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            Verified Purchase
-                        </p>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 relative overflow-hidden group/item hover:bg-white/10 transition-colors">
+                         <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500/50"></div>
+                        <h3 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-1">Protocol 03</h3>
+                         <div class="flex justify-between items-center">
+                            <span class="text-sm font-bold text-white">Developer Menu</span>
+                            <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">Root Access</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Purchase Info -->
-                 <div class="pt-4 border-t border-white/10">
-                     <p class="text-[10px] text-zinc-500 uppercase font-bold mb-3 tracking-wider">Purchase Key</p>
-                     <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-white/5 p-3 rounded-xl border border-white/5">
-                            <p class="text-[10px] text-zinc-400 mb-1">Method</p>
-                            <p class="text-xs font-bold text-white">Cash (In-Person)</p>
-                        </div>
-                        <a href="mailto:kayazissigma@gmail.com" class="bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 hover:bg-amber-500/20 transition-colors group/link cursor-pointer block">
-                            <p class="text-[10px] text-amber-300 mb-1">Contact for Key</p>
-                            <div class="flex items-center gap-1 text-xs font-bold text-amber-400">
-                                <span>Email Me</span>
-                                <svg class="w-3 h-3 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                            </div>
-                        </a>
+                 <div class="pt-4 border-t border-white/10 flex justify-between items-end">
+                     <div>
+                         <p class="text-[10px] text-zinc-500 uppercase font-bold mb-1 tracking-wider">Access Key Required</p>
+                         <p class="text-xs text-zinc-400">Obtain via In-Person Cash Only</p>
                      </div>
+                     <a href="mailto:kayazissigma@gmail.com" class="text-xs text-amber-400 font-bold hover:underline flex items-center gap-1">
+                         Contact Support <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                     </a>
                  </div>
             </div>
 
@@ -430,7 +432,7 @@
                     <div id="site-key-error" class="text-center text-red-500 text-[10px] font-bold h-4 opacity-0 transition-opacity uppercase tracking-widest z-10">Invalid Key</div>
                     
                     <button onclick="unlockSite()" class="shine-effect w-full py-3.5 rounded-xl bg-white text-black font-extrabold text-xs active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 group z-10">
-                        <span>UNLOCK SYSTEM</span>
+                        <span>AUTHENTICATE</span>
                         <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </button>
                     
@@ -460,15 +462,19 @@
                     <button class="nav-btn" data-tab="Favs">Saved</button>
                 </div>
 
-                <!-- RIGHT CONTROLS -->
-                <div class="flex items-center gap-3">
+                <!-- RIGHT CONTROLS (Updated HUD Timer) -->
+                <div class="flex items-center gap-4">
                     <div id="vip-status-badge" class="flex items-center gap-2 mr-2">
                         <span class="text-[10px] md:text-[8px] font-black vip-badge tracking-widest uppercase truncate max-w-[80px] md:max-w-none">VIP MEMBER</span>
                     </div>
 
-                    <div class="hidden md:flex items-center gap-2 px-4 md:px-2 py-2 md:py-1 rounded-full bg-white/5 border border-white/5">
-                        <div id="timer-dot" class="status-dot"></div>
-                        <span id="header-timer" class="text-[10px] md:text-[9px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
+                    <!-- HUD TIMER -->
+                    <div class="hidden md:flex flex-col items-end">
+                        <div class="text-[8px] text-zinc-600 uppercase tracking-widest font-bold mb-0.5">Session Time</div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded bg-black/40 border border-white/5 shadow-inner">
+                            <div id="timer-dot" class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+                            <span id="header-timer" class="font-mono text-xs font-bold text-amber-500 tabular-nums tracking-widest digital-timer">00:00:00</span>
+                        </div>
                     </div>
 
                     <button onclick="openCloakModal()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
@@ -763,14 +769,15 @@
                 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
                 
                 setTimeout(() => {
+                    const installModal = document.getElementById('install-modal');
                     installModal.classList.remove('translate-y-full');
                     
                     if (isIOS) {
-                        iosText.classList.remove('hidden');
+                        document.getElementById('ios-instructions').classList.remove('hidden');
                     } else if (deferredPrompt) {
-                        installBtn.classList.remove('hidden');
+                        document.getElementById('install-btn').classList.remove('hidden');
                     } else {
-                        manualText.classList.remove('hidden');
+                        document.getElementById('manual-install').classList.remove('hidden');
                     }
                 }, 2000); 
              }
@@ -829,7 +836,7 @@
 
             // Simple loading state
             const originalText = btn.innerHTML;
-            btn.innerHTML = "<span>VERIFYING...</span>";
+            btn.innerHTML = "<span>DECRYPTING...</span>";
             btn.disabled = true;
 
             try {
@@ -1005,7 +1012,7 @@
             }
 
             if(isPreviewMode) {
-                 timerEl.innerText = "PREVIEW";
+                 timerEl.innerText = "PREVIEW MODE";
                  dot.classList.add('bg-yellow-500');
                  return;
             }
@@ -1029,7 +1036,7 @@
 
                 if (diff <= 0) {
                     clearInterval(countdownInterval);
-                    timerEl.innerText = "EXPIRED";
+                    timerEl.innerText = "SESSION EXPIRED";
                     localStorage.removeItem('kivro_premium_session');
                     setTimeout(() => window.location.reload(), 1000);
                     return;
