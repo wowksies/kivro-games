@@ -6,7 +6,7 @@
     <title>Kivro • Elite</title>
     <meta name="description" content="Exclusive unblocked library.">
 
-    <!-- PWA Manifest -->
+    <!-- PWA Manifest (Defaults to Kivro Logo) -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIktpdnJvIEVsaXRlIiwKICAic2hvcnRfbmFtZSI6ICJLaXZybyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjMDAwMDAwIiwKICAidGhlbWVfY29sb3IiOiAiIzAwMDAwMCIsCiAgImljb25zIjogW3sKICAgICJzcmMiOiAiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0tBWUFaenovQ05NLUdhbWVzL21haW4vTG9nb2FjdHVhbC5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
 
     <!-- PWA Meta -->
@@ -15,8 +15,8 @@
     <meta name="apple-mobile-web-app-title" content="Kivro Elite">
     <meta name="theme-color" content="#000000">
 
-    <!-- Icons -->
-    <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/onsigma67.png">
+    <!-- Icons - FIXED: Defaults to Kivro Logo, not OneNote -->
+    <link id="apple-touch-icon" rel="apple-touch-icon" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
     <link id="dynamic-favicon" rel="icon" type="image/png" href="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,19 +39,20 @@
                         }
                     },
                     animation: {
-                        'float': 'float 8s ease-in-out infinite',
-                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 15s infinite',
                         'fade-up': 'fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
                         'shimmer': 'shimmer 2.5s linear infinite',
                         'pulse-gold': 'pulseGold 2s infinite',
-                        'entrance': 'entrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'entrance': 'entrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
                         'scan': 'scan 3s ease-in-out infinite',
                         'shine': 'shine 1.5s infinite',
+                        'pop-in': 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-15px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
@@ -73,6 +74,10 @@
                         },
                         entrance: {
                             '0%': { opacity: 0, transform: 'scale(0.95)' },
+                            '100%': { opacity: 1, transform: 'scale(1)' }
+                        },
+                        popIn: {
+                            '0%': { opacity: 0, transform: 'scale(0.8)' },
                             '100%': { opacity: 1, transform: 'scale(1)' }
                         },
                         scan: {
@@ -107,14 +112,15 @@
         .blob-1, .blob-2, .blob-3 {
             position: absolute;
             filter: blur(80px);
-            opacity: 0.4;
+            opacity: 0.35;
             border-radius: 50%;
             animation: blob 20s infinite alternate;
         }
         
-        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #4c1d95; }
-        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #312e81; animation-delay: -5s; }
-        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #701a75; animation-delay: -10s; opacity: 0.3; }
+        /* GOLD / AMBER THEME BACKGROUND */
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #b45309; } /* Amber 700 */
+        .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #92400e; animation-delay: -5s; } /* Amber 800 */
+        .blob-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: #d97706; animation-delay: -10s; opacity: 0.25; } /* Amber 600 */
 
         .smooth-card {
             background: rgba(20, 20, 20, 0.6);
@@ -126,6 +132,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0; /* Hidden initially for staggered animation */
         }
 
         .smooth-card:hover {
@@ -164,16 +171,9 @@
             white-space: nowrap;
         }
 
-        /* COMPACT MODE FOR IPAD/TABLETS */
         @media (max-width: 1150px) {
-            .nav-btn {
-                padding: 8px 14px;
-                font-size: 11px;
-            }
-            .nav-pill {
-                padding: 3px;
-                gap: 2px;
-            }
+            .nav-btn { padding: 8px 14px; font-size: 11px; }
+            .nav-pill { padding: 3px; gap: 2px; }
         }
 
         .nav-btn.active {
@@ -246,7 +246,7 @@
         <div class="text-center transform scale-95 transition-transform duration-1000" id="vip-welcome-content">
             <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-yellow-400 to-amber-600 p-[2px] animate-pulse-gold">
                 <div class="w-full h-full rounded-full bg-black flex items-center justify-center">
-                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 animate-float">
                 </div>
             </div>
             <h1 class="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">ACCESS GRANTED</h1>
@@ -259,13 +259,14 @@
         <!-- Background Effects -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/30 rounded-full blur-[120px] animate-blob"></div>
+            <!-- GOLD GLOW EFFECTS -->
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-600/20 rounded-full blur-[120px] animate-blob"></div>
             <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/20 rounded-full blur-[120px] animate-blob" style="animation-delay: -2s;"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-4xl p-4 md:p-8 flex flex-col md:flex-row gap-8 items-stretch animate-fade-up">
             
-            <!-- LEFT COLUMN: Sales Pitch (Persuasion) -->
+            <!-- LEFT COLUMN: Sales Pitch -->
             <div class="flex-1 bg-zinc-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col relative overflow-hidden group hover:border-amber-500/30 transition-colors">
                 <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 animate-pulse">
                     HIGH DEMAND
@@ -273,7 +274,7 @@
                 
                 <div class="flex items-center gap-4 mb-6">
                      <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 shadow-lg">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-8 h-8 opacity-90">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-8 h-8 opacity-90 animate-float">
                     </div>
                     <div>
                         <h1 class="text-2xl font-black text-white tracking-tight">KIVRO <span class="text-amber-400">ELITE</span></h1>
@@ -308,11 +309,10 @@
                     </div>
                 </div>
 
-                <!-- Live Ticker (UPDATED) -->
+                <!-- Live Ticker -->
                 <div class="bg-black/40 rounded-xl p-3 border border-white/5 flex items-center gap-3 mb-6 backdrop-blur-md relative overflow-hidden group hover:border-white/10 transition-colors">
                     <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="flex -space-x-2 relative z-10">
-                         <!-- Believable Avatars -->
                          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">JD</div>
                          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">MK</div>
                          <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 border-2 border-zinc-900 flex items-center justify-center text-[9px] text-white font-bold shadow-lg">AL</div>
@@ -410,7 +410,7 @@
                     </div>
                 </div>
 
-                <!-- Auth Box (UPDATED ANIMATIONS) -->
+                <!-- Auth Box -->
                 <div class="bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-5 flex flex-col gap-3 shadow-2xl h-full justify-center relative overflow-hidden">
                     <div class="text-center mb-1 relative z-10">
                         <div class="text-xs font-bold text-white uppercase tracking-widest flex items-center justify-center gap-2">
@@ -420,7 +420,6 @@
                     </div>
                     
                     <div class="relative group z-10">
-                        <!-- Laser Scan Effect on Input -->
                          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 animate-[scan_2s_linear_infinite]"></div>
                         
                         <input type="password" id="site-key-input" 
@@ -449,11 +448,10 @@
         <nav class="fixed top-0 left-0 right-0 z-50 bg-black/10 backdrop-blur-md border-b border-white/5">
             <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between relative">
                 <div class="flex items-center gap-4 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg">
+                    <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-10 h-10 rounded-2xl shadow-lg animate-float">
                 </div>
 
-                <!-- NAVIGATION (Center - Tablet Optimized) -->
-                <!-- Removed absolute positioning on very small screens if needed, but flex + transform works if width is managed -->
+                <!-- NAVIGATION -->
                 <div class="nav-pill hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
                     <button class="nav-btn active" data-tab="Games">Library</button>
                     <button class="nav-btn" data-tab="Apps">Apps</button>
@@ -464,19 +462,15 @@
 
                 <!-- RIGHT CONTROLS -->
                 <div class="flex items-center gap-3">
-                    
-                    <!-- VIP Badge (Resizes on Tablet, does not hide) -->
                     <div id="vip-status-badge" class="flex items-center gap-2 mr-2">
                         <span class="text-[10px] md:text-[8px] font-black vip-badge tracking-widest uppercase truncate max-w-[80px] md:max-w-none">VIP MEMBER</span>
                     </div>
 
-                    <!-- Timer (Resizes on Tablet, does not hide) -->
                     <div class="hidden md:flex items-center gap-2 px-4 md:px-2 py-2 md:py-1 rounded-full bg-white/5 border border-white/5">
                         <div id="timer-dot" class="status-dot"></div>
                         <span id="header-timer" class="text-[10px] md:text-[9px] font-bold text-zinc-400 font-mono tracking-widest">--:--:--</span>
                     </div>
 
-                    <!-- MASK / CLOAK BUTTON -->
                     <button onclick="openCloakModal()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                     </button>
@@ -563,7 +557,7 @@
             <div id="menu-view" class="hidden max-w-2xl mx-auto animate-fade-up">
                 <div class="text-center mb-12">
                     <div class="w-24 h-24 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_40px_rgba(251,191,36,0.1)] border border-white/10">
-                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 opacity-80">
+                        <img src="https://raw.githubusercontent.com/KAYAZzz/CNM-Games/main/Logoactual.png" class="w-12 h-12 opacity-80 animate-float">
                     </div>
                     <h2 class="text-4xl font-extrabold text-white mb-4">Kivro Menu V2</h2>
                     <p class="text-zinc-400">The ultimate utility belt for your browser sessions.</p>
@@ -1177,8 +1171,8 @@
             items.forEach((item, index) => {
                 const isFav = favorites.includes(item.id);
                 const card = document.createElement('div');
-                card.className = "smooth-card group cursor-pointer animate-fade-up";
-                card.style.animationDelay = `${index * 30}ms`;
+                card.className = "smooth-card group cursor-pointer animate-pop-in";
+                card.style.animationDelay = `${index * 50}ms`; // Staggered animation
 
                 // GUARDED ONCLICK
                 card.onclick = () => {
@@ -1213,6 +1207,7 @@
             });
         }
 
+        // ... existing helper functions (copyBookmarklet, fallbackCopy, showToast) ...
         function copyBookmarklet() {
             if (isPreviewMode) {
                 showToast("🔒 Premium Required to Copy");
@@ -1347,19 +1342,36 @@
 
         // --- SESSION RESUME ---
         window.onload = () => {
-            // REMOVE EXISTING PREVIEW SESSION IF ANY
-            localStorage.removeItem('kivro_preview_session');
+             // 1. Session Resume Logic
+             localStorage.removeItem('kivro_preview_session');
+             const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
+             if (session) {
+                 if (!session.isUnlimited && session.expiresAt < Date.now()) {
+                     localStorage.removeItem('kivro_premium_session');
+                 } else {
+                     showVipWelcome(session);
+                 }
+             }
 
-            // Check for Premium session
-            const session = JSON.parse(localStorage.getItem('kivro_premium_session'));
-            if (session) {
-                if (!session.isUnlimited && session.expiresAt < Date.now()) {
-                    localStorage.removeItem('kivro_premium_session');
-                } else {
-                    // CHANGED: Call showVipWelcome instead of enterSystem directly
-                    showVipWelcome(session);
-                }
-            }
+             // 2. Install Logic
+             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+             
+             if (!isStandalone && !localStorage.getItem('kivro_install_dismissed')) {
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                
+                setTimeout(() => {
+                    const installModal = document.getElementById('install-modal');
+                    installModal.classList.remove('translate-y-full');
+                    
+                    if (isIOS) {
+                        document.getElementById('ios-instructions').classList.remove('hidden');
+                    } else if (deferredPrompt) {
+                        document.getElementById('install-btn').classList.remove('hidden');
+                    } else {
+                        document.getElementById('manual-install').classList.remove('hidden');
+                    }
+                }, 2000); 
+             }
         };
 
         document.getElementById('site-key-input').addEventListener('keypress', (e) => {
